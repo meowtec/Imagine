@@ -1,0 +1,21 @@
+@keyframes spin {
+  from {
+    transform: rotate(0);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  fill: currentColor;
+  overflow: visible;
+}
+
+.icon.-spin {
+  animation: spin infinite 1s linear;
+}

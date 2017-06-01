@@ -1,0 +1,46 @@
+.action-bar {
+  position: fixed;
+  display: flex;
+  height: 60px;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 0 20px;
+  padding-left: 70px;
+  background: #fff;
+  box-shadow: 0 0 15px rgba(0, 0, 0, .3);
+  // border-bottom: 1px solid #eee;
+  z-index: 100;
+  -webkit-app-region: drag;
+
+  button {
+    background: none;
+    border: 0;
+    outline: none;
+    width: 60px;
+
+    .icon {
+      height: 18px;
+      width: 18px;
+      margin-top: 3px;
+      color: #666;
+    }
+
+    .icon-add {
+      width: 16px;
+    }
+
+    span {
+      display: block;
+      margin-top: 4px;
+      color: #888;
+    }
+  }
+
+  :hover {
+    .icon,
+    span {
+      color: #333;
+    }
+  }
+}

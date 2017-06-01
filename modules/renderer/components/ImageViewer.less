@@ -1,0 +1,55 @@
+.backdrop {
+  position: relative;
+  background: url(../images/opacity.png);
+  overflow: hidden;
+
+  .image-wrapper {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    transition: ease .4s;
+  }
+
+  .image {
+    display: block;
+  }
+
+  .zoom-control {
+    position: absolute;
+    bottom: 10px;
+    right: 20px;
+
+    button {
+      display: block;
+      width: 25px;
+      height: 25px;
+      line-height: 25px;
+      font-size: 16px;
+      text-align: center;
+      color: #333;
+      border: 0;
+      padding: 0;
+      margin-bottom: 10px;
+      cursor: pointer;
+      outline: none;
+      transition: all .4s;
+
+      .icon {
+        vertical-align: top;
+        height: 100%;
+      }
+
+      &:hover,
+      &:active {
+        color: #0cf;
+        box-shadow: 0 0 10px rgba(0, 0, 0, .4);
+      }
+
+      &:disabled {
+        color: #ccc;
+        cursor: default;
+      }
+    }
+  }
+}
