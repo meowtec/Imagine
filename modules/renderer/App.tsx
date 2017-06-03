@@ -1,13 +1,16 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import * as classnanes from 'classnames'
-import { connect } from 'react-redux'
+import { Provider } from 'react-redux'
 import { State } from './store/reducer'
+import Modal from './components/Modal'
 import List from './containers/List'
 import ActionBar from './containers/ActionBar'
+import Alone from './containers/Alone'
 import { prevent } from './utils/dom-event'
 import { IpcChannel } from '../common/constants'
 import { ipcRenderer } from 'electron'
+import store from './store/store'
 
 import './components/Icon'
 import './App.less'
@@ -45,18 +48,21 @@ export default class App extends React.PureComponent<{}, {}> {
 
   render () {
     return (
-      <div
-        className={classnanes('layout', {
-          '-drag': !!this.state.onion,
-        })}
-        onDragOver={prevent}
-        onDragEnter={this.handleDragEnter}
-        onDragLeave={this.handleDragLeave}
-        onDrop={this.handleDragDrop}
-      >
-        <ActionBar />
-        <List />
-      </div>
+      <Provider store={store}>
+        <div
+          className={classnanes('layout', {
+            '-drag': !!this.state.onion,
+          })}
+          onDragOver={prevent}
+          onDragEnter={this.handleDragEnter}
+          onDragLeave={this.handleDragLeave}
+          onDrop={this.handleDragDrop}
+        >
+          <ActionBar />
+          <List />
+          <Alone />
+        </div>
+      </Provider>
     )
   }
 }

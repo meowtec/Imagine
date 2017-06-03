@@ -1,6 +1,8 @@
 .backdrop {
   position: relative;
   background: url(../images/opacity.png);
+  background-size: image-size('../images/opacity.png');
+  image-rendering: pixelated;
   overflow: hidden;
 
   .image-wrapper {
@@ -8,17 +10,18 @@
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    transition: ease .4s;
   }
 
   .image {
     display: block;
+    image-rendering: pixelated;
+    // transition: transform ease .4s;
   }
 
   .zoom-control {
     position: absolute;
-    bottom: 10px;
-    right: 20px;
+    bottom: 40px;
+    right: 15px;
 
     button {
       display: block;

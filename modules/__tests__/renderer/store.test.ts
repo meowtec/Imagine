@@ -24,9 +24,7 @@ const image2 = {
 
 test('initial state', () => {
   const store = createStore(reducer)
-  expect(store.getState()).toEqual({
-    tasks: [],
-  })
+  expect(store.getState().tasks).toEqual([])
 })
 
 test('task add', () => {
@@ -35,24 +33,22 @@ test('task add', () => {
   store.dispatch(actions.taskAdd([image1, image2]))
   store.dispatch(actions.taskAdd([image1, image2]))
 
-  expect(store.getState()).toEqual({
-    tasks: [
-      {
-        image: image1,
-        options: {
-          color: 64,
-        },
-        status: TaskStatus.PENDING,
+  expect(store.getState().tasks).toEqual([
+    {
+      image: image1,
+      options: {
+        color: 64,
       },
-      {
-        image: image2,
-        options: {
-          color: 64,
-        },
-        status: TaskStatus.PENDING,
-      }
-    ],
-  })
+      status: TaskStatus.PENDING,
+    },
+    {
+      image: image2,
+      options: {
+        color: 64,
+      },
+      status: TaskStatus.PENDING,
+    }
+  ])
 })
 
 test('task delete', () => {
@@ -61,17 +57,15 @@ test('task delete', () => {
   store.dispatch(actions.taskAdd([image1, image2]))
   store.dispatch(actions.taskDelete([image2.id, 'notexist']))
 
-  expect(store.getState()).toEqual({
-    tasks: [
-      {
-        image: image1,
-        options: {
-          color: 64,
-        },
-        status: TaskStatus.PENDING,
-      }
-    ],
-  })
+  expect(store.getState().tasks).toEqual([
+    {
+      image: image1,
+      options: {
+        color: 64,
+      },
+      status: TaskStatus.PENDING,
+    }
+  ])
 })
 
 test('task update options', () => {
@@ -85,8 +79,7 @@ test('task update options', () => {
     color: 8,
   }))
 
-  expect(store.getState()).toEqual({
-    tasks: [
+  expect(store.getState().tasks).toEqual([
       {
         image: image1,
         options: {
@@ -101,8 +94,7 @@ test('task update options', () => {
         },
         status: TaskStatus.PENDING,
       }
-    ],
-  })
+    ])
 })
 
 test('task start', () => {
@@ -112,24 +104,22 @@ test('task start', () => {
   store.dispatch(actions.taskOptimizeStart(image2.id))
   store.dispatch(actions.taskOptimizeStart('notexist'))
 
-  expect(store.getState()).toEqual({
-    tasks: [
-      {
-        image: image1,
-        options: {
-          color: 64,
-        },
-        status: TaskStatus.PENDING,
+  expect(store.getState().tasks).toEqual([
+    {
+      image: image1,
+      options: {
+        color: 64,
       },
-      {
-        image: image2,
-        options: {
-          color: 64,
-        },
-        status: TaskStatus.PROCESSING,
-      }
-    ],
-  })
+      status: TaskStatus.PENDING,
+    },
+    {
+      image: image2,
+      options: {
+        color: 64,
+      },
+      status: TaskStatus.PROCESSING,
+    }
+  ])
 })
 
 test('task success', () => {
@@ -146,32 +136,30 @@ test('task success', () => {
   }))
   store.dispatch(actions.taskOptimizeSuccess('notexist', {} as ImageFile))
 
-  expect(store.getState()).toEqual({
-    tasks: [
-      {
-        image: image1,
-        options: {
-          color: 64,
-        },
-        status: TaskStatus.PENDING,
+  expect(store.getState().tasks).toEqual([
+    {
+      image: image1,
+      options: {
+        color: 64,
       },
-      {
-        image: image2,
-        options: {
-          color: 64,
-        },
-        status: TaskStatus.DONE,
-        optimized: {
-          id: '03',
-          url: '02.png',
-          size: 101,
-          ext: 'png',
-          color: 8,
-          originalName: 'file-result.png',
-        }
+      status: TaskStatus.PENDING,
+    },
+    {
+      image: image2,
+      options: {
+        color: 64,
+      },
+      status: TaskStatus.DONE,
+      optimized: {
+        id: '03',
+        url: '02.png',
+        size: 101,
+        ext: 'png',
+        color: 8,
+        originalName: 'file-result.png',
       }
-    ],
-  })
+    }
+  ])
 })
 
 test('task fail', () => {
@@ -181,23 +169,34 @@ test('task fail', () => {
   store.dispatch(actions.taskOptimizeFail(image2.id))
   store.dispatch(actions.taskOptimizeFail('notexist'))
 
-  expect(store.getState()).toEqual({
-    tasks: [
-      {
-        image: image1,
-        options: {
-          color: 64,
-        },
-        status: TaskStatus.PENDING,
+  expect(store.getState().tasks).toEqual([
+    {
+      image: image1,
+      options: {
+        color: 64,
       },
-      {
-        image: image2,
-        options: {
-          color: 64,
-        },
-        status: TaskStatus.FAIL,
-        optimized: null,
-      }
-    ],
-  })
+      status: TaskStatus.PENDING,
+    },
+    {
+      image: image2,
+      options: {
+        color: 64,
+      },
+      status: TaskStatus.FAIL,
+      optimized: null,
+    }
+  ])
+})
+
+
+test('globals', () => {
+  const store = createStore(reducer)
+
+  store.dispatch(actions.taskDetail('detailId'))
+
+  expect(store.getState().globals.activeId).toBe('detailId')
+
+  store.dispatch(actions.taskDetail(null))
+
+  expect(store.getState().globals.activeId).toBe(null)
 })

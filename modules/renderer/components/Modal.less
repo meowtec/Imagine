@@ -1,0 +1,45 @@
+.modal-enter {
+  opacity: 0.01;
+}
+
+.modal-enter.modal-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease;
+}
+
+.modal-leave {
+  opacity: 1;
+}
+
+.modal-leave.modal-leave-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  z-index: 200;
+  box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+  transition: opacity 1s;
+
+  .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border: 0;
+    outline: 0;
+    padding: 10px;
+    background: none;
+    z-index: 10;
+
+    .icon {
+      color: #666;
+      font-size: 24px;
+    }
+  }
+}

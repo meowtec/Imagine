@@ -110,8 +110,6 @@ const envConfigs = {
 
     resolve: {
       alias: {
-        'react': 'react/dist/react.min.js',
-        'react-dom': 'react-dom/dist/react-dom.min.js',
       },
     },
 
@@ -128,8 +126,6 @@ const envConfigs = {
 
     resolve: {
       alias: {
-        'react': 'react/dist/react.js',
-        'react-dom': 'react-dom/dist/react-dom.js',
       },
     },
   }

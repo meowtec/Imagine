@@ -23,7 +23,7 @@ interface ImageViewerState {
 }
 
 const ZOOM_MIN = 0.125
-const ZOOM_MAX = 4
+const ZOOM_MAX = 16
 
 const zoomCoop = coop(ZOOM_MIN, ZOOM_MAX)
 
@@ -31,9 +31,14 @@ const roundZoom = (zoom: number) => {
   return Math.pow(2, Math.round(Math.log2(zoom)))
 }
 
+const floorZoom = (zoom: number) => {
+  return Math.pow(2, Math.floor(Math.log2(zoom)))
+}
+
 export default class ImageViewer extends PureComponent<ImageViewerProps, ImageViewerState> {
 
   image: HTMLImageElement
+  backdrop: HTMLDivElement
   prevScreenX: number
   prevScreenY: number
   dragging = false
@@ -70,12 +75,23 @@ export default class ImageViewer extends PureComponent<ImageViewerProps, ImageVi
     }
   }
 
+  private initialZoom () {
+    const { naturalWidth, naturalHeight } = this.image
+    const { clientWidth, clientHeight } = this.backdrop
+
+    return floorZoom(Math.min(clientWidth / naturalWidth, clientHeight / naturalHeight))
+  }
+
   handleImageLoad = () => {
-    const { image } = this
-    this.setState({
-      imageNaturalWidth: image.naturalWidth,
-      imageNaturalHeight: image.naturalHeight,
-    })
+    const { naturalWidth, naturalHeight } = this.image
+
+    if (!this.state.imageNaturalWidth) {
+      this.setState({
+        imageNaturalWidth: naturalWidth,
+        imageNaturalHeight: naturalHeight,
+        zoom: this.initialZoom(),
+      })
+    }
   }
 
   handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -110,15 +126,19 @@ export default class ImageViewer extends PureComponent<ImageViewerProps, ImageVi
     if (wheelData.type === 'zoom') {
       const target = e.currentTarget
       const mousePosition = eventOffset(e.nativeEvent, target)
-      const originX = mousePosition.x - target.clientWidth / 2 - state.x
-      const originY = mousePosition.y - target.clientHeight / 2 - state.y
+
+      const zoom = zoomCoop(state.zoom * wheelData.zoom)
+      const zoomCenterOffsetX = (mousePosition.x - target.clientWidth / 2 - state.x - state.zoomCenterOffsetX) / state.zoom + state.zoomCenterOffsetX
+      const zoomCenterOffsetY = (mousePosition.y - target.clientHeight / 2 - state.y - state.zoomCenterOffsetY) / state.zoom + state.zoomCenterOffsetY
+      const x = state.x - (zoomCenterOffsetX - state.zoomCenterOffsetX) * (1 - state.zoom)
+      const y = state.y - (zoomCenterOffsetY - state.zoomCenterOffsetY) * (1 - state.zoom)
 
       this.setState({
-        zoom: zoomCoop(state.zoom * wheelData.zoom),
-        zoomCenterOffsetX: originX,
-        zoomCenterOffsetY: originY,
-        x: state.x - (originX - state.zoomCenterOffsetX) * (1 - state.zoom),
-        y: state.y - (originY - state.zoomCenterOffsetY) * (1 - state.zoom),
+        zoom,
+        zoomCenterOffsetX,
+        zoomCenterOffsetY,
+        x,
+        y,
       })
     } else {
       this.setState({
@@ -128,7 +148,10 @@ export default class ImageViewer extends PureComponent<ImageViewerProps, ImageVi
     }
   }
 
-  handleZoomOut = () => {
+  // to fix
+  handleZoomOut = (e: React.MouseEvent<HTMLElement>) => {
+    e.stopPropagation()
+
     const { x, y, zoom, zoomCenterOffsetX, zoomCenterOffsetY } = this.state
     this.setState({
       zoom: roundZoom(zoom * 2),
@@ -139,7 +162,9 @@ export default class ImageViewer extends PureComponent<ImageViewerProps, ImageVi
     })
   }
 
-  handleZoomIn = () => {
+  handleZoomIn = (e: React.MouseEvent<HTMLElement>) => {
+    e.stopPropagation()
+
     const { x, y, zoom, zoomCenterOffsetX, zoomCenterOffsetY } = this.state
     this.setState({
       zoom: roundZoom(zoom / 2),
@@ -150,13 +175,15 @@ export default class ImageViewer extends PureComponent<ImageViewerProps, ImageVi
     })
   }
 
-  handleFocusCenter = () => {
+  handleFocusCenter = (e: React.MouseEvent<HTMLElement>) => {
+    e.stopPropagation()
+
     this.setState({
       x: 0,
       y: 0,
       zoomCenterOffsetX: 0,
       zoomCenterOffsetY: 0,
-      zoom: 1,
+      zoom: this.initialZoom(),
     })
   }
 
@@ -180,6 +207,7 @@ export default class ImageViewer extends PureComponent<ImageViewerProps, ImageVi
       <div
         className="backdrop"
         onWheel={this.handleWheel}
+        ref={el => {this.backdrop = el}}
       >
         <div
           className="image-wrapper"
@@ -189,7 +217,6 @@ export default class ImageViewer extends PureComponent<ImageViewerProps, ImageVi
             className="image"
             src={this.props.src}
             onLoad={this.handleImageLoad}
-
             ref={el => {this.image = el}}
             style={{
               transform: `translate(${x}px, ${y}px) scale(${zoom})`,

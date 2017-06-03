@@ -7,8 +7,13 @@ import deamon from './daemon'
 
 type Tasks = TaskItem[]
 
-export interface State {
+type Globals = {
+  activeId: string
+}
+
+export type State = {
   tasks: TaskItem[]
+  globals: Globals
 }
 
 const newOptimizeOptions: () => OptimizeOptions = () => ({
@@ -29,7 +34,7 @@ const updateTaskHelper = (tasks: Tasks, id: string, partial: Partial<TaskItem>) 
   ]
 }
 
-export const taskReducer: Reducer<Tasks> = handleActions<Tasks>({
+export const taskReducer = handleActions<Tasks>({
   [ACTIONS.TASK_ADD] (state, action: Action<ImageFile[]>) {
     return [
       ...state,
@@ -83,6 +88,18 @@ export const taskReducer: Reducer<Tasks> = handleActions<Tasks>({
   },
 }, [])
 
+export const globalsReducer = handleActions<Globals>({
+  [ACTIONS.TASK_DETAIL] (state, action: Action<string>) {
+    return {
+      ...state,
+      activeId: action.payload,
+    }
+  }
+}, {
+  activeId: null
+})
+
 export default combineReducers<State>({
   tasks: taskReducer,
+  globals: globalsReducer,
 })

@@ -43,7 +43,7 @@ class Controller {
       e.preventDefault()
     })
 
-    process.env.NODE_ENV !== 'production' && win.webContents.openDevTools()
+    process.env.NODE_ENV === 'development' && win.webContents.openDevTools()
 
     this.windows.push(id)
   }

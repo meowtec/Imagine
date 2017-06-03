@@ -24,15 +24,16 @@ class ActionBar extends React.PureComponent<ActionBarProps, {}> {
           <span>Add</span>
         </button>
 
+        <button>
+          <Icon name="down" />
+          <span>Save</span>
+        </button>
+
         <button onClick={this.props.onRemoveAll}>
           <Icon name="delete" />
           <span>Clear</span>
         </button>
 
-        <button>
-          <Icon name="down" />
-          <span>Save</span>
-        </button>
       </div>
     )
   }

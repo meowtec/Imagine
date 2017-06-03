@@ -29,7 +29,7 @@ export const sleep = (ms: number) => new Promise(resolve => {
   setTimeout(resolve, ms)
 })
 
-export const percent = (rate: number) => (rate * 100).toFixed(1) + '%'
+export const percent = (rate: number) => (rate * 100).toFixed(1)
 
 export const fixed = (number: number, digits: number) => Number(number.toFixed(digits))
 

@@ -10,6 +10,7 @@ export const ACTIONS = Enum(
   'TASK_OPTIMIZE_START',
   'TASK_OPTIMIZE_SUCCESS',
   'TASK_OPTIMIZE_FAIL',
+  'TASK_DETAIL',
 )
 
 export const actions = {
@@ -28,6 +29,8 @@ export const actions = {
     (ACTIONS.TASK_OPTIMIZE_SUCCESS, (id, optimized) => ({ id, optimized })),
 
   taskOptimizeFail: createAction<string>(ACTIONS.TASK_OPTIMIZE_FAIL),
+
+  taskDetail: createAction<string>(ACTIONS.TASK_DETAIL),
 }
 
 const z = createAction<string>('AA')

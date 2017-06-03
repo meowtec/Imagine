@@ -5,13 +5,17 @@ import Item from './TaskView'
 
 import './TaskList.less'
 
-interface TaskViewProps {
+export interface TaskViewProps {
   tasks: TaskItem[]
+}
+
+export interface TaskViewDispatchProps {
   onRemove(id: string): void
+  onClick(id: string): void
   onOptionsChange(id: string, options: OptimizeOptions): void
 }
 
-export default class TaskList extends PureComponent<TaskViewProps, void> {
+export default class TaskList extends PureComponent<TaskViewProps & TaskViewDispatchProps, void> {
   render () {
     if (this.props.tasks.length) {
       return (
@@ -19,6 +23,7 @@ export default class TaskList extends PureComponent<TaskViewProps, void> {
           {this.props.tasks.map(task => (
             <Item
               onRemove={this.props.onRemove}
+              onClick={this.props.onClick}
               onOptionsChange={this.props.onOptionsChange}
               key={task.image.id}
               task={task}
