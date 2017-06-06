@@ -11,6 +11,7 @@ declare module 'child-process-promise' {
   export declare function spawn(
     command: string,
     args?: string[],
-    options?: SpawnOptions & {capture?: string[]}): ChildProcessPromise
+    options?: SpawnOptions & {capture?: string[]}
+  ): ChildProcessPromise
   // TODO: export declare function exec
 }

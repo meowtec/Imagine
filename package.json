@@ -69,6 +69,7 @@
     "file-type": "^4.2.0",
     "fs-extra": "^3.0.0",
     "lodash": "^4.17.4",
+    "mozjpeg": "^4.1.1",
     "pify": "^3.0.0",
     "pngquant-bin": "^3.1.1",
     "raw-body": "^2.2.0",

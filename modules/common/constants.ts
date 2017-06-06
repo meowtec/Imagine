@@ -26,6 +26,7 @@ export interface ImageFile {
 
 export interface OptimizeOptions {
   color?: number
+  quality?: number
 }
 
 export interface TaskItem {
