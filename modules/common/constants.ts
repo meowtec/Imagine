@@ -20,7 +20,6 @@ export interface ImageFile {
   url: string
   size: number
   ext: string
-  color: number
   originalName: string
 }
 

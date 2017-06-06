@@ -3,7 +3,7 @@ import * as fs from 'fs-extra'
 import * as rawBody from 'raw-body'
 import { OptimizeOptions } from '../common/constants'
 
-export abstract class Optimizer {
+export default abstract class Optimizer {
   protected options: OptimizeOptions
 
   constructor (options: OptimizeOptions = {}) {
@@ -11,4 +11,8 @@ export abstract class Optimizer {
   }
 
   abstract io (input: string, output: string): Promise<any>
+}
+
+export type OptimizerConstructor = {
+  new (options: OptimizeOptions): Optimizer
 }

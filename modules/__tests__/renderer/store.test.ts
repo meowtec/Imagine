@@ -10,7 +10,6 @@ const image1 = {
   url: '01.png',
   size: 100,
   ext: 'png',
-  color: 64,
   originalName: 'file.png',
 }
 const image2 = {
@@ -18,7 +17,6 @@ const image2 = {
   url: '02.png',
   size: 101,
   ext: 'png',
-  color: 64,
   originalName: 'file.png',
 }
 
@@ -131,7 +129,6 @@ test('task success', () => {
     url: '02.png',
     size: 101,
     ext: 'png',
-    color: 8,
     originalName: 'file-result.png',
   }))
   store.dispatch(actions.taskOptimizeSuccess('notexist', {} as ImageFile))
@@ -155,7 +152,6 @@ test('task success', () => {
         url: '02.png',
         size: 101,
         ext: 'png',
-        color: 8,
         originalName: 'file-result.png',
       }
     }

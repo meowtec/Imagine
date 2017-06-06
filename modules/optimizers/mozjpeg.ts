@@ -6,7 +6,7 @@ import * as mozjpegBin from 'mozjpeg'
 import * as rawBody from 'raw-body'
 import log from 'electron-log'
 
-import { Optimizer } from './base'
+import Optimizer from './base'
 
 export default class PNGQuant extends Optimizer {
   io (input: string, output: string) {

@@ -39,7 +39,7 @@ export async function imageType (file: string | Buffer) {
 
 export const getFilePath = (image: ImageFile, options?: OptimizeOptions) => {
   if (options) {
-    return path.resolve(tmpdir, image.id + '_' + options.color + '.' + image.ext)
+    return path.resolve(tmpdir, image.id + '_' + md5(JSON.stringify(options)).slice(-6) + '.' + image.ext)
   } else {
     return path.resolve(tmpdir, image.id + '.' + image.ext)
   }
@@ -60,7 +60,6 @@ export const saveFilesTmp = (files: string[]) => {
       size,
       id,
       ext: type.ext,
-      color: null,
       originalName: 'TODO',
     }
 

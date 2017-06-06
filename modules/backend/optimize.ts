@@ -1,7 +1,9 @@
 import * as path from 'path'
 import { ImageFile, OptimizeOptions, SupportedExt } from '../common/constants'
 import * as fu from '../common/file-utils'
+import { OptimizerConstructor } from '../optimizers/base'
 import PNGQuant from '../optimizers/pngquant'
+import Mozjpeg from '../optimizers/mozjpeg'
 
 const optimize = async (image: ImageFile, options: OptimizeOptions): Promise<ImageFile> => {
   const isPNG = image.ext === SupportedExt.png
@@ -14,7 +16,6 @@ const optimize = async (image: ImageFile, options: OptimizeOptions): Promise<Ima
     id: image.id,
     ext: image.ext,
     url: 'file://' + destPath,
-    color: options.color,
     size: null,
     originalName: image.originalName,
   }
@@ -22,14 +23,19 @@ const optimize = async (image: ImageFile, options: OptimizeOptions): Promise<Ima
   try {
     dest.size = await fu.getSize(destPath)
   } catch (e) {
+    let Class: OptimizerConstructor
+
     if (isPNG) {
-      const optimizer = new PNGQuant(options)
-      await optimizer.io(sourcePath, destPath)
+      Class = PNGQuant
     }
 
     if (isJPEG) {
-      // TODO
+      Class = Mozjpeg
     }
+
+    const optimizer = new Class(options)
+
+    await optimizer.io(sourcePath, destPath)
 
     dest.size = await fu.getSize(destPath)
   }
