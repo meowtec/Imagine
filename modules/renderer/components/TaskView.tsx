@@ -22,15 +22,15 @@ class TaskView extends PureComponent<TaskViewProps, void> {
     e.preventDefault()
     e.stopPropagation()
 
-    this.props.onRemove(this.props.task.image.id)
+    this.props.onRemove(this.props.task.id)
   }
 
   handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    this.props.onClick(this.props.task.image.id)
+    this.props.onClick(this.props.task.id)
   }
 
   handleColorChange = (color: number) => {
-    this.props.onOptionsChange(this.props.task.image.id, {
+    this.props.onOptionsChange(this.props.task.id, {
       ...this.props.task.options,
       color,
     })

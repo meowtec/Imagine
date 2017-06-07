@@ -23,7 +23,7 @@ type AloneDispatchProps = {
 
 class Alone extends React.PureComponent<AloneProps & AloneDispatchProps, any> {
   handleColorChange = (color: number) => {
-    this.props.onOptionsChange(this.props.task.image.id, {
+    this.props.onOptionsChange(this.props.task.id, {
       ...this.props.task.options,
       color,
     })

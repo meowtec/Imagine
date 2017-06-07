@@ -29,6 +29,7 @@ export interface OptimizeOptions {
 }
 
 export interface TaskItem {
+  id: string
   image: ImageFile
   options: OptimizeOptions
   optimized?: ImageFile

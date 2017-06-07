@@ -37,13 +37,7 @@ export async function imageType (file: string | Buffer) {
   return fileType(file)
 }
 
-export const getFilePath = (image: ImageFile, options?: OptimizeOptions) => {
-  if (options) {
-    return path.resolve(tmpdir, image.id + '_' + md5(JSON.stringify(options)).slice(-6) + '.' + image.ext)
-  } else {
-    return path.resolve(tmpdir, image.id + '.' + image.ext)
-  }
-}
+export const getFilePath = (image: ImageFile) => path.resolve(tmpdir, image.id + '.' + image.ext)
 
 export const saveFilesTmp = (files: string[]) => {
   return Promise.all(files.map(async file => {

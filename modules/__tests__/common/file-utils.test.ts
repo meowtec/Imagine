@@ -28,25 +28,14 @@ test('getSize', async () => {
 })
 
 test('getFilePath', async () => {
-  const size1 = await getFilePath({
-    id: 'abcd',
-    url: '/',
-    size: 0,
-    ext: 'png',
-    originalName: '',
-  }, {
-    color: 3,
-  })
-  expect(size1).toMatch(/\/abcd_\w{6}.png$/)
-
-  const size2 = await getFilePath({
+  const size = await getFilePath({
     id: 'abcd',
     url: '/',
     size: 0,
     ext: 'png',
     originalName: '',
   })
-  expect(size2).toMatch(/\/abcd.png$/)
+  expect(size).toMatch(/\/abcd.png$/)
 })
 
 test('saveFilesTmp', async () => {

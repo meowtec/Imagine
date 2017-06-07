@@ -10,15 +10,19 @@ const optimize = async (image: ImageFile, options: OptimizeOptions): Promise<Ima
   const isJPEG = image.ext === SupportedExt.jpg
 
   const sourcePath = fu.getFilePath(image)
-  const destPath = fu.getFilePath(image, options)
+  const optimizedId = fu.md5(image.id + JSON.stringify(options))
 
   const dest: ImageFile = {
-    id: image.id,
+    id: optimizedId,
     ext: image.ext,
-    url: 'file://' + destPath,
+    url: null,
     size: null,
     originalName: image.originalName,
   }
+
+  const destPath = fu.getFilePath(dest)
+
+  dest.url = 'file://' + destPath
 
   try {
     dest.size = await fu.getSize(destPath)

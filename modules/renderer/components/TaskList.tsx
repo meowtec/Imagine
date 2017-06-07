@@ -25,7 +25,7 @@ export default class TaskList extends PureComponent<TaskViewProps & TaskViewDisp
               onRemove={this.props.onRemove}
               onClick={this.props.onClick}
               onOptionsChange={this.props.onOptionsChange}
-              key={task.image.id}
+              key={task.id}
               task={task}
             />
           ))}

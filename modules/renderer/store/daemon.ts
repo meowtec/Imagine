@@ -34,12 +34,12 @@ export default class Daemon {
       if (!task) break
 
       try {
-        store.dispatch(actions.taskOptimizeStart(task.image.id))
+        store.dispatch(actions.taskOptimizeStart(task.id))
         const optimized = await optimize(task)
-        store.dispatch(actions.taskOptimizeSuccess(task.image.id, optimized))
+        store.dispatch(actions.taskOptimizeSuccess(task.id, optimized))
       } catch (err) {
         console.error(err)
-        store.dispatch(actions.taskOptimizeFail(task.image.id))
+        store.dispatch(actions.taskOptimizeFail(task.id))
       }
     }
 

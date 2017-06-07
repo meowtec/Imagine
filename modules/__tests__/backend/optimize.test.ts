@@ -49,7 +49,7 @@ test('optimize jpg success', async () => {
     expectedImage: getFilePath(file),
   })
 
-  expect(diffResult.percentage).toBeLessThan(0.01)
+  expect(diffResult.percentage).toBeLessThan(0.1)
 })
 
 test('optimize jpg fail', async () => {

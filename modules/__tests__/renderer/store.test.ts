@@ -33,6 +33,7 @@ test('task add', () => {
 
   expect(store.getState().tasks).toEqual([
     {
+      id: image1.id,
       image: image1,
       options: {
         color: 64,
@@ -40,6 +41,7 @@ test('task add', () => {
       status: TaskStatus.PENDING,
     },
     {
+      id: image2.id,
       image: image2,
       options: {
         color: 64,
@@ -57,6 +59,7 @@ test('task delete', () => {
 
   expect(store.getState().tasks).toEqual([
     {
+      id: image1.id,
       image: image1,
       options: {
         color: 64,
@@ -79,6 +82,7 @@ test('task update options', () => {
 
   expect(store.getState().tasks).toEqual([
       {
+        id: image1.id,
         image: image1,
         options: {
           color: 64,
@@ -86,6 +90,7 @@ test('task update options', () => {
         status: TaskStatus.PENDING,
       },
       {
+        id: image2.id,
         image: image2,
         options: {
           color: 8,
@@ -104,6 +109,7 @@ test('task start', () => {
 
   expect(store.getState().tasks).toEqual([
     {
+      id: image1.id,
       image: image1,
       options: {
         color: 64,
@@ -111,6 +117,7 @@ test('task start', () => {
       status: TaskStatus.PENDING,
     },
     {
+      id: image2.id,
       image: image2,
       options: {
         color: 64,
@@ -135,6 +142,7 @@ test('task success', () => {
 
   expect(store.getState().tasks).toEqual([
     {
+      id: image1.id,
       image: image1,
       options: {
         color: 64,
@@ -142,6 +150,7 @@ test('task success', () => {
       status: TaskStatus.PENDING,
     },
     {
+      id: image2.id,
       image: image2,
       options: {
         color: 64,
@@ -167,6 +176,7 @@ test('task fail', () => {
 
   expect(store.getState().tasks).toEqual([
     {
+      id: image1.id,
       image: image1,
       options: {
         color: 64,
@@ -174,6 +184,7 @@ test('task fail', () => {
       status: TaskStatus.PENDING,
     },
     {
+      id: image2.id,
       image: image2,
       options: {
         color: 64,

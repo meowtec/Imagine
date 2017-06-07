@@ -21,7 +21,7 @@ const newOptimizeOptions: () => OptimizeOptions = () => ({
 })
 
 const updateTaskHelper = (tasks: Tasks, id: string, partial: Partial<TaskItem>) => {
-  const index = tasks.findIndex(task => task.image.id === id)
+  const index = tasks.findIndex(task => task.id === id)
   if (index === -1) return tasks
 
   return [
@@ -39,8 +39,9 @@ export const taskReducer = handleActions<Tasks>({
     return [
       ...state,
       ...action.payload
-        .filter(image => !state.some(task => task.image.id === image.id))
+        .filter(image => !state.some(task => task.id === image.id))
         .map<TaskItem>(image => ({
+          id: image.id,
           image,
           options: newOptimizeOptions(),
           status: TaskStatus.PENDING,
@@ -49,7 +50,7 @@ export const taskReducer = handleActions<Tasks>({
   },
 
   [ACTIONS.TASK_DELETE] (state, action: Action<string[]>) {
-    return state.filter(task => !action.payload.some(id => id === task.image.id))
+    return state.filter(task => !action.payload.some(id => id === task.id))
   },
 
   [ACTIONS.TASK_CLEAR] (state, action: Action<void>) {
