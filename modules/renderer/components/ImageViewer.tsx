@@ -79,7 +79,7 @@ export default class ImageViewer extends PureComponent<ImageViewerProps, ImageVi
     const { naturalWidth, naturalHeight } = this.image
     const { clientWidth, clientHeight } = this.backdrop
 
-    return floorZoom(Math.min(clientWidth / naturalWidth, clientHeight / naturalHeight))
+    return floorZoom(Math.min(clientWidth / naturalWidth, clientHeight / naturalHeight) * 0.9)
   }
 
   handleImageLoad = () => {

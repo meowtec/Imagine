@@ -22,7 +22,7 @@ class Controller {
     const win = new BrowserWindow({
       width: 900,
       height: 600,
-      titleBarStyle: 'hidden',
+      // titleBarStyle: 'hidden',
       webPreferences: {
         webSecurity: false,
       },
