@@ -53,7 +53,7 @@ export const saveFilesTmp = (files: string[]) => {
       url: null,
       size,
       id,
-      ext: type.ext,
+      ext: type.ext as SupportedExt,
       originalName: 'TODO',
     }
 

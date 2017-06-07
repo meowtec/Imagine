@@ -17,7 +17,8 @@ export type State = {
 }
 
 const newOptimizeOptions: () => OptimizeOptions = () => ({
-  color: 64,
+  color: 128,
+  quality: 70,
 })
 
 const updateTaskHelper = (tasks: Tasks, id: string, partial: Partial<TaskItem>) => {

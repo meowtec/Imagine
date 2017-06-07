@@ -6,6 +6,7 @@ export default function SizeReduce ({ task }: { task: TaskItem }) {
   const { image, optimized } = task
   const beforeSize = _.size(image.size)
   const afterSize = optimized && _.size(optimized.size)
+  const percent = optimized && _.percent((image.size - optimized.size) / image.size)
 
   if (optimized) {
     return (
@@ -17,10 +18,8 @@ export default function SizeReduce ({ task }: { task: TaskItem }) {
         <span className="size-unit">{beforeSize[1]}</span>
         <span className="size-less">
           <span className="size-q">(</span>
-          -
-          <span className="size-number">{
-            _.percent((image.size - optimized.size) / image.size)
-          }</span>
+          { percent >= 0 ? '-' : '+' }
+          <span className="size-number">{ Math.abs(percent) }</span>
           <span className="size-unit">%</span>
           <span className="size-q">)</span>
         </span>

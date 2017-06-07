@@ -1,5 +1,7 @@
 export const coop = (min: number, max: number) => (num: number) => Math.min(max, Math.max(min, num))
 
+export const coop2 = (min: number, max: number, num: number) => Math.min(max, Math.max(min, num))
+
 export const randomId = () => Math.random().toString(36).slice(2)
 
 export const shallowCompare = <T>(a: T, b: T, keys?: (keyof T)[]) => {
@@ -29,7 +31,7 @@ export const sleep = (ms: number) => new Promise(resolve => {
   setTimeout(resolve, ms)
 })
 
-export const percent = (rate: number) => (rate * 100).toFixed(1)
+export const percent = (rate: number) => fixed((rate * 100), 1)
 
 export const fixed = (number: number, digits: number) => Number(number.toFixed(digits))
 

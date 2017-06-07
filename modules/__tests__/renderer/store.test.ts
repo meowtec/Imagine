@@ -36,7 +36,8 @@ test('task add', () => {
       id: image1.id,
       image: image1,
       options: {
-        color: 64,
+        color: 128,
+        quality: 70,
       },
       status: TaskStatus.PENDING,
     },
@@ -44,7 +45,8 @@ test('task add', () => {
       id: image2.id,
       image: image2,
       options: {
-        color: 64,
+        color: 128,
+        quality: 70,
       },
       status: TaskStatus.PENDING,
     }
@@ -62,7 +64,8 @@ test('task delete', () => {
       id: image1.id,
       image: image1,
       options: {
-        color: 64,
+        color: 128,
+        quality: 70,
       },
       status: TaskStatus.PENDING,
     }
@@ -85,7 +88,8 @@ test('task update options', () => {
         id: image1.id,
         image: image1,
         options: {
-          color: 64,
+          color: 128,
+          quality: 70,
         },
         status: TaskStatus.PENDING,
       },
@@ -112,7 +116,8 @@ test('task start', () => {
       id: image1.id,
       image: image1,
       options: {
-        color: 64,
+        color: 128,
+        quality: 70,
       },
       status: TaskStatus.PENDING,
     },
@@ -120,7 +125,8 @@ test('task start', () => {
       id: image2.id,
       image: image2,
       options: {
-        color: 64,
+        color: 128,
+        quality: 70,
       },
       status: TaskStatus.PROCESSING,
     }
@@ -145,7 +151,8 @@ test('task success', () => {
       id: image1.id,
       image: image1,
       options: {
-        color: 64,
+        color: 128,
+        quality: 70,
       },
       status: TaskStatus.PENDING,
     },
@@ -153,7 +160,8 @@ test('task success', () => {
       id: image2.id,
       image: image2,
       options: {
-        color: 64,
+        color: 128,
+        quality: 70,
       },
       status: TaskStatus.DONE,
       optimized: {
@@ -179,7 +187,8 @@ test('task fail', () => {
       id: image1.id,
       image: image1,
       options: {
-        color: 64,
+        color: 128,
+        quality: 70,
       },
       status: TaskStatus.PENDING,
     },
@@ -187,7 +196,8 @@ test('task fail', () => {
       id: image2.id,
       image: image2,
       options: {
-        color: 64,
+        color: 128,
+        quality: 70,
       },
       status: TaskStatus.FAIL,
       optimized: null,

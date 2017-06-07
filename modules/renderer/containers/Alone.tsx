@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
-import ColorNumber from '../components/ColorNumber'
+import ImageOptions from '../components/ImageOptions'
 import ImageViewer from '../components/ImageViewer'
 import Modal from '../components/Modal'
 import Icon from '../components/Icon'
@@ -22,11 +22,8 @@ type AloneDispatchProps = {
 }
 
 class Alone extends React.PureComponent<AloneProps & AloneDispatchProps, any> {
-  handleColorChange = (color: number) => {
-    this.props.onOptionsChange(this.props.task.id, {
-      ...this.props.task.options,
-      color,
-    })
+  handleOptionsChange = (options: OptimizeOptions) => {
+    this.props.onOptionsChange(this.props.task.id, options)
   }
 
   render () {
@@ -45,7 +42,7 @@ class Alone extends React.PureComponent<AloneProps & AloneDispatchProps, any> {
               }
               <SizeReduce task={task} />
               <div className="paper alone-options">
-                <ColorNumber value={task.options.color} onChange={this.handleColorChange} />
+                <ImageOptions ext={task.image.ext} options={task.options} onChange={this.handleOptionsChange} />
               </div>
             </div>
           ) : null

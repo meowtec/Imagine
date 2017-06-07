@@ -2,21 +2,21 @@ import * as React from 'react'
 import { range } from 'lodash'
 import Ranger from './Ranger'
 
-interface CorlorNumberProps {
+interface QualityProps {
   value: number
   inputReadOnly?: boolean
   onChange (value: number): void
 }
 
-const transformInput = (value: number) => Math.log2(value)
+const transformInput = (value: number) => value / 10
 
-const transformOutput =  (value: number) => Math.pow(2, value)
+const transformOutput =  (value: number) => value * 10
 
-export default function CorlorNumber (props: CorlorNumberProps) {
+export default function Quality (props: QualityProps) {
   return (
     <Ranger
-      min={2}
-      max={256}
+      min={10}
+      max={100}
       value={props.value}
       onChange={props.onChange}
       transformInput={transformInput}

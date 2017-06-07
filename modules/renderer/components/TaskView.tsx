@@ -3,7 +3,7 @@ import { PureComponent } from 'react'
 import * as classnames from 'classnames'
 import Select from './Select'
 import Icon from './Icon'
-import ColorNumber from './ColorNumber'
+import ImageOptions from './ImageOptions'
 import SizeReduce from './SizeReduce'
 import { TaskItem, TaskStatus, OptimizeOptions } from '../../common/constants'
 import * as _ from '../../common/utils'
@@ -29,15 +29,12 @@ class TaskView extends PureComponent<TaskViewProps, void> {
     this.props.onClick(this.props.task.id)
   }
 
-  handleColorChange = (color: number) => {
-    this.props.onOptionsChange(this.props.task.id, {
-      ...this.props.task.options,
-      color,
-    })
+  handleOptionsChange = (options: OptimizeOptions) => {
+    this.props.onOptionsChange(this.props.task.id, options)
   }
 
   render () {
-    const { task } = this.props
+    const { task, onOptionsChange } = this.props
     const { image, optimized, options } = task
     const destImage = task.optimized || task.image
     const color = Math.pow(2, Math.round(Math.log2(options.color)))
@@ -62,7 +59,7 @@ class TaskView extends PureComponent<TaskViewProps, void> {
         </div>
         <div className="image-profile">
           <div className="image-options">
-            <ColorNumber inputReadOnly={true} value={color} onChange={this.handleColorChange} />
+            <ImageOptions ext={image.ext} options={options} onChange={this.handleOptionsChange} />
           </div>
           <div className="image-sizes">
             <SizeReduce task={task} />

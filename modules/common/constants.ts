@@ -19,7 +19,7 @@ export interface ImageFile {
   id: string
   url: string
   size: number
-  ext: string
+  ext: SupportedExt
   originalName: string
 }
 

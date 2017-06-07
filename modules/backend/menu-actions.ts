@@ -13,7 +13,7 @@ export const open = () => {
       name: 'Images',
       extensions: [
         // TODO:
-        // 'jpg',
+        'jpg',
         'png',
       ]
     }],
