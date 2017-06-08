@@ -52,7 +52,7 @@ class Alone extends React.PureComponent<AloneProps & AloneDispatchProps, any> {
   }
 }
 
-export default connect<AloneProps, AloneDispatchProps, {}>((state) => ({
+export default connect<AloneProps, AloneDispatchProps, {}>(state => ({
   task: state.globals.activeId && getTaskById(state.tasks, state.globals.activeId)
 }), dispatch => ({
   onClose () {

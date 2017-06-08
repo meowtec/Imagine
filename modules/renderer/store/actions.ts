@@ -18,7 +18,7 @@ export const actions = {
 
   taskDelete: createAction<string[]>(ACTIONS.TASK_DELETE),
 
-  taskClear: createAction<void>(ACTIONS.TASK_CLEAR),
+  taskClear: createAction(ACTIONS.TASK_CLEAR),
 
   taskUpdateOptions: createAction<{ id: string, options: OptimizeOptions }, string, OptimizeOptions>
     (ACTIONS.TASK_UPDATE_OPTIONS, (id, options) => ({ id, options })),
@@ -32,7 +32,3 @@ export const actions = {
 
   taskDetail: createAction<string>(ACTIONS.TASK_DETAIL),
 }
-
-const z = createAction<string>('AA')
-const k = createAction('ZZZ')
-const kk = k()

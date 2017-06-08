@@ -16,5 +16,5 @@ export default connect<TaskViewProps, TaskViewDispatchProps, {}>((state: State) 
   },
   onClick (id: string) {
     dispatch(actions.taskDetail(id))
-  }
+  },
 }))(TaskList)

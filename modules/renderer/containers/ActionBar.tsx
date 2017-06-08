@@ -7,8 +7,8 @@ import { IpcChannel } from '../../common/constants'
 
 import './ActionBar.less'
 
-interface ActionBarProps {
-  onRemoveAll(): void
+type ActionBarProps = {
+  onRemoveAll (): void
 }
 
 class ActionBar extends React.PureComponent<ActionBarProps, {}> {
@@ -33,7 +33,6 @@ class ActionBar extends React.PureComponent<ActionBarProps, {}> {
           <Icon name="delete" />
           <span>Clear</span>
         </button>
-
       </div>
     )
   }
@@ -42,5 +41,5 @@ class ActionBar extends React.PureComponent<ActionBarProps, {}> {
 export default connect(null, dispatch => ({
   onRemoveAll () {
     dispatch(actions.taskClear())
-  }
-}))(ActionBar)
+  },
+}))(ActionBar) as React.ComponentClass<{}>

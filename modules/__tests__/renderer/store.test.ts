@@ -3,16 +3,16 @@ import { createStore } from 'redux'
 import reducer from '../../renderer/store/reducer'
 import { actions } from '../../renderer/store/actions'
 import controller from '../../backend/controller'
-import { ImageFile, OptimizeOptions, TaskItem, TaskStatus } from '../../common/constants'
+import { ImageFile, OptimizeOptions, TaskItem, TaskStatus, SupportedExt } from '../../common/constants'
 
-const image1 = {
+const image1: ImageFile = {
   id: '01',
   url: '01.png',
   size: 100,
   ext: 'png',
   originalName: 'file.png',
 }
-const image2 = {
+const image2: ImageFile = {
   id: '02',
   url: '02.png',
   size: 101,
