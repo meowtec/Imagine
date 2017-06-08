@@ -1,7 +1,9 @@
 import * as React from 'react'
 import { PureComponent, SyntheticEvent } from 'react'
+import * as classnames from 'classnames'
 import { consumWheelEvent, eventOffset } from '../utils/dom-event'
 import { coop } from '../../common/utils'
+import RadioGroup from './RadioGroup'
 import Icon from './Icon'
 
 import './ImageViewer.less'
@@ -20,6 +22,7 @@ interface ImageViewerState {
   y: number
   zoomCenterOffsetX: number
   zoomCenterOffsetY: number
+  material: string
 }
 
 const ZOOM_MIN = 0.125
@@ -34,6 +37,16 @@ const roundZoom = (zoom: number) => {
 const floorZoom = (zoom: number) => {
   return Math.pow(2, Math.floor(Math.log2(zoom)))
 }
+
+const materials = [
+  'transparent',
+  'white',
+  'black',
+  'red',
+  // 'green',
+  'blue',
+  'yellow',
+]
 
 export default class ImageViewer extends PureComponent<ImageViewerProps, ImageViewerState> {
 
@@ -54,6 +67,7 @@ export default class ImageViewer extends PureComponent<ImageViewerProps, ImageVi
       y: 0,
       zoomCenterOffsetX: 0,
       zoomCenterOffsetY: 0,
+      material: materials[0],
     }
   }
 
@@ -187,6 +201,16 @@ export default class ImageViewer extends PureComponent<ImageViewerProps, ImageVi
     })
   }
 
+  handleMaterialChange = (value: string) => {
+    this.setState({
+      material: value,
+    })
+  }
+
+  renderMaterialItem (material: string) {
+    return <div className={classnames('material-cube', '-' + material)} />
+  }
+
   render () {
     const {
       zoom,
@@ -194,6 +218,7 @@ export default class ImageViewer extends PureComponent<ImageViewerProps, ImageVi
       y,
       zoomCenterOffsetX,
       zoomCenterOffsetY,
+      material,
     } = this.state
 
     const { width, height } = this.imageSize()
@@ -209,6 +234,7 @@ export default class ImageViewer extends PureComponent<ImageViewerProps, ImageVi
         onWheel={this.handleWheel}
         ref={el => {this.backdrop = el}}
       >
+        <div className={classnames('material-wall', '-' + material)}></div>
         <div
           className="image-wrapper"
           onMouseDown={this.handleMouseDown}
@@ -232,6 +258,14 @@ export default class ImageViewer extends PureComponent<ImageViewerProps, ImageVi
           <button className="paper" onClick={this.handleZoomOut} disabled={zoom >= ZOOM_MAX}>+</button>
           <button className="paper" onClick={this.handleZoomIn} disabled={zoom <= ZOOM_MIN}>-</button>
         </div>
+
+        <RadioGroup
+          className="material-list"
+          data={materials}
+          value={material}
+          renderItem={this.renderMaterialItem}
+          onChange={this.handleMaterialChange}
+        ></RadioGroup>
       </div>
     )
   }

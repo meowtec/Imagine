@@ -1,9 +1,71 @@
 .backdrop {
   position: relative;
-  background: url(../images/opacity.png);
-  background-size: image-size('../images/opacity.png');
   image-rendering: pixelated;
   overflow: hidden;
+
+  .material-wall {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .material-wall,
+  .material-cube {
+    &.-transparent {
+      background-image: url(../images/opacity.png);
+      image-rendering: pixelated;
+    }
+
+    &.-white {
+      background: white;
+    }
+
+    &.-black {
+      background: black;
+    }
+
+    &.-blue {
+      background: #96CEB4;
+    }
+
+    &.-red {
+      background: #FF6F69;
+    }
+
+    &.-yellow {
+      background: #FFEEAD;
+    }
+  }
+
+  .material-list {
+    position: absolute;
+    left: 10px;
+    bottom: 50px;
+
+    .radio-item {
+      cursor: pointer;
+      position: relative;
+      border: 2px solid #333;
+      margin-top: -2px;
+
+      &.-checked {
+        border-color: #0c9;
+        outline: 1px solid #0c9;
+        z-index: 1;
+      }
+    }
+  }
+
+  .material-cube {
+    width: 40px;
+    height: 40px;
+
+    &.-transparent {
+      background-size: 300%;
+    }
+  }
 
   .image-wrapper {
     position: absolute;
