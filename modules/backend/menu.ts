@@ -4,10 +4,10 @@ import * as menuActions from './menu-actions'
 export default function installMenu() {
   const menu = Menu.buildFromTemplate([
     {
-      label: 'PQ',
+      label: 'Imagine',
       submenu: [
         {
-          label: 'About PQ',
+          label: 'About Imagine',
           click: menuActions.about,
         },
         {
