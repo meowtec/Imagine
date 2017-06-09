@@ -6,14 +6,14 @@ import Icon from './Icon'
 
 import './Modal.less'
 
-interface ModalProps {
+interface IModalProps {
   visible: boolean
   className?: string
   onClose?(): void
 }
 
-export default class Modal extends React.PureComponent<ModalProps, {}> {
-  render () {
+export default class Modal extends React.PureComponent<IModalProps, {}> {
+  render() {
     return (
       <Root className={classnames('modal-container', this.props.className)}>
         <CSSTransitionGroup

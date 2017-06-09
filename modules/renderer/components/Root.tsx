@@ -4,23 +4,23 @@ import * as ReactDOM from 'react-dom'
 export default class Layer extends React.PureComponent<any, {}> {
   root: HTMLDivElement
 
-  componentDidMount () {
+  componentDidMount() {
     const div = document.createElement('div')
     document.body.appendChild(div)
     this.root = div
     this.renderInBody()
   }
 
-  componentDidUpdate () {
+  componentDidUpdate() {
     this.renderInBody()
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     ReactDOM.unmountComponentAtNode(this.root)
     document.body.removeChild(this.root)
   }
 
-  renderInBody () {
+  renderInBody() {
     const { props } = this
 
     ReactDOM.render((
@@ -28,8 +28,7 @@ export default class Layer extends React.PureComponent<any, {}> {
     ), this.root)
   }
 
-  render (): any {
+  render(): any {
     return null
   }
 }
-

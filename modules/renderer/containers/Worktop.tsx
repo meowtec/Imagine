@@ -2,19 +2,19 @@ import * as React from 'react'
 import CorlorNumber from '../components/ColorNumber'
 import { bindActionCreators } from 'redux'
 import { connect, Dispatch } from 'react-redux'
-import { State } from '../store/reducer'
+import { IState } from '../store/reducer'
 import { actions } from '../store/actions'
 import './Worktop.less'
 
-interface WorktopProps {
+interface IWorktopProps {
   totalSize: number
   optimizedSize: number
   color: number
   updateColor(value: number): void
 }
 
-class Worktop extends React.PureComponent<WorktopProps, any> {
-  render () {
+class Worktop extends React.PureComponent<IWorktopProps, any> {
+  render() {
     const { optimizedSize, totalSize } = this.props
 
     return (

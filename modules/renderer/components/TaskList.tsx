@@ -5,18 +5,18 @@ import Item from './TaskView'
 
 import './TaskList.less'
 
-export interface TaskViewProps {
+export interface ITaskViewProps {
   tasks: ITaskItem[]
 }
 
-export interface TaskViewDispatchProps {
+export interface ITaskViewDispatchProps {
   onRemove(id: string): void
   onClick(id: string): void
   onOptionsChange(id: string, options: IOptimizeOptions): void
 }
 
-export default class TaskList extends PureComponent<TaskViewProps & TaskViewDispatchProps, void> {
-  render () {
+export default class TaskList extends PureComponent<ITaskViewProps & ITaskViewDispatchProps, void> {
+  render() {
     if (this.props.tasks.length) {
       return (
         <div className="task-list">

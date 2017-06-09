@@ -7,13 +7,13 @@ import deamon from './daemon'
 
 type Tasks = ITaskItem[]
 
-type Globals = {
+interface IGlobals {
   activeId: string
 }
 
-export type State = {
+export interface IState {
   tasks: ITaskItem[]
-  globals: Globals
+  globals: IGlobals
 }
 
 const newIOptimizeOptions: () => IOptimizeOptions = () => ({
@@ -36,7 +36,7 @@ const updateTaskHelper = (tasks: Tasks, id: string, partial: Partial<ITaskItem>)
 }
 
 export const taskReducer = handleActions<Tasks>({
-  [ACTIONS.TASK_ADD] (state, action: Action<IImageFile[]>) {
+  [ACTIONS.TASK_ADD](state, action: Action<IImageFile[]>) {
     return [
       ...state,
       ...action.payload
@@ -46,19 +46,19 @@ export const taskReducer = handleActions<Tasks>({
           image,
           options: newIOptimizeOptions(),
           status: TaskStatus.PENDING,
-        }))
+        })),
     ]
   },
 
-  [ACTIONS.TASK_DELETE] (state, action: Action<string[]>) {
+  [ACTIONS.TASK_DELETE](state, action: Action<string[]>) {
     return state.filter(task => !action.payload.some(id => id === task.id))
   },
 
-  [ACTIONS.TASK_CLEAR] (state, action: Action<void>) {
+  [ACTIONS.TASK_CLEAR](state, action: Action<void>) {
     return []
   },
 
-  [ACTIONS.TASK_UPDATE_OPTIONS] (state, action: Action<{ id: string, options: IOptimizeOptions }>) {
+  [ACTIONS.TASK_UPDATE_OPTIONS](state, action: Action<{ id: string, options: IOptimizeOptions }>) {
     const { id, options } = action.payload
     return updateTaskHelper(state, id, {
       options,
@@ -66,14 +66,14 @@ export const taskReducer = handleActions<Tasks>({
     })
   },
 
-  [ACTIONS.TASK_OPTIMIZE_START] (state, action: Action<string>) {
+  [ACTIONS.TASK_OPTIMIZE_START](state, action: Action<string>) {
     const id = action.payload
     return updateTaskHelper(state, id, {
       status: TaskStatus.PROCESSING,
     })
   },
 
-  [ACTIONS.TASK_OPTIMIZE_SUCCESS] (state, action: Action<{ id: string, optimized: IImageFile }>) {
+  [ACTIONS.TASK_OPTIMIZE_SUCCESS](state, action: Action<{ id: string, optimized: IImageFile }>) {
     const { id, optimized } = action.payload
     return updateTaskHelper(state, id, {
       optimized,
@@ -81,7 +81,7 @@ export const taskReducer = handleActions<Tasks>({
     })
   },
 
-  [ACTIONS.TASK_OPTIMIZE_FAIL] (state, action: Action<string>) {
+  [ACTIONS.TASK_OPTIMIZE_FAIL](state, action: Action<string>) {
     const id = action.payload
     return updateTaskHelper(state, id, {
       status: TaskStatus.FAIL,
@@ -90,18 +90,18 @@ export const taskReducer = handleActions<Tasks>({
   },
 }, [])
 
-export const globalsReducer = handleActions<Globals>({
-  [ACTIONS.TASK_DETAIL] (state, action: Action<string>) {
+export const globalsReducer = handleActions<IGlobals>({
+  [ACTIONS.TASK_DETAIL](state, action: Action<string>) {
     return {
       ...state,
       activeId: action.payload,
     }
-  }
+  },
 }, {
-  activeId: null
+  activeId: null,
 })
 
-export default combineReducers<State>({
+export default combineReducers<IState>({
   tasks: taskReducer,
   globals: globalsReducer,
 })

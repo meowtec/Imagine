@@ -6,27 +6,27 @@ import Modal from '../components/Modal'
 import Icon from '../components/Icon'
 import SizeReduce from '../components/SizeReduce'
 import { actions } from '../store/actions'
-import { State } from '../store/reducer'
+import { IState } from '../store/reducer'
 import { getTaskById } from '../store/filter'
 import { ITaskItem, IOptimizeOptions, TaskStatus } from '../../common/constants'
 
 import './Alone.less'
 
-type AloneProps = {
+interface IAloneProps {
   task: ITaskItem
 }
 
-type AloneDispatchProps = {
-  onClose (): void
-  onOptionsChange (id: string, options: IOptimizeOptions): void
+interface IAloneDispatchProps {
+  onClose(): void
+  onOptionsChange(id: string, options: IOptimizeOptions): void
 }
 
-class Alone extends React.PureComponent<AloneProps & AloneDispatchProps, any> {
+class Alone extends React.PureComponent<IAloneProps & IAloneDispatchProps, any> {
   handleOptionsChange = (options: IOptimizeOptions) => {
     this.props.onOptionsChange(this.props.task.id, options)
   }
 
-  render () {
+  render() {
     const { task } = this.props
     const image = task && (task.optimized || task.image)
 
@@ -52,13 +52,13 @@ class Alone extends React.PureComponent<AloneProps & AloneDispatchProps, any> {
   }
 }
 
-export default connect<AloneProps, AloneDispatchProps, {}>(state => ({
-  task: state.globals.activeId && getTaskById(state.tasks, state.globals.activeId)
+export default connect<IAloneProps, IAloneDispatchProps, {}>(state => ({
+  task: state.globals.activeId && getTaskById(state.tasks, state.globals.activeId),
 }), dispatch => ({
-  onClose () {
+  onClose() {
     dispatch(actions.taskDetail(null))
   },
-  onOptionsChange (id: string, options: IOptimizeOptions) {
+  onOptionsChange(id: string, options: IOptimizeOptions) {
     dispatch(actions.taskUpdateOptions(id, options))
-  }
+  },
 }))(Alone)

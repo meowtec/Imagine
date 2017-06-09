@@ -1,21 +1,21 @@
 import * as React from 'react'
 import * as classnames from 'classnames'
 
-type RadioGroupProps = {
+interface IRadioGroupProps {
   value: any
   data: any[]
-  onChange (value: any): void
-  renderItem? (value: any): React.ReactNode
-  itemValue? (value: any): any
+  onChange(value: any): void
+  renderItem?(value: any): React.ReactNode
+  itemValue?(value: any): any
   className?: string
 }
 
-export default class RadioGroup<T> extends React.PureComponent<RadioGroupProps, {}> {
+export default class RadioGroup<T> extends React.PureComponent<IRadioGroupProps, {}> {
   handleClick = (value: any) => {
     this.props.onChange(value)
   }
 
-  render () {
+  render() {
     const { renderItem, itemValue, className } = this.props
 
     return (
@@ -42,12 +42,12 @@ export default class RadioGroup<T> extends React.PureComponent<RadioGroupProps, 
   }
 
   static defaultProps = {
-    renderItem (item: any) {
+    renderItem(item: any) {
       return item
     },
 
-    itemValue (item: any) {
+    itemValue(item: any) {
       return item
-    }
+    },
   }
 }

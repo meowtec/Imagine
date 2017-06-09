@@ -2,29 +2,29 @@ import { Store } from 'redux'
 import optimize from '../apis/optimize'
 import { TaskStatus } from '../../common/constants'
 import { actions } from './actions'
-import { State } from './reducer'
+import { IState } from './reducer'
 import { debounce } from 'lodash'
 
 export default class Daemon {
   private running = false
-  private store: Store<State>
+  private store: Store<IState>
 
   trigger = debounce(() => {
     if (this.running) return
     this.start()
   }, 100)
 
-  watch (store: Store<State>) {
+  watch(store: Store<IState>) {
     this.store = store
     store.subscribe(() => this.trigger())
   }
 
-  private pickPendingTask () {
+  private pickPendingTask() {
     const state = this.store.getState()
     return state.tasks.find(task => task.status === TaskStatus.PENDING)
   }
 
-  private async start () {
+  private async start() {
     this.running = true
     const { store } = this
 

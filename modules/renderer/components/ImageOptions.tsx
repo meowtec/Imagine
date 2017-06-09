@@ -3,10 +3,10 @@ import { SupportedExt, IOptimizeOptions } from '../../common/constants'
 import ColorNumber from './ColorNumber'
 import Quality from './Quality'
 
-type ImageOptionsProps = {
+interface ImageOptionsProps {
   ext: SupportedExt
   options: IOptimizeOptions
-  onChange (options: IOptimizeOptions): void
+  onChange(options: IOptimizeOptions): void
 }
 
 export default class ImageOptions extends React.PureComponent<ImageOptionsProps, {}> {
@@ -25,7 +25,7 @@ export default class ImageOptions extends React.PureComponent<ImageOptionsProps,
     })
   }
 
-  renderPNG () {
+  renderPNG() {
     return (
       <div className="image-options">
         <ColorNumber value={this.props.options.color} onChange={this.handleColorChange} />
@@ -33,7 +33,7 @@ export default class ImageOptions extends React.PureComponent<ImageOptionsProps,
     )
   }
 
-  renderJPG () {
+  renderJPG() {
     return (
       <div className="image-options">
         <Quality value={this.props.options.quality} onChange={this.handleQualityChange} />
@@ -41,7 +41,7 @@ export default class ImageOptions extends React.PureComponent<ImageOptionsProps,
     )
   }
 
-  render () {
+  render() {
     const { ext } = this.props
 
     switch (ext) {

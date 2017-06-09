@@ -20,6 +20,7 @@ export default Icon
 /**
  * require all symbols/*.svg
  */
-;(require as any).context('../images/symbols/', false).keys().map((file: string) => {
+;
+(require as any).context('../images/symbols/', false).keys().map((file: string) => {
   return require('../images/symbols/' + file.slice(2))
 })

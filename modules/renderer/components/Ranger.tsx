@@ -4,20 +4,20 @@ import * as _ from '../../common/utils'
 
 import './Ranger.less'
 
-interface RangerProps {
+interface IRangerProps {
   value: number
   max: number
   min: number
   inputReadOnly?: boolean
-  transformInput? (value: number): number
-  transformOutput? (value: number): number
-  onChange (value: number): void
+  transformInput?(value: number): number
+  transformOutput?(value: number): number
+  onChange(value: number): void
 }
 
 const pass = (x: any) => x
 
-export default class Ranger extends React.PureComponent<RangerProps, any> {
-  fixValue (value: number) {
+export default class Ranger extends React.PureComponent<IRangerProps, any> {
+  fixValue(value: number) {
     const { max, min } = this.props
 
     return _.coop2(min, max, value)
@@ -35,7 +35,7 @@ export default class Ranger extends React.PureComponent<RangerProps, any> {
     this.props.onChange(this.fixValue(~~e.target.value))
   }
 
-  render () {
+  render() {
     const { min, max, value, transformInput, transformOutput } = this.props
     const nativeValue = transformInput(value)
 

@@ -1,14 +1,14 @@
 import { WheelEvent, SyntheticEvent } from 'react'
 
-interface WheelData {
+interface IWheelData {
   type: 'zoom' | 'move'
   zoom: number
   x: number
   y: number
 }
 
-export function consumWheelEvent (wheelEvent: WheelEvent<any>): WheelData {
-  const wheelData: WheelData = {
+export function consumWheelEvent(wheelEvent: WheelEvent<any>): IWheelData {
+  const wheelData: IWheelData = {
     type: 'zoom',
     zoom: 1,
     x: 0,
@@ -29,8 +29,7 @@ export function consumWheelEvent (wheelEvent: WheelEvent<any>): WheelData {
   return wheelData
 }
 
-
-export function eventOffset (e: MouseEvent, el: HTMLElement) {
+export function eventOffset(e: MouseEvent, el: HTMLElement) {
   const bounds = el.getBoundingClientRect()
   return {
     x: e.clientX - bounds.left,
@@ -38,6 +37,6 @@ export function eventOffset (e: MouseEvent, el: HTMLElement) {
   }
 }
 
-export function prevent (e: SyntheticEvent<any>) {
+export function prevent(e: SyntheticEvent<any>) {
   e.preventDefault()
 }

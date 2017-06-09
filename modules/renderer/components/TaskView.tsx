@@ -10,14 +10,14 @@ import * as _ from '../../common/utils'
 
 import './TaskView.less'
 
-interface TaskViewProps {
+interface ITaskViewProps {
   task: ITaskItem
   onRemove(id: string): void
   onClick(id: string): void
   onOptionsChange(id: string, options: IOptimizeOptions): void
 }
 
-class TaskView extends PureComponent<TaskViewProps, void> {
+class TaskView extends PureComponent<ITaskViewProps, void> {
   handleClear = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault()
     e.stopPropagation()
@@ -33,7 +33,7 @@ class TaskView extends PureComponent<TaskViewProps, void> {
     this.props.onOptionsChange(this.props.task.id, options)
   }
 
-  render () {
+  render() {
     const { task, onOptionsChange } = this.props
     const { image, optimized, options } = task
     const destImage = task.optimized || task.image

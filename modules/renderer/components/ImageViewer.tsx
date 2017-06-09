@@ -56,7 +56,7 @@ export default class ImageViewer extends PureComponent<ImageViewerProps, ImageVi
   prevScreenY: number
   dragging = false
 
-  constructor () {
+  constructor() {
     super()
 
     this.state = {
@@ -71,12 +71,12 @@ export default class ImageViewer extends PureComponent<ImageViewerProps, ImageVi
     }
   }
 
-  componentDidMount () {
+  componentDidMount() {
     document.addEventListener('mousemove', this.handleMouseMove)
     document.addEventListener('mouseup', this.handleMouseUp)
   }
 
-  private imageSize () {
+  private imageSize() {
     let { width, height } = this.props
     if (!(width && height)) {
       width = this.state.imageNaturalWidth
@@ -89,7 +89,7 @@ export default class ImageViewer extends PureComponent<ImageViewerProps, ImageVi
     }
   }
 
-  private initialZoom () {
+  private initialZoom() {
     const { naturalWidth, naturalHeight } = this.image
     const { clientWidth, clientHeight } = this.backdrop
 
@@ -142,8 +142,12 @@ export default class ImageViewer extends PureComponent<ImageViewerProps, ImageVi
       const mousePosition = eventOffset(e.nativeEvent, target)
 
       const zoom = zoomCoop(state.zoom * wheelData.zoom)
-      const zoomCenterOffsetX = (mousePosition.x - target.clientWidth / 2 - state.x - state.zoomCenterOffsetX) / state.zoom + state.zoomCenterOffsetX
-      const zoomCenterOffsetY = (mousePosition.y - target.clientHeight / 2 - state.y - state.zoomCenterOffsetY) / state.zoom + state.zoomCenterOffsetY
+      const zoomCenterOffsetX = (
+        mousePosition.x - target.clientWidth / 2 - state.x - state.zoomCenterOffsetX
+      ) / state.zoom + state.zoomCenterOffsetX
+      const zoomCenterOffsetY = (
+        mousePosition.y - target.clientHeight / 2 - state.y - state.zoomCenterOffsetY
+      ) / state.zoom + state.zoomCenterOffsetY
       const x = state.x - (zoomCenterOffsetX - state.zoomCenterOffsetX) * (1 - state.zoom)
       const y = state.y - (zoomCenterOffsetY - state.zoomCenterOffsetY) * (1 - state.zoom)
 
@@ -207,11 +211,11 @@ export default class ImageViewer extends PureComponent<ImageViewerProps, ImageVi
     })
   }
 
-  renderMaterialItem (material: string) {
+  renderMaterialItem(material: string) {
     return <div className={classnames('material-cube', '-' + material)} />
   }
 
-  render () {
+  render() {
     const {
       zoom,
       x,

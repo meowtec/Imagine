@@ -49,7 +49,7 @@ test('task add', () => {
         quality: 70,
       },
       status: TaskStatus.PENDING,
-    }
+    },
   ])
 })
 
@@ -68,7 +68,7 @@ test('task delete', () => {
         quality: 70,
       },
       status: TaskStatus.PENDING,
-    }
+    },
   ])
 })
 
@@ -100,7 +100,7 @@ test('task update options', () => {
           color: 8,
         },
         status: TaskStatus.PENDING,
-      }
+      },
     ])
 })
 
@@ -129,7 +129,7 @@ test('task start', () => {
         quality: 70,
       },
       status: TaskStatus.PROCESSING,
-    }
+    },
   ])
 })
 
@@ -170,8 +170,8 @@ test('task success', () => {
         size: 101,
         ext: 'png',
         originalName: 'file-result.png',
-      }
-    }
+      },
+    },
   ])
 })
 
@@ -201,10 +201,9 @@ test('task fail', () => {
       },
       status: TaskStatus.FAIL,
       optimized: null,
-    }
+    },
   ])
 })
-
 
 test('globals', () => {
   const store = createStore(reducer)

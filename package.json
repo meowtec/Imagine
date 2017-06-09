@@ -4,7 +4,7 @@
   "description": "pngquant gui",
   "main": "./lib/bootstrap.js",
   "scripts": {
-    "lint": "tslint -t verbose modules/**/*.ts modules/**/*.tsx",
+    "lint": "tslint -t verbose -p .",
     "dev": "tsc && cross-env NODE_ENV=development electron .",
     "build": "tsc && cross-env NODE_ENV=production webpack",
     "start": "npm run build && electron .",

@@ -2,17 +2,17 @@ import * as React from 'react'
 import { range } from 'lodash'
 import Ranger from './Ranger'
 
-interface CorlorNumberProps {
+interface ICorlorNumberProps {
   value: number
   inputReadOnly?: boolean
-  onChange (value: number): void
+  onChange(value: number): void
 }
 
 const transformInput = (value: number) => Math.log2(value)
 
 const transformOutput =  (value: number) => Math.pow(2, value)
 
-export default function CorlorNumber (props: CorlorNumberProps) {
+export default function CorlorNumber(props: ICorlorNumberProps) {
   return (
     <Ranger
       min={2}

@@ -2,17 +2,17 @@ import * as React from 'react'
 import { range } from 'lodash'
 import Ranger from './Ranger'
 
-interface QualityProps {
+interface IQualityProps {
   value: number
   inputReadOnly?: boolean
-  onChange (value: number): void
+  onChange(value: number): void
 }
 
 const transformInput = (value: number) => value / 10
 
 const transformOutput =  (value: number) => value * 10
 
-export default function Quality (props: QualityProps) {
+export default function Quality(props: IQualityProps) {
   return (
     <Ranger
       min={10}

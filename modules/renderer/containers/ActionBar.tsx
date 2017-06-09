@@ -7,16 +7,16 @@ import { IpcChannel } from '../../common/constants'
 
 import './ActionBar.less'
 
-type ActionBarProps = {
-  onRemoveAll (): void
+interface IActionBarProps {
+  onRemoveAll(): void
 }
 
-class ActionBar extends React.PureComponent<ActionBarProps, {}> {
+class ActionBar extends React.PureComponent<IActionBarProps, {}> {
   handleAdd = () => {
     ipcRenderer.send(IpcChannel.FILE_SELECT)
   }
 
-  render () {
+  render() {
     return (
       <div className="action-bar">
         <button onClick={this.handleAdd}>
@@ -39,7 +39,7 @@ class ActionBar extends React.PureComponent<ActionBarProps, {}> {
 }
 
 export default connect(null, dispatch => ({
-  onRemoveAll () {
+  onRemoveAll() {
     dispatch(actions.taskClear())
   },
 }))(ActionBar) as React.ComponentClass<{}>

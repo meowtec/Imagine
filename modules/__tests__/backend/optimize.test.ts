@@ -38,7 +38,6 @@ test('optimize png fail', async () => {
   }
 })
 
-
 test('optimize jpg success', async () => {
   const files = await saveFilesTmp([relPath(jpg)])
   const file = files[0]

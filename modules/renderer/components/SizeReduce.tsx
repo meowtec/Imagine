@@ -2,7 +2,7 @@ import * as React from 'react'
 import { ITaskItem } from '../../common/constants'
 import * as _ from '../../common/utils'
 
-export default function SizeReduce ({ task }: { task: ITaskItem }) {
+export default function SizeReduce({ task }: { task: ITaskItem }) {
   const { image, optimized } = task
   const beforeSize = _.size(image.size)
   const afterSize = optimized && _.size(optimized.size)

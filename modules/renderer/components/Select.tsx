@@ -3,12 +3,12 @@ import Icon from './Icon'
 
 import './Select.less'
 
-interface SelectProps {
+interface ISelectProps {
   iconName?: string
 }
 
-export default class Select extends React.Component<SelectProps, {}> {
-  render () {
+export default class Select extends React.Component<ISelectProps, {}> {
+  render() {
     const { children, iconName } = this.props
     return (
       <div className="select">
