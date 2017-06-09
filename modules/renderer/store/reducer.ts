@@ -1,27 +1,27 @@
 import { ipcRenderer } from 'electron'
 import { Reducer, combineReducers } from 'redux'
 import { handleActions, Action } from 'redux-actions'
-import { ImageFile, OptimizeOptions, TaskItem, TaskStatus } from '../../common/constants'
+import { IImageFile, IOptimizeOptions, ITaskItem, TaskStatus } from '../../common/constants'
 import { ACTIONS } from './actions'
 import deamon from './daemon'
 
-type Tasks = TaskItem[]
+type Tasks = ITaskItem[]
 
 type Globals = {
   activeId: string
 }
 
 export type State = {
-  tasks: TaskItem[]
+  tasks: ITaskItem[]
   globals: Globals
 }
 
-const newOptimizeOptions: () => OptimizeOptions = () => ({
+const newIOptimizeOptions: () => IOptimizeOptions = () => ({
   color: 128,
   quality: 70,
 })
 
-const updateTaskHelper = (tasks: Tasks, id: string, partial: Partial<TaskItem>) => {
+const updateTaskHelper = (tasks: Tasks, id: string, partial: Partial<ITaskItem>) => {
   const index = tasks.findIndex(task => task.id === id)
   if (index === -1) return tasks
 
@@ -36,15 +36,15 @@ const updateTaskHelper = (tasks: Tasks, id: string, partial: Partial<TaskItem>) 
 }
 
 export const taskReducer = handleActions<Tasks>({
-  [ACTIONS.TASK_ADD] (state, action: Action<ImageFile[]>) {
+  [ACTIONS.TASK_ADD] (state, action: Action<IImageFile[]>) {
     return [
       ...state,
       ...action.payload
         .filter(image => !state.some(task => task.id === image.id))
-        .map<TaskItem>(image => ({
+        .map<ITaskItem>(image => ({
           id: image.id,
           image,
-          options: newOptimizeOptions(),
+          options: newIOptimizeOptions(),
           status: TaskStatus.PENDING,
         }))
     ]
@@ -58,7 +58,7 @@ export const taskReducer = handleActions<Tasks>({
     return []
   },
 
-  [ACTIONS.TASK_UPDATE_OPTIONS] (state, action: Action<{ id: string, options: OptimizeOptions }>) {
+  [ACTIONS.TASK_UPDATE_OPTIONS] (state, action: Action<{ id: string, options: IOptimizeOptions }>) {
     const { id, options } = action.payload
     return updateTaskHelper(state, id, {
       options,
@@ -73,7 +73,7 @@ export const taskReducer = handleActions<Tasks>({
     })
   },
 
-  [ACTIONS.TASK_OPTIMIZE_SUCCESS] (state, action: Action<{ id: string, optimized: ImageFile }>) {
+  [ACTIONS.TASK_OPTIMIZE_SUCCESS] (state, action: Action<{ id: string, optimized: IImageFile }>) {
     const { id, optimized } = action.payload
     return updateTaskHelper(state, id, {
       optimized,

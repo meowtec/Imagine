@@ -2,7 +2,7 @@ import * as path from 'path'
 import optimize from '../../backend/optimize'
 import { saveFilesTmp, getFilePath } from '../../common/file-utils'
 import { fullDiff } from '../_tools/image-diff'
-import { ImageFile } from '../../common/constants'
+import { IImageFile } from '../../common/constants'
 
 const relPath = (file: string) => path.resolve(__dirname, file)
 
@@ -23,7 +23,7 @@ test('optimize png success', async () => {
 })
 
 test('optimize png fail', async () => {
-  const image: ImageFile = {
+  const image: IImageFile = {
     id: '404',
     url: '/',
     size: 0,
@@ -53,7 +53,7 @@ test('optimize jpg success', async () => {
 })
 
 test('optimize jpg fail', async () => {
-  const image: ImageFile = {
+  const image: IImageFile = {
     id: '404',
     url: '/',
     size: 0,

@@ -1,6 +1,6 @@
-import { TaskItem } from '../../common/constants'
+import { ITaskItem } from '../../common/constants'
 import { State } from './reducer'
 
-export const getTaskById = (tasks: TaskItem[], id: string) => {
+export const getTaskById = (tasks: ITaskItem[], id: string) => {
   return tasks.find(task => task.id === id)
 }

@@ -9,13 +9,13 @@ export type TaskStatus = Enum<typeof TaskStatus>
 export const IpcChannel = Enum('FILE_SELECT', 'FILE_SELECTED', 'FILE_ADD', 'OPTIMIZE')
 export type IpcChannel = Enum<typeof IpcChannel>
 
-export interface ElectronResponse<T> {
+export interface IElectronResponse<T> {
   session: string
   error: string
   result: T
 }
 
-export interface ImageFile {
+export interface IImageFile {
   id: string
   url: string
   size: number
@@ -23,20 +23,20 @@ export interface ImageFile {
   originalName: string
 }
 
-export interface OptimizeOptions {
+export interface IOptimizeOptions {
   color?: number
   quality?: number
 }
 
-export interface TaskItem {
+export interface ITaskItem {
   id: string
-  image: ImageFile
-  options: OptimizeOptions
-  optimized?: ImageFile
+  image: IImageFile
+  options: IOptimizeOptions
+  optimized?: IImageFile
   status: TaskStatus
 }
 
-export interface OptimizeRequest {
-  image: ImageFile
-  options: OptimizeOptions
+export interface IOptimizeRequest {
+  image: IImageFile
+  options: IOptimizeOptions
 }

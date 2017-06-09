@@ -4,7 +4,7 @@ export const coop2 = (min: number, max: number, num: number) => Math.min(max, Ma
 
 export const randomId = () => Math.random().toString(36).slice(2)
 
-export const shallowCompare = <T>(a: T, b: T, keys?: (keyof T)[]) => {
+export const shallowCompare = <T>(a: T, b: T, keys?: Array<keyof T>) => {
   if (a === b) {
     return true
   }
@@ -13,12 +13,14 @@ export const shallowCompare = <T>(a: T, b: T, keys?: (keyof T)[]) => {
     const akeys = Object.keys(a)
     const bkeys = Object.keys(b)
 
-    if (akeys.length !== bkeys.length) return false
+    if (akeys.length !== bkeys.length) {
+      return false
+    }
 
-    keys = <(keyof T)[]>akeys
+    keys = akeys as Array<keyof T>
   }
 
-  for (let key of keys) {
+  for (const key of keys) {
     if (a[key] !== b[key]) {
       return false
     }
@@ -55,14 +57,4 @@ export const size = (bytes: number): [number, Unit] => {
   }
 
   return [number, unit]
-}
-
-const createQuene = () => {
-  let prev: Promise<any> = Promise.resolve()
-
-  return <T>(pthunk: () => Promise<T>) => {
-    return prev = prev
-      .catch(() => {})
-      .then(pthunk)
-  }
 }

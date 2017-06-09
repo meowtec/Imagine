@@ -9,7 +9,7 @@ import log from 'electron-log'
 import Optimizer from './base'
 
 export default class PNGQuant extends Optimizer {
-  io (input: string, output: string) {
+  io(input: string, output: string) {
     const { color = 256 } = this.options
 
     const pngquantBinFixed = pngquantBin.replace('app.asar', 'app.asar.unpacked')
@@ -20,7 +20,7 @@ export default class PNGQuant extends Optimizer {
       '-o',
       output,
     ], {
-      capture: [ 'stdout', 'stderr' ]
+      capture: [ 'stdout', 'stderr' ],
     }).catch(e => {
       throw new Error(e.message + '\n' + e.stderr)
     })

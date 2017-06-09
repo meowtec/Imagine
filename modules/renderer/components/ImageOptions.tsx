@@ -1,12 +1,12 @@
 import * as React from 'react'
-import { SupportedExt, OptimizeOptions } from '../../common/constants'
+import { SupportedExt, IOptimizeOptions } from '../../common/constants'
 import ColorNumber from './ColorNumber'
 import Quality from './Quality'
 
 type ImageOptionsProps = {
   ext: SupportedExt
-  options: OptimizeOptions
-  onChange (options: OptimizeOptions): void
+  options: IOptimizeOptions
+  onChange (options: IOptimizeOptions): void
 }
 
 export default class ImageOptions extends React.PureComponent<ImageOptionsProps, {}> {

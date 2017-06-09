@@ -10,12 +10,12 @@ if (process.env.NODE_ENV === 'development') {
       <AppContainer>
         <App />
       </AppContainer>,
-      document.getElementById('app')
+      document.getElementById('app'),
     )
   }
 
   if ((module as any).hot) {
-    ;(module as any).hot.accept('./App', render)
+    (module as any).hot.accept('./App', render)
   }
 
   render()
@@ -23,7 +23,6 @@ if (process.env.NODE_ENV === 'development') {
 } else {
   ReactDOM.render(
     <App />,
-    document.getElementById('app')
+    document.getElementById('app'),
   )
 }
-

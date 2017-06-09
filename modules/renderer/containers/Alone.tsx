@@ -8,21 +8,21 @@ import SizeReduce from '../components/SizeReduce'
 import { actions } from '../store/actions'
 import { State } from '../store/reducer'
 import { getTaskById } from '../store/filter'
-import { TaskItem, OptimizeOptions, TaskStatus } from '../../common/constants'
+import { ITaskItem, IOptimizeOptions, TaskStatus } from '../../common/constants'
 
 import './Alone.less'
 
 type AloneProps = {
-  task: TaskItem
+  task: ITaskItem
 }
 
 type AloneDispatchProps = {
   onClose (): void
-  onOptionsChange (id: string, options: OptimizeOptions): void
+  onOptionsChange (id: string, options: IOptimizeOptions): void
 }
 
 class Alone extends React.PureComponent<AloneProps & AloneDispatchProps, any> {
-  handleOptionsChange = (options: OptimizeOptions) => {
+  handleOptionsChange = (options: IOptimizeOptions) => {
     this.props.onOptionsChange(this.props.task.id, options)
   }
 
@@ -58,7 +58,7 @@ export default connect<AloneProps, AloneDispatchProps, {}>(state => ({
   onClose () {
     dispatch(actions.taskDetail(null))
   },
-  onOptionsChange (id: string, options: OptimizeOptions) {
+  onOptionsChange (id: string, options: IOptimizeOptions) {
     dispatch(actions.taskUpdateOptions(id, options))
   }
 }))(Alone)

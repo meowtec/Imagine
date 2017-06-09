@@ -4,13 +4,13 @@
   "description": "pngquant gui",
   "main": "./lib/bootstrap.js",
   "scripts": {
-    "ts": "tsc",
-    "dev": "npm run ts && NODE_ENV=development electron .",
-    "build": "npm run ts && NODE_ENV=production webpack",
+    "lint": "tslint -t verbose modules/**/*.ts modules/**/*.tsx",
+    "dev": "tsc && NODE_ENV=development electron .",
+    "build": "tsc && NODE_ENV=production webpack",
     "start": "npm run build && electron .",
     "pack": "npm run build && build --dir",
     "dist": "npm run build && build",
-    "test": "npm run ts && jest"
+    "test": "npm run lint && jest"
   },
   "author": "meowtec",
   "license": "ISC",
@@ -58,6 +58,7 @@
     "svg-sprite-loader": "^3.0.4",
     "ts-jest": "^20.0.0",
     "ts-loader": "^2.0.3",
+    "tslint": "^5.4.3",
     "typescript": "^2.3.2",
     "webpack": "^2.4.1",
     "webpack-dev-server": "^2.4.5",

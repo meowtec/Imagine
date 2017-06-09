@@ -1,18 +1,18 @@
 import * as React from 'react'
 import { PureComponent } from 'react'
-import { TaskItem, OptimizeOptions } from '../../common/constants'
+import { ITaskItem, IOptimizeOptions } from '../../common/constants'
 import Item from './TaskView'
 
 import './TaskList.less'
 
 export interface TaskViewProps {
-  tasks: TaskItem[]
+  tasks: ITaskItem[]
 }
 
 export interface TaskViewDispatchProps {
   onRemove(id: string): void
   onClick(id: string): void
-  onOptionsChange(id: string, options: OptimizeOptions): void
+  onOptionsChange(id: string, options: IOptimizeOptions): void
 }
 
 export default class TaskList extends PureComponent<TaskViewProps & TaskViewDispatchProps, void> {

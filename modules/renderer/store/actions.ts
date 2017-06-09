@@ -1,6 +1,6 @@
 import { createAction, Action } from 'redux-actions'
 import { Enum } from 'typescript-string-enums'
-import { ImageFile, OptimizeOptions, TaskItem, TaskStatus } from '../../common/constants'
+import { IImageFile, IOptimizeOptions, ITaskItem, TaskStatus } from '../../common/constants'
 
 export const ACTIONS = Enum(
   'TASK_ADD',
@@ -14,18 +14,18 @@ export const ACTIONS = Enum(
 )
 
 export const actions = {
-  taskAdd: createAction<ImageFile[]>(ACTIONS.TASK_ADD),
+  taskAdd: createAction<IImageFile[]>(ACTIONS.TASK_ADD),
 
   taskDelete: createAction<string[]>(ACTIONS.TASK_DELETE),
 
   taskClear: createAction(ACTIONS.TASK_CLEAR),
 
-  taskUpdateOptions: createAction<{ id: string, options: OptimizeOptions }, string, OptimizeOptions>
+  taskUpdateOptions: createAction<{ id: string, options: IOptimizeOptions }, string, IOptimizeOptions>
     (ACTIONS.TASK_UPDATE_OPTIONS, (id, options) => ({ id, options })),
 
   taskOptimizeStart: createAction<string>(ACTIONS.TASK_OPTIMIZE_START),
 
-  taskOptimizeSuccess: createAction<{ id: string, optimized: ImageFile }, string, ImageFile>
+  taskOptimizeSuccess: createAction<{ id: string, optimized: IImageFile }, string, IImageFile>
     (ACTIONS.TASK_OPTIMIZE_SUCCESS, (id, optimized) => ({ id, optimized })),
 
   taskOptimizeFail: createAction<string>(ACTIONS.TASK_OPTIMIZE_FAIL),

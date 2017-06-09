@@ -1,3 +1,5 @@
+/* tslint:disable no-var-requires */
+
 import * as path from 'path'
 import { app } from 'electron'
 

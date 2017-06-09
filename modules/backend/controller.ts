@@ -1,10 +1,10 @@
 import { BrowserWindow, ipcMain } from 'electron'
 import * as path from 'path'
 import * as fs from 'fs-extra'
-import { SupportedExt, ImageFile, OptimizeOptions, OptimizeRequest, IpcChannel } from '../common/constants'
+import { SupportedExt, IImageFile, IOptimizeOptions, IOptimizeRequest, IpcChannel } from '../common/constants'
 import * as fu from '../common/file-utils'
 import { url } from './dev'
-import PNGQuant from  '../optimizers/pngquant'
+import PNGQuant from '../optimizers/pngquant'
 import { listenIpc } from './ipc-responser'
 import optimize from './optimize'
 import * as menuActions from './menu-actions'
@@ -14,11 +14,11 @@ type BrowserWindow = Electron.BrowserWindow
 class Controller {
   windows: number[] = []
 
-  constructor () {
+  constructor() {
     this.listenIpc()
   }
 
-  createWindow () {
+  createWindow() {
     const win = new BrowserWindow({
       width: 900,
       height: 600,
@@ -43,19 +43,21 @@ class Controller {
       e.preventDefault()
     })
 
-    process.env.NODE_ENV === 'development' && win.webContents.openDevTools()
+    if (process.env.NODE_ENV === 'development') {
+      win.webContents.openDevTools()
+    }
 
     this.windows.push(id)
   }
 
-  async receiveFiles (files: string[], winId?: string) {
+  async receiveFiles(files: string[], winId?: string) {
     const dests = (await fu.saveFilesTmp(files)).filter(x => x)
     const win = BrowserWindow.fromId(this.windows[0])
     win.webContents.send(IpcChannel.FILE_SELECTED, dests)
   }
 
-  listenIpc () {
-    listenIpc<OptimizeRequest, ImageFile>(IpcChannel.OPTIMIZE, ({image, options}) => {
+  listenIpc() {
+    listenIpc<IOptimizeRequest, IImageFile>(IpcChannel.OPTIMIZE, ({image, options}) => {
       return optimize(image, options)
     })
 

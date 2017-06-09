@@ -1,5 +1,5 @@
 import { BrowserWindow, ipcMain } from 'electron'
-import { ElectronResponse, IpcChannel } from '../common/constants'
+import { IElectronResponse, IpcChannel } from '../common/constants'
 import log from 'electron-log'
 
 export const listenIpc = <I, O>(channel: IpcChannel, responser: (input: I) => Promise<O> | O) => {
@@ -18,6 +18,6 @@ export const listenIpc = <I, O>(channel: IpcChannel, responser: (input: I) => Pr
       session: sessionId,
       error: error && error.message,
       result,
-    } as ElectronResponse<O>)
+    } as IElectronResponse<O>)
   })
 }

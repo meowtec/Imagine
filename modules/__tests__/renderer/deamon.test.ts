@@ -8,7 +8,7 @@ import { actions } from '../../renderer/store/actions'
 import controller from '../../backend/controller'
 import { saveFilesTmp } from '../../common/file-utils'
 import { sleep } from '../../common/utils'
-import { ImageFile, OptimizeOptions, TaskItem, TaskStatus } from '../../common/constants'
+import { IImageFile, IOptimizeOptions, ITaskItem, TaskStatus } from '../../common/constants'
 
 test('optimize daemon', async () => {
   const images = await saveFilesTmp(

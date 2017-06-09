@@ -1,18 +1,18 @@
 import { Duplex } from 'stream'
 import * as fs from 'fs-extra'
 import * as rawBody from 'raw-body'
-import { OptimizeOptions } from '../common/constants'
+import { IOptimizeOptions } from '../common/constants'
 
 export default abstract class Optimizer {
-  protected options: OptimizeOptions
+  protected options: IOptimizeOptions
 
-  constructor (options: OptimizeOptions = {}) {
+  constructor(options: IOptimizeOptions = {}) {
     this.options = options
   }
 
-  abstract io (input: string, output: string): Promise<any>
+  abstract io(input: string, output: string): Promise<any>
 }
 
-export type OptimizerConstructor = {
-  new (options: OptimizeOptions): Optimizer
+export interface IOptimizerConstructor {
+  new (options: IOptimizeOptions): Optimizer
 }

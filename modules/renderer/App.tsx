@@ -46,7 +46,7 @@ export default class App extends React.PureComponent<{}, {}> {
     ipcRenderer.send(IpcChannel.FILE_ADD, files)
   }
 
-  render () {
+  render() {
     return (
       <Provider store={store}>
         <div

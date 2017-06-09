@@ -3,16 +3,16 @@ import { createStore } from 'redux'
 import reducer from '../../renderer/store/reducer'
 import { actions } from '../../renderer/store/actions'
 import controller from '../../backend/controller'
-import { ImageFile, OptimizeOptions, TaskItem, TaskStatus, SupportedExt } from '../../common/constants'
+import { IImageFile, IOptimizeOptions, ITaskItem, TaskStatus, SupportedExt } from '../../common/constants'
 
-const image1: ImageFile = {
+const image1: IImageFile = {
   id: '01',
   url: '01.png',
   size: 100,
   ext: 'png',
   originalName: 'file.png',
 }
-const image2: ImageFile = {
+const image2: IImageFile = {
   id: '02',
   url: '02.png',
   size: 101,
@@ -144,7 +144,7 @@ test('task success', () => {
     ext: 'png',
     originalName: 'file-result.png',
   }))
-  store.dispatch(actions.taskOptimizeSuccess('notexist', {} as ImageFile))
+  store.dispatch(actions.taskOptimizeSuccess('notexist', {} as IImageFile))
 
   expect(store.getState().tasks).toEqual([
     {

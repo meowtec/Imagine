@@ -5,16 +5,16 @@ import Select from './Select'
 import Icon from './Icon'
 import ImageOptions from './ImageOptions'
 import SizeReduce from './SizeReduce'
-import { TaskItem, TaskStatus, OptimizeOptions } from '../../common/constants'
+import { ITaskItem, TaskStatus, IOptimizeOptions } from '../../common/constants'
 import * as _ from '../../common/utils'
 
 import './TaskView.less'
 
 interface TaskViewProps {
-  task: TaskItem
+  task: ITaskItem
   onRemove(id: string): void
   onClick(id: string): void
-  onOptionsChange(id: string, options: OptimizeOptions): void
+  onOptionsChange(id: string, options: IOptimizeOptions): void
 }
 
 class TaskView extends PureComponent<TaskViewProps, void> {
@@ -29,7 +29,7 @@ class TaskView extends PureComponent<TaskViewProps, void> {
     this.props.onClick(this.props.task.id)
   }
 
-  handleOptionsChange = (options: OptimizeOptions) => {
+  handleOptionsChange = (options: IOptimizeOptions) => {
     this.props.onOptionsChange(this.props.task.id, options)
   }
 

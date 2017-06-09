@@ -1,7 +1,7 @@
 import { Menu } from 'electron'
 import * as menuActions from './menu-actions'
 
-export default function installMenu () {
+export default function installMenu() {
   const menu = Menu.buildFromTemplate([
     {
       label: 'PQ',
@@ -16,7 +16,7 @@ export default function installMenu () {
         {
           role: 'quit',
         },
-      ]
+      ],
     },
 
     {
@@ -27,7 +27,7 @@ export default function installMenu () {
           accelerator: 'CommandOrControl+O',
           click: menuActions.open,
         },
-      ]
+      ],
     },
 
     {
@@ -36,7 +36,7 @@ export default function installMenu () {
         {role: 'reload'},
         {role: 'forcereload' as 'reload'},
         {role: 'toggledevtools'},
-      ]
+      ],
     },
   ])
 
