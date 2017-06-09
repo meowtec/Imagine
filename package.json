@@ -5,8 +5,8 @@
   "main": "./lib/bootstrap.js",
   "scripts": {
     "lint": "tslint -t verbose modules/**/*.ts modules/**/*.tsx",
-    "dev": "tsc && NODE_ENV=development electron .",
-    "build": "tsc && NODE_ENV=production webpack",
+    "dev": "tsc && cross-env NODE_ENV=development electron .",
+    "build": "tsc && cross-env NODE_ENV=production webpack",
     "start": "npm run build && electron .",
     "pack": "npm run build && build --dir",
     "dist": "npm run build && build",
@@ -35,6 +35,7 @@
     "babili-webpack-plugin": "^0.1.1",
     "classnames": "^2.2.5",
     "copy-webpack-plugin": "^4.0.1",
+    "cross-env": "^5.0.1",
     "css-loader": "^0.28.1",
     "electron": "^1.6.10",
     "electron-builder": "^18.2.2",
