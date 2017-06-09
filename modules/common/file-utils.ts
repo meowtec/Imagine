@@ -65,3 +65,18 @@ export const saveFilesTmp = (files: string[]) => {
     return descriptor
   }))
 }
+
+/**
+ * get a unoccupied file path by an orignial path.
+ * example: `/path/to/a.txt` to `/path/to/a(1).txt`
+ * @param filePath - original file path
+ */
+export const unoccupiedFile = (filePath: string, index = 0): Promise<string> => {
+  const accessPath = index
+    ? filePath.replace(/(\.\w+)?$/, `(${index})$1`)
+    : filePath
+
+  return fs.access(accessPath)
+    .then(() => unoccupiedFile(filePath, index + 1))
+    .catch(() => accessPath)
+}

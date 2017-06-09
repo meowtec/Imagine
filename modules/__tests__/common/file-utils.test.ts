@@ -1,5 +1,13 @@
 import * as path from 'path'
-import { md5, fileMD5, imageType, getSize, getFilePath, saveFilesTmp } from '../../common/file-utils'
+import {
+  md5,
+  fileMD5,
+  imageType,
+  getSize,
+  getFilePath,
+  saveFilesTmp,
+  unoccupiedFile,
+} from '../../common/file-utils'
 
 const relPath = (file: string) => path.resolve(__dirname, file)
 
@@ -48,4 +56,25 @@ test('saveFilesTmp', async () => {
 
   expect(files[0].ext).toBe('png')
   expect(files[1].ext).toBe('jpg')
+})
+
+test('unoccupiedFile 1', async () => {
+  const path0 = path.resolve(__dirname, '../_files/available.png')
+  const pathExpect = path0
+  const pathActual = await unoccupiedFile(path0)
+  expect(pathActual).toBe(pathExpect)
+})
+
+test('unoccupiedFile 2', async () => {
+  const path0 = path.resolve(__dirname, '../_files/qr.png')
+  const pathExpect = path.resolve(__dirname, '../_files/qr(1).png')
+  const pathActual = await unoccupiedFile(path0)
+  expect(pathActual).toBe(pathExpect)
+})
+
+test('unoccupiedFile 3', async () => {
+  const path0 = path.resolve(__dirname, '../_files/fox.jpg')
+  const pathExpect = path.resolve(__dirname, '../_files/fox(2).jpg')
+  const pathActual = await unoccupiedFile(path0)
+  expect(pathActual).toBe(pathExpect)
 })
