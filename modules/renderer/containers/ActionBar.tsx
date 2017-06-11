@@ -64,6 +64,6 @@ export default connect(null, dispatch => ({
   },
 
   onSave(type: SaveType) {
-    ipcRenderer.send(IpcChannel.SAVE, store.getState().tasks, type)
+    ipcRenderer.send(IpcChannel.SAVE, store.getState().tasks.map(task => task.optimized), type)
   },
 }))(ActionBar) as React.ComponentClass<{}>

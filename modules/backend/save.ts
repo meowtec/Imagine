@@ -1,18 +1,17 @@
 import * as path from 'path'
 import * as fs from 'fs-extra'
 import * as fu from '../common/file-utils'
-import { SaveType, ITaskItem } from '../common/constants'
+import { SaveType, IImageFile } from '../common/constants'
 
-export default async function saveFiles(tasks: ITaskItem[], type: SaveType, dirname?: string) {
+export default async function saveFiles(images: IImageFile[], type: SaveType, dirname?: string) {
   if (type === SaveType.NEW_DIR && !dirname) return
 
-  for (const task of tasks) {
-    const { image, optimized } = task
-    if (!optimized) continue
+  for (const image of images) {
+    if (!image) continue
 
     let savePath: string = image.originalName
-    if (!savePath.endsWith(optimized.ext)) {
-      savePath = savePath + '.' + optimized.ext
+    if (!savePath.endsWith(image.ext)) {
+      savePath = savePath + '.' + image.ext
     }
 
     switch (type) {
@@ -28,6 +27,6 @@ export default async function saveFiles(tasks: ITaskItem[], type: SaveType, dirn
         break
     }
 
-    await fs.copy(fu.getFilePath(optimized), savePath)
+    await fs.copy(fu.getFilePath(image), savePath)
   }
 }

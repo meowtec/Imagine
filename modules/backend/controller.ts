@@ -8,7 +8,6 @@ import {
   IOptimizeRequest,
   IpcChannel,
   SaveType,
-  ITaskItem,
 } from '../common/constants'
 import * as fu from '../common/file-utils'
 import { url } from './dev'
@@ -78,7 +77,7 @@ class Controller {
       this.receiveFiles(files)
     })
 
-    ipcMain.on(IpcChannel.SAVE, (event, tasks: ITaskItem[], type: SaveType) => {
+    ipcMain.on(IpcChannel.SAVE, (event, images: IImageFile[], type: SaveType) => {
       if (type === SaveType.NEW_DIR) {
         dialog.showOpenDialog({
           title: 'Save files',
@@ -86,10 +85,10 @@ class Controller {
         }, filePaths => {
           if (!filePaths || !filePaths.length) return
 
-          saveFiles(tasks, type, filePaths[0])
+          saveFiles(images, type, filePaths[0])
         })
       } else {
-        saveFiles(tasks, type)
+        saveFiles(images, type)
       }
     })
   }
