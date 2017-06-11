@@ -28,8 +28,9 @@ class Controller {
 
   createWindow() {
     const win = new BrowserWindow({
-      width: 900,
+      width: 800,
       height: 600,
+      minWidth: 540,
       // titleBarStyle: 'hidden',
       webPreferences: {
         webSecurity: false,
