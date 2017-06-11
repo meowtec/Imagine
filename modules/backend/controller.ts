@@ -74,11 +74,11 @@ class Controller {
       menuActions.open()
     })
 
-    ipcMain.on(IpcChannel.FILE_ADD, (event, files: string[]) => {
+    ipcMain.on(IpcChannel.FILE_ADD, (event: any, files: string[]) => {
       this.receiveFiles(files)
     })
 
-    ipcMain.on(IpcChannel.SAVE, (event, images: IImageFile[], type: SaveType) => {
+    ipcMain.on(IpcChannel.SAVE, (event: any, images: IImageFile[], type: SaveType) => {
       if (type === SaveType.NEW_DIR) {
         dialog.showOpenDialog({
           title: 'Save files',

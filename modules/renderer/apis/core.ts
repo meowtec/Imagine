@@ -11,7 +11,7 @@ export const requestCreater = <I, O>(channel: string) => (data: I) => new Promis
 
   ipcRenderer.send(channel, sessionId, data)
 
-  const handler = (event: Electron.IpcRendererEvent, { error, result, session }: IElectronResponse<O>) => {
+  const handler = (event: any, { error, result, session }: IElectronResponse<O>) => {
     if (session !== sessionId) return
 
     if (error) {

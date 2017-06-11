@@ -5,7 +5,7 @@ import { actions } from './actions'
 import { IImageFile, IpcChannel } from '../../common/constants'
 
 const listenPush = (store: Store<IState>) => {
-  ipcRenderer.on(IpcChannel.FILE_SELECTED, (event, data: IImageFile[]) => {
+  ipcRenderer.on(IpcChannel.FILE_SELECTED, (event: any, data: IImageFile[]) => {
     store.dispatch(actions.taskAdd(data))
   })
 }

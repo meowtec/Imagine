@@ -16,7 +16,6 @@
   "license": "ISC",
   "devDependencies": {
     "@types/classnames": "^2.2.0",
-    "@types/electron": "^1.4.37",
     "@types/electron-devtools-installer": "^2.0.2",
     "@types/file-type": "0.0.2",
     "@types/fs-extra": "^3.0.0",

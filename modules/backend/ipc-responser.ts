@@ -3,7 +3,7 @@ import { IElectronResponse, IpcChannel } from '../common/constants'
 import log from 'electron-log'
 
 export const listenIpc = <I, O>(channel: IpcChannel, responser: (input: I) => Promise<O> | O) => {
-  ipcMain.on(channel, async (listener, sessionId: string, data: I) => {
+  ipcMain.on(channel, async (event: Electron.Event, sessionId: string, data: I) => {
     let result: O
     let error: Error
 
@@ -14,7 +14,7 @@ export const listenIpc = <I, O>(channel: IpcChannel, responser: (input: I) => Pr
       error = err
     }
 
-    listener.sender.send(channel, {
+    event.sender.send(channel, {
       session: sessionId,
       error: error && error.message,
       result,
