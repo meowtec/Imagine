@@ -6,8 +6,17 @@ export type SupportedExt = Enum<typeof SupportedExt>
 export const TaskStatus = Enum('PENDING', 'PROCESSING', 'DONE', 'FAIL')
 export type TaskStatus = Enum<typeof TaskStatus>
 
-export const IpcChannel = Enum('FILE_SELECT', 'FILE_SELECTED', 'FILE_ADD', 'OPTIMIZE')
+export const IpcChannel = Enum(
+  'FILE_SELECT',
+  'FILE_SELECTED',
+  'FILE_ADD',
+  'OPTIMIZE',
+  'SAVE',
+)
 export type IpcChannel = Enum<typeof IpcChannel>
+
+export const SaveType = Enum('OVER', 'NEW_NAME', 'NEW_DIR')
+export type SaveType = Enum<typeof SaveType>
 
 export interface IElectronResponse<T> {
   session: string

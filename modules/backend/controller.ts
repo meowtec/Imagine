@@ -1,12 +1,21 @@
-import { BrowserWindow, ipcMain } from 'electron'
+import { BrowserWindow, ipcMain, dialog } from 'electron'
 import * as path from 'path'
 import * as fs from 'fs-extra'
-import { SupportedExt, IImageFile, IOptimizeOptions, IOptimizeRequest, IpcChannel } from '../common/constants'
+import {
+  SupportedExt,
+  IImageFile,
+  IOptimizeOptions,
+  IOptimizeRequest,
+  IpcChannel,
+  SaveType,
+  ITaskItem,
+} from '../common/constants'
 import * as fu from '../common/file-utils'
 import { url } from './dev'
 import PNGQuant from '../optimizers/pngquant'
 import { listenIpc } from './ipc-responser'
 import optimize from './optimize'
+import saveFiles from './save'
 import * as menuActions from './menu-actions'
 
 type BrowserWindow = Electron.BrowserWindow
@@ -67,6 +76,21 @@ class Controller {
 
     ipcMain.on(IpcChannel.FILE_ADD, (event, files: string[]) => {
       this.receiveFiles(files)
+    })
+
+    ipcMain.on(IpcChannel.SAVE, (event, tasks: ITaskItem[], type: SaveType) => {
+      if (type === SaveType.NEW_DIR) {
+        dialog.showOpenDialog({
+          title: 'Save files',
+          properties: ['openDirectory', 'createDirectory'],
+        }, filePaths => {
+          if (!filePaths || !filePaths.length) return
+
+          saveFiles(tasks, type, filePaths[0])
+        })
+      } else {
+        saveFiles(tasks, type)
+      }
     })
   }
 }

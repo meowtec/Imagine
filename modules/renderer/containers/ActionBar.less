@@ -16,6 +16,13 @@
     outline: none;
     width: 60px;
 
+    &:hover {
+      .icon,
+      span {
+        color: #333;
+      }
+    }
+
     .icon {
       height: 18px;
       width: 18px;
@@ -34,10 +41,7 @@
     }
   }
 
-  :hover {
-    .icon,
-    span {
-      color: #333;
-    }
+  .tooltip {
+    top: 5px;
   }
 }

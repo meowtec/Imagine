@@ -10,7 +10,7 @@
     "start": "npm run build && electron .",
     "pack": "npm run build && build --dir",
     "dist": "npm run build && build",
-    "test": "npm run lint && jest"
+    "test": "tsc && npm run lint && jest"
   },
   "author": "meowtec",
   "license": "ISC",

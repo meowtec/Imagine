@@ -54,7 +54,7 @@ export const saveFilesTmp = (files: string[]) => {
       size,
       id,
       ext: type.ext as SupportedExt,
-      originalName: 'TODO',
+      originalName: file,
     }
 
     const dest = getFilePath(descriptor)
