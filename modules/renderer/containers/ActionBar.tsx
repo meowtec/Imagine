@@ -4,12 +4,14 @@ import { ipcRenderer } from 'electron'
 import Icon from '../components/Icon'
 import Tooltip from '../components/Tooltip'
 import { actions } from '../store/actions'
+import { IState } from '../store/reducer'
 import store from '../store/store'
 import { IpcChannel, SaveType } from '../../common/constants'
 
 import './ActionBar.less'
 
 interface IActionBarProps {
+  count: number
   onRemoveAll(): void
   onSave(type: SaveType): void
   onAdd(): void
@@ -22,6 +24,8 @@ class ActionBar extends React.PureComponent<IActionBarProps, {}> {
   }
 
   render() {
+    const { count } = this.props
+
     return (
       <div className="action-bar">
         <button onClick={this.props.onAdd}>
@@ -29,7 +33,7 @@ class ActionBar extends React.PureComponent<IActionBarProps, {}> {
           <span>Add</span>
         </button>
 
-        <button className="tooltip-hover">
+        <button className="tooltip-hover" disabled={!count}>
           <Icon name="down" />
           <span>Save</span>
           <Tooltip>
@@ -45,7 +49,7 @@ class ActionBar extends React.PureComponent<IActionBarProps, {}> {
           </Tooltip>
         </button>
 
-        <button onClick={this.props.onRemoveAll}>
+        <button onClick={this.props.onRemoveAll} disabled={!count}>
           <Icon name="delete" />
           <span>Clear</span>
         </button>
@@ -54,7 +58,9 @@ class ActionBar extends React.PureComponent<IActionBarProps, {}> {
   }
 }
 
-export default connect(null, dispatch => ({
+export default connect((state: IState) => ({
+  count: state.tasks.length,
+}), dispatch => ({
   onRemoveAll() {
     dispatch(actions.taskClear())
   },

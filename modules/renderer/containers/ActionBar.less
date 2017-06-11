@@ -16,10 +16,19 @@
     outline: none;
     width: 60px;
 
-    &:hover {
-      .icon,
-      span {
-        color: #333;
+    &:disabled {
+      .icon, span {
+        color: #ccc;
+      }
+    }
+
+    &:not(:disabled) {
+      cursor: pointer;
+
+      &:hover {
+        .icon, span {
+          color: #000;
+        }
       }
     }
 
