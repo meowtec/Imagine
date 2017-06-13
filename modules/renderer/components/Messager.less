@@ -1,0 +1,76 @@
+.global-messager {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+
+  .messager {
+    position: absolute;
+    width: 100%;
+  }
+}
+
+.messager {
+  position: relative;
+  padding: 6px 45px;
+  font-size: 12px;
+
+  &.-info {
+    background: #aef;
+
+    .messager-icon {
+      color: #09f;
+    }
+  }
+
+  &.-warning {
+    background: #fe9;
+
+    .messager-icon {
+      color: #f60;
+    }
+  }
+
+  &.-error {
+    background: #e66;
+    color: #fff;
+  }
+
+  &.-success {
+    background: #cfc;
+
+    .messager-icon {
+      color: #0c0;
+    }
+  }
+}
+
+.messager-icon {
+  position: absolute;
+  left: 20px;
+  top: 7px;
+  font-size: 16px;
+}
+
+.messager-enter {
+  opacity: 0.01;
+  transform: translateY(-100%);
+}
+
+.messager-enter.messager-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: .3s;
+  transition-property: opacity, transform;
+}
+
+.messager-leave {
+  opacity: 1;
+}
+
+.messager-leave.messager-leave-active {
+  opacity: 0.01;
+  transition: .3s;
+  transition-property: opacity, transform;
+}
