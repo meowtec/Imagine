@@ -18,7 +18,7 @@ export default class Modal extends React.PureComponent<IModalProps, {}> {
       <Root className={classnames('modal-container', this.props.className)}>
         <CSSTransitionGroup
           transitionName="modal"
-          transitionEnterTimeout={500}
+          transitionEnterTimeout={300}
           transitionLeaveTimeout={300}
           component="div"
         >

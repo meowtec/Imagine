@@ -1,10 +1,11 @@
 .modal-enter {
   opacity: 0.01;
+  transform: translateY(20px);
 }
 
 .modal-enter.modal-enter-active {
   opacity: 1;
-  transition: opacity 500ms ease;
+  transform: translateY(0);
 }
 
 .modal-leave {
@@ -13,7 +14,7 @@
 
 .modal-leave.modal-leave-active {
   opacity: 0.01;
-  transition: opacity 300ms ease;
+  transform: translateY(20px);
 }
 
 .modal {
@@ -24,8 +25,8 @@
   height: 100%;
   background: #fff;
   z-index: 200;
-  box-shadow: 0 0 10px rgba(0, 0, 0, .1);
-  transition: opacity 1s;
+  transition: .2s;
+  transition-property: opacity, transform;
 
   .close {
     position: absolute;
