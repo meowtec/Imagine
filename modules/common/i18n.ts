@@ -36,7 +36,6 @@ export default function createLocales(
 
     if (args.length) {
       args.forEach((arg, index) => {
-        console.log(new RegExp(`\\{${index}\\}`, 'g'))
         content = content.replace(new RegExp(`\\{${index}\\}`, 'g'), arg == null ? '' : arg)
       })
     }
