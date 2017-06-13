@@ -7,6 +7,6 @@ import { cleanTmpdir } from './common/file-utils'
 cleanTmpdir()
 
 app.on('ready', () => {
-  controller.createWindow()
+  controller.start()
   setMenu()
 })

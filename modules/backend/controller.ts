@@ -1,4 +1,4 @@
-import { BrowserWindow, ipcMain, dialog, shell } from 'electron'
+import { BrowserWindow, ipcMain, dialog, app, shell } from 'electron'
 import * as path from 'path'
 import * as fs from 'fs-extra'
 import {
@@ -23,8 +23,27 @@ type BrowserWindow = Electron.BrowserWindow
 class Controller {
   windows: number[] = []
 
-  constructor() {
+  start() {
+    const shouldQuit = app.makeSingleInstance(this.createWindow)
+    if (shouldQuit) {
+      app.quit()
+      return
+    } else {
+      this.createWindow()
+    }
     this.listenIpc()
+  }
+
+  onOtherInstance() {
+    const win = this.getMainWindow()
+    win && win.focus()
+  }
+
+  getMainWindow() {
+    const id = this.windows[0]
+    if (id != null) {
+      return BrowserWindow.fromId(id)
+    }
   }
 
   createWindow() {
@@ -62,8 +81,8 @@ class Controller {
 
   async receiveFiles(files: string[], winId?: string) {
     const dests = (await fu.saveFilesTmp(files)).filter(x => x)
-    const win = BrowserWindow.fromId(this.windows[0])
-    win.webContents.send(IpcChannel.FILE_SELECTED, dests)
+    const win = this.getMainWindow()
+    win && win.webContents.send(IpcChannel.FILE_SELECTED, dests)
   }
 
   listenIpc() {

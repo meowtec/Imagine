@@ -13,6 +13,7 @@
     "no-console": [false],
     "no-bitwise": false,
     "max-classes-per-file": [false],
+    "no-unused-expression": [true, "allow-fast-null-checks"],
     "trailing-comma": [
       true,
       {
