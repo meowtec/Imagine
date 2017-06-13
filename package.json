@@ -1,10 +1,12 @@
 {
-  "name": "imagine",
+  "name": "Imagine",
   "version": "0.1.0",
   "description": "pngquant gui",
+  "homepage": "https://github.com/meowtec/Imagine",
   "main": "./lib/bootstrap.js",
   "scripts": {
     "lint": "tslint -t verbose -p .",
+    "tscw": "tsc -w",
     "dev": "tsc && cross-env NODE_ENV=development electron .",
     "build": "tsc && cross-env NODE_ENV=production webpack",
     "start": "npm run build && electron .",

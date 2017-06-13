@@ -1,10 +1,21 @@
-import { Menu, dialog } from 'electron'
+import { Menu, dialog, shell } from 'electron'
 import { EventEmitter } from 'events'
 import controller from './controller'
 import __ from '../locales'
+import * as pkg from '../../package.json'
 
 export const about = () => {
-  // TODO
+  dialog.showMessageBox({
+    type: 'info',
+    title: __('about'),
+    message: `Imagine v${pkg.version}`,
+    detail: `Created by Meowtec\n${pkg.homepage}`,
+    buttons: ['OK', 'Visit'],
+  }, response => {
+    if (response === 1) {
+      shell.openExternal(pkg.homepage)
+    }
+  })
 }
 
 export const open = () => {
@@ -13,7 +24,6 @@ export const open = () => {
     filters: [{
       name: 'Images',
       extensions: [
-        // TODO:
         'jpg',
         'png',
       ],

@@ -1,4 +1,9 @@
 declare module "file-loader!*" {
   const value: string
-  export default value
+  export = value
+}
+
+declare module "*.json" {
+  const value: any
+  export = value
 }
