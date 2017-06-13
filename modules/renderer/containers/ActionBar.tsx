@@ -7,6 +7,7 @@ import { actions } from '../store/actions'
 import { IState } from '../store/reducer'
 import store from '../store/store'
 import { IpcChannel, SaveType } from '../../common/constants'
+import __ from '../../locales'
 
 import './ActionBar.less'
 
@@ -30,28 +31,28 @@ class ActionBar extends React.PureComponent<IActionBarProps, {}> {
       <div className="action-bar">
         <button onClick={this.props.onAdd}>
           <Icon name="add" />
-          <span>Add</span>
+          <span>{__('add')}</span>
         </button>
 
         <button className="tooltip-hover" disabled={!count}>
           <Icon name="down" />
-          <span>Save</span>
+          <span>{__('save')}</span>
           <Tooltip>
             <a href="#" className="tooltip-item" onClick={e => this.handleSaveClick(e, SaveType.OVER)}>
-              Save
+              {__('save_cover')}
             </a>
             <a href="#" className="tooltip-item" onClick={e => this.handleSaveClick(e, SaveType.NEW_NAME)}>
-              Save with new name
+              {__('save_new')}
             </a>
             <a href="#" className="tooltip-item" onClick={e => this.handleSaveClick(e, SaveType.NEW_DIR)}>
-              Export to
+              {__('save_dir')}
             </a>
           </Tooltip>
         </button>
 
         <button onClick={this.props.onRemoveAll} disabled={!count}>
           <Icon name="delete" />
-          <span>Clear</span>
+          <span>{__('clear')}</span>
         </button>
       </div>
     )

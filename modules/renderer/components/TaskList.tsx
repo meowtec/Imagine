@@ -2,6 +2,7 @@ import * as React from 'react'
 import { PureComponent } from 'react'
 import { ITaskItem, IOptimizeOptions } from '../../common/constants'
 import Item from './TaskView'
+import __ from '../../locales'
 
 import './TaskList.less'
 
@@ -35,7 +36,7 @@ export default class TaskList extends PureComponent<ITaskViewProps & ITaskViewDi
 
     return (
       <div className="task-list task-empty">
-        Drag some picture here
+        {__('drag_files')}
       </div>
     )
   }

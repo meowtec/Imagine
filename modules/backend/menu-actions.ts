@@ -1,6 +1,7 @@
 import { Menu, dialog } from 'electron'
 import { EventEmitter } from 'events'
 import controller from './controller'
+import __ from '../locales'
 
 export const about = () => {
   // TODO
@@ -8,7 +9,7 @@ export const about = () => {
 
 export const open = () => {
   dialog.showOpenDialog({
-    title: 'Choose image file',
+    title: __('choose_images'),
     filters: [{
       name: 'Images',
       extensions: [

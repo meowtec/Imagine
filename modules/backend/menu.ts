@@ -1,5 +1,6 @@
 import { Menu } from 'electron'
 import * as menuActions from './menu-actions'
+import __ from '../locales'
 
 export default function installMenu() {
   const menu = Menu.buildFromTemplate([
@@ -7,7 +8,7 @@ export default function installMenu() {
       label: 'Imagine',
       submenu: [
         {
-          label: 'About Imagine',
+          label: __('about', 'Imagine'),
           click: menuActions.about,
         },
         {
@@ -20,10 +21,10 @@ export default function installMenu() {
     },
 
     {
-      label: 'File',
+      label: __('file'),
       submenu: [
         {
-          label: 'Open...',
+          label: __('open'),
           accelerator: 'CommandOrControl+O',
           click: menuActions.open,
         },

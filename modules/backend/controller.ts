@@ -16,6 +16,7 @@ import { listenIpc } from './ipc-responser'
 import optimize from './optimize'
 import saveFiles from './save'
 import * as menuActions from './menu-actions'
+import __ from '../locales'
 
 type BrowserWindow = Electron.BrowserWindow
 
