@@ -12,6 +12,7 @@
     "member-ordering": [false],
     "no-console": [false],
     "no-bitwise": false,
+    "max-classes-per-file": [false],
     "trailing-comma": [
       true,
       {

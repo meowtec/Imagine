@@ -12,6 +12,7 @@ export const IpcChannel = Enum(
   'FILE_ADD',
   'OPTIMIZE',
   'SAVE',
+  'SAVED',
 )
 export type IpcChannel = Enum<typeof IpcChannel>
 

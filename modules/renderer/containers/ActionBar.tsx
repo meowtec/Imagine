@@ -3,6 +3,7 @@ import { connect, Dispatch } from 'react-redux'
 import { ipcRenderer } from 'electron'
 import Icon from '../components/Icon'
 import Tooltip from '../components/Tooltip'
+import Messager, { showMessage } from '../components/Messager'
 import { actions } from '../store/actions'
 import { IState } from '../store/reducer'
 import store from '../store/store'
@@ -22,6 +23,21 @@ class ActionBar extends React.PureComponent<IActionBarProps, {}> {
   handleSaveClick(e: React.MouseEvent<HTMLElement>, type: SaveType) {
     e.preventDefault()
     this.props.onSave(type)
+  }
+
+  handleSavedMessage = () => {
+    showMessage({
+      message: 'Save successful',
+      type: 'success',
+    })
+  }
+
+  componentDidMount() {
+    ipcRenderer.on(IpcChannel.SAVED, this.handleSavedMessage)
+  }
+
+  componentWillUnmount() {
+    ipcRenderer.removeListener(IpcChannel.SAVED, this.handleSavedMessage)
   }
 
   render() {

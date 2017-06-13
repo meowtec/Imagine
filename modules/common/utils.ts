@@ -1,3 +1,5 @@
+export const noop = () => {/* noop */}
+
 export const coop = (min: number, max: number) => (num: number) => Math.min(max, Math.max(min, num))
 
 export const coop2 = (min: number, max: number, num: number) => Math.min(max, Math.max(min, num))

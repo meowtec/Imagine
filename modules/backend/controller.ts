@@ -1,4 +1,4 @@
-import { BrowserWindow, ipcMain, dialog } from 'electron'
+import { BrowserWindow, ipcMain, dialog, shell } from 'electron'
 import * as path from 'path'
 import * as fs from 'fs-extra'
 import {
@@ -79,18 +79,26 @@ class Controller {
       this.receiveFiles(files)
     })
 
-    ipcMain.on(IpcChannel.SAVE, (event: any, images: IImageFile[], type: SaveType) => {
+    ipcMain.on(IpcChannel.SAVE, (event: Electron.IpcMessageEvent, images: IImageFile[], type: SaveType) => {
+      const save = (dirname?: string) =>
+        saveFiles(images, type, dirname)
+          .then(() => {
+            event.sender.send(IpcChannel.SAVED)
+          })
+
       if (type === SaveType.NEW_DIR) {
         dialog.showOpenDialog({
           title: 'Save files',
           properties: ['openDirectory', 'createDirectory'],
         }, filePaths => {
           if (!filePaths || !filePaths.length) return
-
-          saveFiles(images, type, filePaths[0])
+          const dirpath = filePaths[0]
+          save(dirpath).then(() => {
+            shell.openItem(dirpath)
+          })
         })
       } else {
-        saveFiles(images, type)
+        save()
       }
     })
   }

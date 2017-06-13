@@ -1,5 +1,6 @@
 import * as path from 'path'
 import * as fs from 'fs-extra'
+import { noop } from '../common/utils'
 import * as fu from '../common/file-utils'
 import { SaveType, IImageFile } from '../common/constants'
 
@@ -27,6 +28,6 @@ export default async function saveFiles(images: IImageFile[], type: SaveType, di
         break
     }
 
-    await fs.copy(fu.getFilePath(image), savePath)
+    await fs.copy(fu.getFilePath(image), savePath).catch(noop)
   }
 }
