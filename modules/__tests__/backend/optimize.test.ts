@@ -61,7 +61,7 @@ test('optimize jpg fail', async () => {
   }
 
   try {
-    optimize(image, {})
+    await optimize(image, {})
   } catch (e) {
     expect(e).toBeTruthy()
   }
