@@ -39,6 +39,7 @@ const floorZoom = (zoom: number) => {
 }
 
 const materials = [
+  'gradient',
   'transparent',
   'white',
   'black',

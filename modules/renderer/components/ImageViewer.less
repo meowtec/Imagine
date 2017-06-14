@@ -18,6 +18,25 @@
       image-rendering: pixelated;
     }
 
+    &.-gradient {
+      background-image:
+        linear-gradient(
+          limegreen,
+          transparent
+        ),
+        linear-gradient(
+          90deg,
+          skyblue,
+          transparent
+        ),
+        linear-gradient(
+          -90deg,
+          coral,
+          transparent
+        );
+      background-blend-mode: screen;
+    }
+
     &.-white {
       background: white;
     }
@@ -49,6 +68,7 @@
       position: relative;
       border: 2px solid #333;
       margin-top: -2px;
+      background: #fff;
 
       &.-checked {
         border-color: #0c9;

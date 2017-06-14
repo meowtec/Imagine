@@ -14,7 +14,7 @@
 
 .modal-leave.modal-leave-active {
   opacity: 0.01;
-  transform: translateY(20px);
+  transform: translateY(10px);
 }
 
 .modal {
@@ -37,9 +37,15 @@
     padding: 10px;
     background: none;
     z-index: 10;
+    color: #666;
+    cursor: pointer;
+    transition: color .3s;
+
+    &:hover {
+      color: #0cf;
+    }
 
     .icon {
-      color: #666;
       font-size: 24px;
     }
   }
