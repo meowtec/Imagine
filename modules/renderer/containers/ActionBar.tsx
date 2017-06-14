@@ -25,19 +25,25 @@ class ActionBar extends React.PureComponent<IActionBarProps, {}> {
     this.props.onSave(type)
   }
 
+  handleReceiveSave = (e: any, type: SaveType) => {
+    this.props.onSave(type)
+  }
+
   handleSavedMessage = () => {
     showMessage({
-      message: 'Save successful',
+      message: __('save_success'),
       type: 'success',
     })
   }
 
   componentDidMount() {
     ipcRenderer.on(IpcChannel.SAVED, this.handleSavedMessage)
+    ipcRenderer.on(IpcChannel.SAVE, this.handleReceiveSave)
   }
 
   componentWillUnmount() {
     ipcRenderer.removeListener(IpcChannel.SAVED, this.handleSavedMessage)
+    ipcRenderer.removeListener(IpcChannel.SAVE, this.handleReceiveSave)
   }
 
   render() {
@@ -87,6 +93,8 @@ export default connect((state: IState) => ({
   },
 
   onSave(type: SaveType) {
-    ipcRenderer.send(IpcChannel.SAVE, store.getState().tasks.map(task => task.optimized), type)
+    const images = store.getState().tasks.map(task => task.optimized)
+    if (!images.length) return
+    ipcRenderer.send(IpcChannel.SAVE, images, type)
   },
 }))(ActionBar) as React.ComponentClass<{}>

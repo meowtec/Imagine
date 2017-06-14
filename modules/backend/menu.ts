@@ -1,4 +1,6 @@
 import { Menu } from 'electron'
+import controller from './controller'
+import { SaveType } from '../common/constants'
 import * as menuActions from './menu-actions'
 import __ from '../locales'
 
@@ -27,6 +29,21 @@ export default function installMenu() {
           label: __('open'),
           accelerator: 'CommandOrControl+O',
           click: menuActions.open,
+        },
+        {
+          label: __('save'),
+          accelerator: 'CommandOrControl+S',
+          click: () => controller.triggerSave(SaveType.OVER),
+        },
+        {
+          label: __('save_new'),
+          // accelerator: 'CommandOrControl+S',
+          click: () => controller.triggerSave(SaveType.NEW_NAME),
+        },
+        {
+          label: __('save_dir'),
+          // accelerator: 'CommandOrControl+S',
+          click: () => controller.triggerSave(SaveType.NEW_DIR),
         },
       ],
     },

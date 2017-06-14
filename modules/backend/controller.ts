@@ -85,6 +85,11 @@ class Controller {
     win && win.webContents.send(IpcChannel.FILE_SELECTED, dests)
   }
 
+  triggerSave(type: SaveType) {
+    const win = this.getMainWindow()
+    win && win.webContents.send(IpcChannel.SAVE, type)
+  }
+
   listenIpc() {
     listenIpc<IOptimizeRequest, IImageFile>(IpcChannel.OPTIMIZE, ({image, options}) => {
       return optimize(image, options)
