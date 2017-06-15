@@ -26,6 +26,20 @@ class Alone extends React.PureComponent<IAloneProps & IAloneDispatchProps, any> 
     this.props.onOptionsChange(this.props.task.id, options)
   }
 
+  handleKeyPress = (e: KeyboardEvent) => {
+    if (e.keyCode === 27) {
+      this.props.onClose()
+    }
+  }
+
+  componentDidMount() {
+    window.addEventListener('keyup', this.handleKeyPress)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('keyup', this.handleKeyPress)
+  }
+
   render() {
     const { task } = this.props
     const image = task && (task.optimized || task.image)
