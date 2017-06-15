@@ -4,7 +4,7 @@ import { noop } from '../common/utils'
 import * as fu from '../common/file-utils'
 import { SaveType, IImageFile } from '../common/constants'
 
-export default async function saveFiles(images: IImageFile[], type: SaveType, dirname?: string) {
+export async function saveFiles(images: IImageFile[], type: SaveType, dirname?: string) {
   if (type === SaveType.NEW_DIR && !dirname) return
 
   for (const image of images) {
@@ -30,4 +30,8 @@ export default async function saveFiles(images: IImageFile[], type: SaveType, di
 
     await fs.copy(fu.getFilePath(image), savePath).catch(noop)
   }
+}
+
+export async function saveFile(image: IImageFile, filePath: string) {
+  await fs.copy(fu.getFilePath(image), filePath)
 }

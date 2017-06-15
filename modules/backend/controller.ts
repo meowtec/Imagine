@@ -14,7 +14,7 @@ import { url } from './dev'
 import PNGQuant from '../optimizers/pngquant'
 import { listenIpc } from './ipc-responser'
 import optimize from './optimize'
-import saveFiles from './save'
+import { saveFiles, saveFile } from './save'
 import * as menuActions from './menu-actions'
 import __ from '../locales'
 
@@ -120,6 +120,16 @@ class Controller {
           save(dirpath).then(() => {
             shell.openItem(dirpath)
           })
+        })
+      } else if (type === SaveType.SAVE_AS) {
+        dialog.showSaveDialog({
+          title: 'Save files',
+          defaultPath: images[0].originalName,
+        }, filePath => {
+          saveFile(images[0], filePath)
+            .then(() => {
+              event.sender.send(IpcChannel.SAVED)
+            })
         })
       } else {
         save()

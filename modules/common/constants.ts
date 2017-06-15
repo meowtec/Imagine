@@ -16,7 +16,7 @@ export const IpcChannel = Enum(
 )
 export type IpcChannel = Enum<typeof IpcChannel>
 
-export const SaveType = Enum('OVER', 'NEW_NAME', 'NEW_DIR')
+export const SaveType = Enum('OVER', 'NEW_NAME', 'NEW_DIR', 'SAVE_AS')
 export type SaveType = Enum<typeof SaveType>
 
 export interface IElectronResponse<T> {
