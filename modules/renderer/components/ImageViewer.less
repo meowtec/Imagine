@@ -97,7 +97,10 @@
   .image {
     display: block;
     image-rendering: pixelated;
-    // transition: transform ease .4s;
+
+    &.-transition {
+      transition: transform ease .1s;
+    }
   }
 
   .zoom-control {

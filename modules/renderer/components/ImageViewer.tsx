@@ -44,18 +44,18 @@ const materials = [
   'white',
   'black',
   'red',
-  // 'green',
   'blue',
   'yellow',
 ]
 
 export default class ImageViewer extends PureComponent<ImageViewerProps, ImageViewerState> {
 
-  image: HTMLImageElement
-  backdrop: HTMLDivElement
-  prevScreenX: number
-  prevScreenY: number
-  dragging = false
+  private image: HTMLImageElement
+  private backdrop: HTMLDivElement
+  private prevScreenX: number
+  private prevScreenY: number
+  private dragging = false
+  private transitionClassName = '-transition'
 
   constructor() {
     super()
@@ -97,6 +97,15 @@ export default class ImageViewer extends PureComponent<ImageViewerProps, ImageVi
     return floorZoom(Math.min(clientWidth / naturalWidth, clientHeight / naturalHeight) * 0.9)
   }
 
+  private set transition(on: boolean) {
+    const { classList } = this.image
+    if (on) {
+      classList.add(this.transitionClassName)
+    } else {
+      classList.remove(this.transitionClassName)
+    }
+  }
+
   handleImageLoad = () => {
     const { naturalWidth, naturalHeight } = this.image
 
@@ -135,6 +144,8 @@ export default class ImageViewer extends PureComponent<ImageViewerProps, ImageVi
 
   handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
     e.preventDefault()
+    this.transition = false
+
     const wheelData = consumWheelEvent(e)
     const { state } = this
 
@@ -167,9 +178,9 @@ export default class ImageViewer extends PureComponent<ImageViewerProps, ImageVi
     }
   }
 
-  // to fix
   handleZoomOut = (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation()
+    this.transition = true
 
     const { x, y, zoom, zoomCenterOffsetX, zoomCenterOffsetY } = this.state
     this.setState({
@@ -183,6 +194,7 @@ export default class ImageViewer extends PureComponent<ImageViewerProps, ImageVi
 
   handleZoomIn = (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation()
+    this.transition = true
 
     const { x, y, zoom, zoomCenterOffsetX, zoomCenterOffsetY } = this.state
     this.setState({
