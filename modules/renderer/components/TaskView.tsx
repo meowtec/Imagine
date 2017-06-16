@@ -1,20 +1,24 @@
 import * as React from 'react'
 import { PureComponent } from 'react'
 import * as classnames from 'classnames'
+import Tooltip from '../components/Tooltip'
+import 'rc-tooltip/assets/bootstrap.css'
 import Select from './Select'
 import Icon from './Icon'
 import ImageOptions from './ImageOptions'
 import SizeReduce from './SizeReduce'
-import { ITaskItem, TaskStatus, IOptimizeOptions } from '../../common/constants'
+import { ITaskItem, TaskStatus, IOptimizeOptions, SaveType } from '../../common/constants'
 import * as _ from '../../common/utils'
+import __ from '../../locales'
 
 import './TaskView.less'
 
 interface ITaskViewProps {
   task: ITaskItem
-  onRemove(id: string): void
-  onClick(id: string): void
-  onOptionsChange(id: string, options: IOptimizeOptions): void
+  onRemove(task: ITaskItem): void
+  onClick(task: ITaskItem): void
+  onSave(task: ITaskItem, type: SaveType): void
+  onOptionsChange(task: ITaskItem, options: IOptimizeOptions): void
 }
 
 class TaskView extends PureComponent<ITaskViewProps, void> {
@@ -22,15 +26,22 @@ class TaskView extends PureComponent<ITaskViewProps, void> {
     e.preventDefault()
     e.stopPropagation()
 
-    this.props.onRemove(this.props.task.id)
+    this.props.onRemove(this.props.task)
   }
 
   handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    this.props.onClick(this.props.task.id)
+    this.props.onClick(this.props.task)
   }
 
   handleOptionsChange = (options: IOptimizeOptions) => {
-    this.props.onOptionsChange(this.props.task.id, options)
+    this.props.onOptionsChange(this.props.task, options)
+  }
+
+  handleSave = (e: React.MouseEvent<any>, type: SaveType) => {
+    e.preventDefault()
+    e.stopPropagation()
+
+    this.props.onSave(this.props.task, type)
   }
 
   render() {
@@ -45,22 +56,42 @@ class TaskView extends PureComponent<ITaskViewProps, void> {
       <div className={classnames('task-view', '-' + task.status)}>
         <div className="image-view" onClick={this.handleClick}>
           <img src={destImage.url} alt="task-cover"/>
-          <span className="traffic-light">
-            <Icon
-              name={isProcessing ? 'color' : 'dot'}
-              className={classnames({
-                '-spin': isProcessing,
-              })}
-            />
-          </span>
-          <a onClick={this.handleClear} href="#" className="close">
-            <Icon name="clear" />
-          </a>
+          <div className="image-view-menu">
+            <span className="traffic">
+              <Icon
+                name={isProcessing ? 'color' : 'dot'}
+                className={classnames({
+                  '-spin': isProcessing,
+                })}
+              />
+            </span>
+            <span className="save-btn tooltip-hover">
+              <Icon name="down" />
+              <Tooltip>
+                <a
+                  className="tooltip-item"
+                  href="#"
+                  onClick={e => this.handleSave(e, SaveType.OVER)}
+                >
+                  {__('save')}
+                </a>
+                <a
+                  className="tooltip-item"
+                  href="#"
+                  onClick={e => this.handleSave(e, SaveType.SAVE_AS)}
+                >
+                  {__('save_as')}
+                </a>
+              </Tooltip>
+            </span>
+            <span className="__center" />
+            <a className="close" onClick={this.handleClear} href="#">
+              <Icon name="clear" />
+            </a>
+          </div>
         </div>
         <div className="image-profile">
-          <div className="image-options">
-            <ImageOptions ext={image.ext} options={options} onChange={this.handleOptionsChange} />
-          </div>
+          <ImageOptions ext={image.ext} options={options} onChange={this.handleOptionsChange} />
           <div className="image-sizes">
             <SizeReduce task={task} />
           </div>

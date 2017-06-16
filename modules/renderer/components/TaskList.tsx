@@ -1,22 +1,23 @@
 import * as React from 'react'
 import { PureComponent } from 'react'
-import { ITaskItem, IOptimizeOptions } from '../../common/constants'
+import { ITaskItem, IOptimizeOptions, SaveType } from '../../common/constants'
 import Item from './TaskView'
 import __ from '../../locales'
 
 import './TaskList.less'
 
-export interface ITaskViewProps {
+export interface ITaskListProps {
   tasks: ITaskItem[]
 }
 
-export interface ITaskViewDispatchProps {
-  onRemove(id: string): void
-  onClick(id: string): void
-  onOptionsChange(id: string, options: IOptimizeOptions): void
+export interface ITaskListDispatchProps {
+  onRemove(task: ITaskItem): void
+  onClick(task: ITaskItem): void
+  onSave(task: ITaskItem, type: SaveType): void
+  onOptionsChange(task: ITaskItem, options: IOptimizeOptions): void
 }
 
-export default class TaskList extends PureComponent<ITaskViewProps & ITaskViewDispatchProps, void> {
+export default class TaskList extends PureComponent<ITaskListProps & ITaskListDispatchProps, void> {
   render() {
     if (this.props.tasks.length) {
       return (
@@ -26,6 +27,7 @@ export default class TaskList extends PureComponent<ITaskViewProps & ITaskViewDi
               onRemove={this.props.onRemove}
               onClick={this.props.onClick}
               onOptionsChange={this.props.onOptionsChange}
+              onSave={this.props.onSave}
               key={task.id}
               task={task}
             />

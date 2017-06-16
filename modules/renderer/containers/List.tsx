@@ -1,20 +1,24 @@
+import { ipcRenderer } from 'electron'
 import store from '../store/store'
 import { actions } from '../store/actions'
 import { IState } from '../store/reducer'
-import TaskList, { ITaskViewProps, ITaskViewDispatchProps } from '../components/TaskList'
-import { ITaskItem, IOptimizeOptions } from '../../common/constants'
+import TaskList, { ITaskListProps, ITaskListDispatchProps } from '../components/TaskList'
+import { ITaskItem, IOptimizeOptions, SaveType, IpcChannel } from '../../common/constants'
 import { connect } from 'react-redux'
 
-export default connect<ITaskViewProps, ITaskViewDispatchProps, {}>((state: IState) => ({
+export default connect<ITaskListProps, ITaskListDispatchProps, {}>((state: IState) => ({
   tasks: state.tasks,
 }), dispatch => ({
-  onRemove(id: string) {
-    dispatch(actions.taskDelete([id]))
+  onRemove(task: ITaskItem) {
+    dispatch(actions.taskDelete([task.id]))
   },
-  onOptionsChange(id: string, options: IOptimizeOptions) {
-    dispatch(actions.taskUpdateOptions(id, options))
+  onOptionsChange(task: ITaskItem, options: IOptimizeOptions) {
+    dispatch(actions.taskUpdateOptions(task.id, options))
   },
-  onClick(id: string) {
-    dispatch(actions.taskDetail(id))
+  onClick(task: ITaskItem) {
+    dispatch(actions.taskDetail(task.id))
+  },
+  onSave(task: ITaskItem, type: SaveType) {
+    ipcRenderer.send(IpcChannel.SAVE, [task.image], type)
   },
 }))(TaskList)
