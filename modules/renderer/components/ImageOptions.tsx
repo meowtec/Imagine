@@ -3,6 +3,8 @@ import { SupportedExt, IOptimizeOptions } from '../../common/constants'
 import ColorNumber from './ColorNumber'
 import Quality from './Quality'
 
+import './ImageOptions.less'
+
 interface ImageOptionsProps {
   ext: SupportedExt
   options: IOptimizeOptions
@@ -28,6 +30,7 @@ export default class ImageOptions extends React.PureComponent<ImageOptionsProps,
   renderPNG() {
     return (
       <div className="image-options">
+        <label>Colors</label>
         <ColorNumber value={this.props.options.color} onChange={this.handleColorChange} />
       </div>
     )
@@ -36,7 +39,9 @@ export default class ImageOptions extends React.PureComponent<ImageOptionsProps,
   renderJPG() {
     return (
       <div className="image-options">
+        <label>Quality</label>
         <Quality value={this.props.options.quality} onChange={this.handleQualityChange} />
+        <span className="percent-symbol">%</span>
       </div>
     )
   }
