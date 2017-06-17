@@ -8,7 +8,9 @@ const { NODE_ENV } = process.env
 
 let url: string
 
-if (NODE_ENV !== 'development') {
+const isDev = NODE_ENV === 'development'
+
+if (!isDev) {
   url = 'file://' + path.resolve(__dirname, '../../htdocs/app.html')
 } else {
   // start dev server
@@ -41,4 +43,4 @@ if (NODE_ENV !== 'development') {
   url = 'http://localhost:9999/htdocs/app.html'
 }
 
-export { url }
+export { isDev, url }

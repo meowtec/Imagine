@@ -7,10 +7,10 @@ import * as pkg from '../../package.json'
 export const about = () => {
   dialog.showMessageBox({
     type: 'info',
-    title: __('about'),
+    title: __('about', pkg.name),
     message: `Imagine v${pkg.version}`,
     detail: `Created by Meowtec\n${pkg.homepage}`,
-    buttons: ['OK', 'Visit'],
+    buttons: [__('ok'), __('visit')],
   }, response => {
     if (response === 1) {
       shell.openExternal(pkg.homepage)

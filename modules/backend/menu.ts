@@ -2,15 +2,17 @@ import { Menu } from 'electron'
 import controller from './controller'
 import { SaveType } from '../common/constants'
 import * as menuActions from './menu-actions'
+import { isDev } from './dev'
 import __ from '../locales'
+import * as pkg from '../../package.json'
 
 export default function installMenu() {
-  const menu = Menu.buildFromTemplate([
+  const menuTemplates: Electron.MenuItemConstructorOptions[] = [
     {
-      label: 'Imagine',
+      label: pkg.name,
       submenu: [
         {
-          label: __('about', 'Imagine'),
+          label: __('about', pkg.name),
           click: menuActions.about,
         },
         {
@@ -47,16 +49,20 @@ export default function installMenu() {
         },
       ],
     },
+  ]
 
-    {
+  if (isDev) {
+    menuTemplates.push({
       label: 'Debug',
       submenu: [
         {role: 'reload'},
         {role: 'forcereload' as 'reload'},
         {role: 'toggledevtools'},
       ],
-    },
-  ])
+    })
+  }
+
+  const menu = Menu.buildFromTemplate(menuTemplates)
 
   Menu.setApplicationMenu(menu)
 }

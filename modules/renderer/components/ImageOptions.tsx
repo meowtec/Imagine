@@ -2,6 +2,7 @@ import * as React from 'react'
 import { SupportedExt, IOptimizeOptions } from '../../common/constants'
 import ColorNumber from './ColorNumber'
 import Quality from './Quality'
+import __ from '../../locales'
 
 import './ImageOptions.less'
 
@@ -30,7 +31,7 @@ export default class ImageOptions extends React.PureComponent<ImageOptionsProps,
   renderPNG() {
     return (
       <div className="image-options">
-        <label>Colors</label>
+        <label>{__('colors')}</label>
         <ColorNumber value={this.props.options.color} onChange={this.handleColorChange} />
       </div>
     )
@@ -39,7 +40,7 @@ export default class ImageOptions extends React.PureComponent<ImageOptionsProps,
   renderJPG() {
     return (
       <div className="image-options">
-        <label>Quality</label>
+        <label>{__('quality')}</label>
         <Quality value={this.props.options.quality} onChange={this.handleQualityChange} />
         <span className="percent-symbol">%</span>
       </div>
