@@ -1,6 +1,8 @@
 import * as React from 'react'
 import * as classnames from 'classnames'
 
+import './RadioGroup.less'
+
 interface IRadioGroupProps {
   value: any
   data: any[]
@@ -42,6 +44,8 @@ export default class RadioGroup<T> extends React.PureComponent<IRadioGroupProps,
   }
 
   static defaultProps = {
+    className: '-standard',
+
     renderItem(item: any) {
       return item
     },

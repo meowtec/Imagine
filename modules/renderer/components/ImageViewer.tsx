@@ -282,7 +282,7 @@ export default class ImageViewer extends PureComponent<ImageViewerProps, ImageVi
           value={material}
           renderItem={this.renderMaterialItem}
           onChange={this.handleMaterialChange}
-        ></RadioGroup>
+        />
       </div>
     )
   }

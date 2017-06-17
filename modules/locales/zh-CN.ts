@@ -16,4 +16,6 @@ export default {
   quality: '质量',
   visit: '访问主页',
   ok: '好的',
+  before_optimized: '优化前',
+  after_optimized: '优化后',
 }

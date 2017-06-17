@@ -1,14 +1,17 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
+import { Enum } from 'typescript-string-enums'
 import ImageOptions from '../components/ImageOptions'
 import ImageViewer from '../components/ImageViewer'
 import Modal from '../components/Modal'
 import Icon from '../components/Icon'
 import SizeReduce from '../components/SizeReduce'
+import RadioGroup from '../components/RadioGroup'
 import { actions } from '../store/actions'
 import { IState } from '../store/reducer'
 import { getTaskById } from '../store/filter'
-import { ITaskItem, IOptimizeOptions, TaskStatus } from '../../common/constants'
+import { ITaskItem, IOptimizeOptions, TaskStatus, IImageFile } from '../../common/constants'
+import __ from '../../locales'
 
 import './Alone.less'
 
@@ -21,7 +24,24 @@ interface IAloneDispatchProps {
   onOptionsChange(id: string, options: IOptimizeOptions): void
 }
 
-class Alone extends React.PureComponent<IAloneProps & IAloneDispatchProps, any> {
+export const ImageStage = Enum('before_optimized', 'after_optimized')
+export type ImageStage = Enum<typeof ImageStage>
+
+const imageStageList = [ImageStage.before_optimized, ImageStage.after_optimized]
+
+interface IAloneState {
+  imageStage: ImageStage,
+}
+
+class Alone extends React.PureComponent<IAloneProps & IAloneDispatchProps, IAloneState> {
+  constructor() {
+    super()
+
+    this.state = {
+      imageStage: ImageStage.after_optimized,
+    }
+  }
+
   handleOptionsChange = (options: IOptimizeOptions) => {
     this.props.onOptionsChange(this.props.task.id, options)
   }
@@ -40,9 +60,22 @@ class Alone extends React.PureComponent<IAloneProps & IAloneDispatchProps, any> 
     window.removeEventListener('keyup', this.handleKeyPress)
   }
 
+  handleImageStageChange = (value: ImageStage) => {
+    this.setState({
+      imageStage: value,
+    })
+  }
+
   render() {
     const { task } = this.props
-    const image = task && (task.optimized || task.image)
+    const { imageStage } = this.state
+
+    let image: IImageFile
+    if (task) {
+      image = imageStage === ImageStage.after_optimized
+        ? task.optimized
+        : task.image
+    }
 
     return (
       <Modal className="alone-modal" visible={!!task} onClose={this.props.onClose}>
@@ -58,6 +91,13 @@ class Alone extends React.PureComponent<IAloneProps & IAloneDispatchProps, any> 
               <div className="paper alone-options">
                 <ImageOptions ext={task.image.ext} options={task.options} onChange={this.handleOptionsChange} />
               </div>
+              <RadioGroup
+                className="original-check -standard"
+                data={imageStageList}
+                value={this.state.imageStage}
+                renderItem={__}
+                onChange={this.handleImageStageChange}
+              />
             </div>
           ) : null
         }

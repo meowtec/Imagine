@@ -1,0 +1,31 @@
+.radio-group.-standard {
+  display: inline-flex;
+  font-size: 12px;
+
+  .radio-item {
+    position: relative;
+    padding: 3px 6px;
+    background: #fff;
+    cursor: pointer;
+    transition: .2s;
+    box-shadow: 0 0 3px rgba(0, 0, 0, .2);
+
+    &:first-child {
+      border-radius: 5px 0 0 5px;
+    }
+
+    &:last-child {
+      border-radius: 0 5px 5px 0;
+    }
+
+    &.-checked {
+      z-index: 1;
+      cursor: default;
+      background: #09f;
+      color: #fff;
+    }
+
+    &:not(.-checked):hover {
+    }
+  }
+}
