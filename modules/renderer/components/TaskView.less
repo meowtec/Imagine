@@ -4,9 +4,15 @@
   position: relative;
   box-sizing: border-box;
   background: #fff;
-  // border: 1px solid @border-color;
-  box-shadow: 0 0 5px rgba(0, 0, 0, .2);
+  box-shadow: 0 0 4px rgba(0, 0, 0, .2);
   overflow: hidden;
+  border-radius: 5px;
+  transition: box-shadow .4s;
+
+  &:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+    background: #fafafa;
+  }
 
   .image-view {
     position: relative;
@@ -119,6 +125,7 @@
     height: 30px;
     transition: .1s;
     color: #555;
+    border-radius: 0 0 0 5px;
 
     &:hover {
       background-color: #c36;
