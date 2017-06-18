@@ -44,7 +44,7 @@ export default class TaskList extends PureComponent<ITaskListProps & ITaskListDi
 
     return (
       <div className="task-list task-empty">
-        {__('drag_files')}
+        <span>{__('drag_files')}</span>
       </div>
     )
   }
