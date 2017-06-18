@@ -1,7 +1,7 @@
 import { createStore } from 'redux'
 import reducer, { IState } from './reducer'
 import Daemon from './daemon'
-import listenPush from './push'
+import subscribe from './subscribe'
 
 const { __REDUX_DEVTOOLS_EXTENSION__ } = window as any
 
@@ -12,6 +12,6 @@ const store = createStore<IState>(
 
 const daemon = new Daemon()
 daemon.watch(store)
-listenPush(store)
+subscribe(store)
 
 export default store

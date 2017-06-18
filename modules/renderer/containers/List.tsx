@@ -1,10 +1,10 @@
-import { ipcRenderer } from 'electron'
+import { connect } from 'react-redux'
 import store from '../store/store'
 import { actions } from '../store/actions'
 import { IState } from '../store/reducer'
 import TaskList, { ITaskListProps, ITaskListDispatchProps } from '../components/TaskList'
 import { ITaskItem, IOptimizeOptions, SaveType, IpcChannel } from '../../common/constants'
-import { connect } from 'react-redux'
+import * as apis from '../apis'
 
 export default connect<ITaskListProps, ITaskListDispatchProps, {}>((state: IState) => ({
   tasks: state.tasks,
@@ -19,6 +19,6 @@ export default connect<ITaskListProps, ITaskListDispatchProps, {}>((state: IStat
     dispatch(actions.taskDetail(task.id))
   },
   onSave(task: ITaskItem, type: SaveType) {
-    ipcRenderer.send(IpcChannel.SAVE, [task.image], type)
+    apis.fileSave([task.image], type)
   },
 }))(TaskList)

@@ -7,8 +7,12 @@ export const coop2 = (min: number, max: number, num: number) => Math.min(max, Ma
 export const randomId = () => Math.random().toString(36).slice(2)
 
 export const shallowCompare = <T>(a: T, b: T, keys?: Array<keyof T>) => {
-  if (a === b) {
+  if (a === b || (a == null && b == null)) {
     return true
+  }
+
+  if (typeof a !== 'object' || !a || typeof b !== 'object' || !b) {
+      return false
   }
 
   if (!keys) {

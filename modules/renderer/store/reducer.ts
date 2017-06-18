@@ -1,4 +1,3 @@
-import { ipcRenderer } from 'electron'
 import { Reducer, combineReducers } from 'redux'
 import { handleActions, Action } from 'redux-actions'
 import { IImageFile, IOptimizeOptions, ITaskItem, TaskStatus } from '../../common/constants'

@@ -9,8 +9,8 @@ import ActionBar from './containers/ActionBar'
 import Alone from './containers/Alone'
 import { prevent } from './utils/dom-event'
 import { IpcChannel } from '../common/constants'
-import { ipcRenderer } from 'electron'
 import store from './store/store'
+import * as apis from './apis'
 
 import './components/Icon'
 import './App.less'
@@ -43,7 +43,7 @@ export default class App extends React.PureComponent<{}, {}> {
       })
       .map(file => file.path)
 
-    ipcRenderer.send(IpcChannel.FILE_ADD, files)
+    apis.fileAdd(files)
   }
 
   render() {

@@ -1,13 +1,12 @@
 import * as React from 'react'
 import { connect, Dispatch } from 'react-redux'
-import { ipcRenderer } from 'electron'
 import Icon from '../components/Icon'
 import Tooltip from '../components/Tooltip'
-import Messager, { showMessage } from '../components/Messager'
 import { actions } from '../store/actions'
 import { IState } from '../store/reducer'
 import store from '../store/store'
 import { IpcChannel, SaveType } from '../../common/constants'
+import * as apis from '../apis'
 import __ from '../../locales'
 
 import './ActionBar.less'
@@ -23,27 +22,6 @@ class ActionBar extends React.PureComponent<IActionBarProps, {}> {
   handleSaveClick(e: React.MouseEvent<HTMLElement>, type: SaveType) {
     e.preventDefault()
     this.props.onSave(type)
-  }
-
-  handleReceiveSave = (e: any, type: SaveType) => {
-    this.props.onSave(type)
-  }
-
-  handleSavedMessage = () => {
-    showMessage({
-      message: __('save_success'),
-      type: 'success',
-    })
-  }
-
-  componentDidMount() {
-    ipcRenderer.on(IpcChannel.SAVED, this.handleSavedMessage)
-    ipcRenderer.on(IpcChannel.SAVE, this.handleReceiveSave)
-  }
-
-  componentWillUnmount() {
-    ipcRenderer.removeListener(IpcChannel.SAVED, this.handleSavedMessage)
-    ipcRenderer.removeListener(IpcChannel.SAVE, this.handleReceiveSave)
   }
 
   render() {
@@ -89,12 +67,10 @@ export default connect((state: IState) => ({
   },
 
   onAdd() {
-    ipcRenderer.send(IpcChannel.FILE_SELECT)
+    apis.fileSelect()
   },
 
   onSave(type: SaveType) {
-    const images = store.getState().tasks.map(task => task.optimized)
-    if (!images.length) return
-    ipcRenderer.send(IpcChannel.SAVE, images, type)
+    apis.fileSaveAll(type)
   },
 }))(ActionBar) as React.ComponentClass<{}>

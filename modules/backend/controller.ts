@@ -8,6 +8,7 @@ import {
   IOptimizeRequest,
   IpcChannel,
   SaveType,
+  IBackendState,
 } from '../common/constants'
 import * as fu from '../common/file-utils'
 import { url } from './dev'
@@ -15,6 +16,7 @@ import PNGQuant from '../optimizers/pngquant'
 import { listenIpc } from './ipc-responser'
 import optimize from './optimize'
 import { saveFiles, saveFile } from './save'
+import menuManager from './menu'
 import * as menuActions from './menu-actions'
 import __ from '../locales'
 
@@ -22,6 +24,7 @@ type BrowserWindow = Electron.BrowserWindow
 
 class Controller {
   windows: number[] = []
+  menu = menuManager
 
   start() {
     const shouldQuit = app.makeSingleInstance(this.createWindow)
@@ -31,7 +34,9 @@ class Controller {
     } else {
       this.createWindow()
     }
+    this.menu.render()
     this.listenIpc()
+    this.listenMenu()
   }
 
   onOtherInstance() {
@@ -85,9 +90,11 @@ class Controller {
     win && win.webContents.send(IpcChannel.FILE_SELECTED, dests)
   }
 
-  triggerSave(type: SaveType) {
-    const win = this.getMainWindow()
-    win && win.webContents.send(IpcChannel.SAVE, type)
+  listenMenu() {
+    this.menu.on('save', (type: SaveType) => {
+      const win = this.getMainWindow()
+      win && win.webContents.send(IpcChannel.SAVE, type)
+    })
   }
 
   listenIpc() {
@@ -134,6 +141,13 @@ class Controller {
       } else {
         save()
       }
+    })
+
+    ipcMain.on(IpcChannel.SYNC, (event: any, state: IBackendState) => {
+      const { menu } = this
+      menu.taskCount = state.taskCount
+      menu.aloneMode = state.aloneMode
+      menu.render()
     })
   }
 }

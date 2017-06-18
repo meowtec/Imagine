@@ -13,6 +13,7 @@ export const IpcChannel = Enum(
   'OPTIMIZE',
   'SAVE',
   'SAVED',
+  'SYNC',
 )
 export type IpcChannel = Enum<typeof IpcChannel>
 
@@ -49,4 +50,9 @@ export interface ITaskItem {
 export interface IOptimizeRequest {
   image: IImageFile
   options: IOptimizeOptions
+}
+
+export interface IBackendState {
+  taskCount: number
+  aloneMode: boolean
 }

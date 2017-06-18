@@ -1,3 +1,4 @@
+import { EventEmitter } from 'events'
 import { Menu } from 'electron'
 import controller from './controller'
 import { SaveType } from '../common/constants'
@@ -6,63 +7,90 @@ import { isDev } from './dev'
 import __ from '../locales'
 import * as pkg from '../../package.json'
 
-export default function installMenu() {
-  const menuTemplates: Electron.MenuItemConstructorOptions[] = [
-    {
-      label: pkg.name,
-      submenu: [
-        {
-          label: __('about', pkg.name),
-          click: menuActions.about,
-        },
-        {
-          type: 'separator',
-        },
-        {
-          role: 'quit',
-        },
-      ],
-    },
+class ManuManager extends EventEmitter {
+  taskCount = 0
+  aloneMode = false
 
-    {
-      label: __('file'),
-      submenu: [
-        {
-          label: __('open'),
-          accelerator: 'CommandOrControl+O',
-          click: menuActions.open,
-        },
-        {
+  handleSave(type: SaveType) {
+    this.emit('save', type)
+  }
+
+  render() {
+    let saveFragment: Electron.MenuItemConstructorOptions[] = []
+
+    if (this.taskCount) {
+      saveFragment = this.aloneMode
+        ?
+        [{
           label: __('save'),
           accelerator: 'CommandOrControl+S',
-          click: () => controller.triggerSave(SaveType.OVER),
+          click: () => this.handleSave(SaveType.OVER),
+        },
+        {
+          label: __('save_as'),
+          click: () => this.handleSave(SaveType.SAVE_AS),
+        }]
+        :
+        [{
+          label: __('save'),
+          accelerator: 'CommandOrControl+S',
+          click: () => this.handleSave(SaveType.OVER),
         },
         {
           label: __('save_new'),
-          // accelerator: 'CommandOrControl+S',
-          click: () => controller.triggerSave(SaveType.NEW_NAME),
+          click: () => this.handleSave(SaveType.NEW_NAME),
         },
         {
           label: __('save_dir'),
-          // accelerator: 'CommandOrControl+S',
-          click: () => controller.triggerSave(SaveType.NEW_DIR),
-        },
-      ],
-    },
-  ]
+          click: () => this.handleSave(SaveType.NEW_DIR),
+        }]
+    }
 
-  if (isDev) {
-    menuTemplates.push({
-      label: 'Debug',
-      submenu: [
-        {role: 'reload'},
-        {role: 'forcereload' as 'reload'},
-        {role: 'toggledevtools'},
-      ],
-    })
+    const menuTemplates: Electron.MenuItemConstructorOptions[] = [
+      {
+        label: pkg.name,
+        submenu: [
+          {
+            label: __('about', pkg.name),
+            click: menuActions.about,
+          },
+          {
+            type: 'separator',
+          },
+          {
+            role: 'quit',
+          },
+        ],
+      },
+
+      {
+        label: __('file'),
+        submenu: [
+          {
+            label: __('open'),
+            accelerator: 'CommandOrControl+O',
+            click: menuActions.open,
+          },
+          ...saveFragment,
+        ],
+      },
+    ]
+
+    if (isDev) {
+      menuTemplates.push({
+        label: 'Debug',
+        submenu: [
+          {role: 'reload'},
+          {role: 'forcereload' as 'reload'},
+          {role: 'toggledevtools'},
+        ],
+      })
+    }
+
+    const menu = Menu.buildFromTemplate(menuTemplates)
+
+    Menu.setApplicationMenu(menu)
   }
-
-  const menu = Menu.buildFromTemplate(menuTemplates)
-
-  Menu.setApplicationMenu(menu)
 }
+
+export default new ManuManager()
