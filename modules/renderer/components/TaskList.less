@@ -18,3 +18,27 @@
   padding-top: 200px;
   font-size: 30px;
 }
+
+.task-enter {
+  opacity: 0.01;
+  transform: scale(1.05);
+}
+
+.task-enter.task-enter-active {
+  opacity: 1;
+  transform: scale(1);
+  transition: .3s;
+  transition-property: opacity, transform;
+}
+
+.task-leave {
+  opacity: 1;
+}
+
+.task-leave.task-leave-active {
+  opacity: 0.01;
+  transform: scale(1.05);
+  transition: .3s;
+  transition-property: opacity, transform;
+}
+

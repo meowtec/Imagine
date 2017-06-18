@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { PureComponent } from 'react'
+import { CSSTransitionGroup } from 'react-transition-group'
 import { ITaskItem, IOptimizeOptions, SaveType } from '../../common/constants'
 import Item from './TaskView'
 import __ from '../../locales'
@@ -21,7 +22,12 @@ export default class TaskList extends PureComponent<ITaskListProps & ITaskListDi
   render() {
     if (this.props.tasks.length) {
       return (
-        <div className="task-list">
+        <CSSTransitionGroup
+          transitionName="task"
+          className="task-list"
+          transitionEnterTimeout={500}
+          transitionLeaveTimeout={300}
+        >
           {this.props.tasks.map(task => (
             <Item
               onRemove={this.props.onRemove}
@@ -32,7 +38,7 @@ export default class TaskList extends PureComponent<ITaskListProps & ITaskListDi
               task={task}
             />
           ))}
-        </div>
+        </CSSTransitionGroup>
       )
     }
 
