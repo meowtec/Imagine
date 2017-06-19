@@ -17,7 +17,12 @@ export function consumWheelEvent(wheelEvent: WheelEvent<any>): IWheelData {
 
   const { deltaX, deltaY, deltaZ, ctrlKey } = wheelEvent
 
-  if (ctrlKey) {
+  if ((deltaY === 100 || deltaY === -100) && !deltaX) {
+    // mouse
+    wheelData.type = 'zoom'
+    wheelData.zoom = deltaY === 100 ? 1 / 2 : 2
+  } else if (ctrlKey) {
+    // trackpad
     wheelData.type = 'zoom'
     wheelData.zoom = Math.pow(1.02, -deltaY)
   } else {

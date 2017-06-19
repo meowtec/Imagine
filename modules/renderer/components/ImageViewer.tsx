@@ -23,6 +23,7 @@ interface ImageViewerState {
   zoomCenterOffsetX: number
   zoomCenterOffsetY: number
   material: string
+  transition: boolean
 }
 
 const ZOOM_MIN = 0.125
@@ -55,7 +56,6 @@ export default class ImageViewer extends PureComponent<ImageViewerProps, ImageVi
   private prevScreenX: number
   private prevScreenY: number
   private dragging = false
-  private transitionClassName = '-transition'
 
   constructor() {
     super()
@@ -69,12 +69,18 @@ export default class ImageViewer extends PureComponent<ImageViewerProps, ImageVi
       zoomCenterOffsetX: 0,
       zoomCenterOffsetY: 0,
       material: materials[0],
+      transition: false,
     }
   }
 
   componentDidMount() {
     document.addEventListener('mousemove', this.handleMouseMove)
     document.addEventListener('mouseup', this.handleMouseUp)
+  }
+
+  private forcePaint() {
+    /* tslint:disable-next-line no-unused-expression */
+    this.image.clientWidth
   }
 
   private imageSize() {
@@ -95,15 +101,6 @@ export default class ImageViewer extends PureComponent<ImageViewerProps, ImageVi
     const { clientWidth, clientHeight } = this.backdrop
 
     return floorZoom(Math.min(clientWidth / naturalWidth, clientHeight / naturalHeight) * 0.9)
-  }
-
-  private set transition(on: boolean) {
-    const { classList } = this.image
-    if (on) {
-      classList.add(this.transitionClassName)
-    } else {
-      classList.remove(this.transitionClassName)
-    }
   }
 
   handleImageLoad = () => {
@@ -144,7 +141,6 @@ export default class ImageViewer extends PureComponent<ImageViewerProps, ImageVi
 
   handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
     e.preventDefault()
-    this.transition = false
 
     const wheelData = consumWheelEvent(e)
     const { state } = this
@@ -163,58 +159,84 @@ export default class ImageViewer extends PureComponent<ImageViewerProps, ImageVi
       const x = state.x - (zoomCenterOffsetX - state.zoomCenterOffsetX) * (1 - state.zoom)
       const y = state.y - (zoomCenterOffsetY - state.zoomCenterOffsetY) * (1 - state.zoom)
 
-      this.setState({
-        zoom,
+      const newState = {
         zoomCenterOffsetX,
         zoomCenterOffsetY,
         x,
         y,
-      })
+        zoom,
+        transition: false,
+      }
+
+      if (Math.abs(Math.log2(wheelData.zoom)) < 1) {
+        this.setState(newState)
+      } else {
+        this.performTransition(newState)
+      }
     } else {
       this.setState({
         x: state.x - wheelData.x,
         y: state.y - wheelData.y,
+        transition: false,
       })
     }
   }
 
   handleZoomOut = (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation()
-    this.transition = true
 
     const { x, y, zoom, zoomCenterOffsetX, zoomCenterOffsetY } = this.state
-    this.setState({
+    this.performTransition({
       zoom: roundZoom(zoom * 2),
       zoomCenterOffsetX: 0,
       zoomCenterOffsetY: 0,
       x: x + zoomCenterOffsetX * (1 - zoom),
       y: y + zoomCenterOffsetY * (1 - zoom),
+      transition: true,
     })
   }
 
   handleZoomIn = (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation()
-    this.transition = true
 
     const { x, y, zoom, zoomCenterOffsetX, zoomCenterOffsetY } = this.state
-    this.setState({
+    this.performTransition({
       zoom: roundZoom(zoom / 2),
       zoomCenterOffsetX: 0,
       zoomCenterOffsetY: 0,
       x: x + zoomCenterOffsetX * (1 - zoom),
       y: y + zoomCenterOffsetY * (1 - zoom),
+      transition: true,
     })
   }
 
   handleFocusCenter = (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation()
 
-    this.setState({
+    this.performTransition({
       x: 0,
       y: 0,
       zoomCenterOffsetX: 0,
       zoomCenterOffsetY: 0,
       zoom: this.initialZoom(),
+      transition: true,
+    })
+  }
+
+  /**
+   * notice: state will mutate
+   */
+  performTransition(state: Partial<ImageViewerState>) {
+    const { zoom } = state
+    delete state.zoom
+    state.transition = false
+
+    this.setState(state as ImageViewerState, () => {
+      this.forcePaint()
+      this.setState({
+        transition: true,
+        zoom,
+      })
     })
   }
 
@@ -236,6 +258,7 @@ export default class ImageViewer extends PureComponent<ImageViewerProps, ImageVi
       zoomCenterOffsetX,
       zoomCenterOffsetY,
       material,
+      transition,
     } = this.state
 
     const { width, height } = this.imageSize()
@@ -257,7 +280,9 @@ export default class ImageViewer extends PureComponent<ImageViewerProps, ImageVi
           onMouseDown={this.handleMouseDown}
         >
           <img
-            className="image"
+            className={classnames('image', {
+              '-transition': transition,
+            })}
             src={this.props.src}
             onLoad={this.handleImageLoad}
             ref={el => {this.image = el}}
