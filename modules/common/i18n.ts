@@ -8,6 +8,8 @@ interface IMacroMap {
   [key: string]: string
 }
 
+export type Gettext = (key: string, ...args: any[]) => string
+
 // eg: en-US -> en
 const macrolang = (langCode: string) => langCode.split('-')[0]
 
