@@ -5,6 +5,7 @@ import Ranger from './Ranger'
 interface IQualityProps {
   value: number
   inputReadOnly?: boolean
+  nativeStep: number
   onChange(value: number): void
 }
 
@@ -18,6 +19,7 @@ export default function Quality(props: IQualityProps) {
       min={10}
       max={100}
       value={props.value}
+      nativeStep = {props.nativeStep}
       onChange={props.onChange}
       transformInput={transformInput}
       transformOutput={transformOutput}

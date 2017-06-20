@@ -8,6 +8,7 @@ interface IRangerProps {
   value: number
   max: number
   min: number
+  nativeStep: number
   inputReadOnly?: boolean
   transformInput?(value: number): number
   transformOutput?(value: number): number
@@ -20,7 +21,7 @@ export default class Ranger extends React.PureComponent<IRangerProps, any> {
   fixValue(value: number) {
     const { max, min } = this.props
 
-    return _.coop2(min, max, value)
+    return ~~_.coop2(min, max, value)
   }
 
   handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,7 +29,7 @@ export default class Ranger extends React.PureComponent<IRangerProps, any> {
     const { value } = input
     const { transformOutput } = this.props
 
-    this.props.onChange(this.fixValue(transformOutput(~~value)))
+    this.props.onChange(this.fixValue(transformOutput(Number(value))))
   }
 
   handleNumberInputChange  = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,7 +37,7 @@ export default class Ranger extends React.PureComponent<IRangerProps, any> {
   }
 
   render() {
-    const { min, max, value, transformInput, transformOutput } = this.props
+    const { min, max, value, transformInput, transformOutput, nativeStep } = this.props
     const nativeValue = transformInput(value)
 
     return (
@@ -46,7 +47,7 @@ export default class Ranger extends React.PureComponent<IRangerProps, any> {
           value={nativeValue}
           min={transformInput(min)}
           max={transformInput(max)}
-          step={1}
+          step={nativeStep}
           onChange={this.handleInputChange}
         />
         <input

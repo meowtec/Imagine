@@ -90,7 +90,12 @@ class TaskView extends PureComponent<ITaskViewProps, void> {
           </div>
         </div>
         <div className="image-profile">
-          <ImageOptions ext={image.ext} options={options} onChange={this.handleOptionsChange} />
+          <ImageOptions
+            ext={image.ext}
+            options={options}
+            precision={false}
+            onChange={this.handleOptionsChange}
+          />
           <div className="image-sizes">
             <SizeReduce task={task} />
           </div>

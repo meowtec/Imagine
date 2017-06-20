@@ -89,7 +89,12 @@ class Alone extends React.PureComponent<IAloneProps & IAloneDispatchProps, IAlon
               }
               <SizeReduce task={task} />
               <div className="paper alone-options">
-                <ImageOptions ext={task.image.ext} options={task.options} onChange={this.handleOptionsChange} />
+                <ImageOptions
+                  ext={task.image.ext}
+                  options={task.options}
+                  precision={true}
+                  onChange={this.handleOptionsChange}
+                />
               </div>
               <RadioGroup
                 className="original-check -standard"
