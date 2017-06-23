@@ -20,7 +20,7 @@ interface ITaskViewProps {
   onOptionsChange(task: ITaskItem, options: IOptimizeOptions): void
 }
 
-class TaskView extends PureComponent<ITaskViewProps, void> {
+class TaskView extends PureComponent<ITaskViewProps, {}> {
   handleClear = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault()
     e.stopPropagation()

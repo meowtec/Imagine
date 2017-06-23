@@ -18,7 +18,7 @@ export interface ITaskListDispatchProps {
   onOptionsChange(task: ITaskItem, options: IOptimizeOptions): void
 }
 
-export default class TaskList extends PureComponent<ITaskListProps & ITaskListDispatchProps, void> {
+export default class TaskList extends PureComponent<ITaskListProps & ITaskListDispatchProps, {}> {
   render() {
     if (this.props.tasks.length) {
       return (

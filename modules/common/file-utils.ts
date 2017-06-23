@@ -5,7 +5,6 @@ import * as crypto from 'crypto'
 import * as fileType from 'file-type'
 import * as readChunk from 'read-chunk'
 import * as rawBody from 'raw-body'
-import { V4Options } from 'uuid'
 import { IImageFile, IOptimizeOptions, SupportedExt } from '../common/constants'
 
 export const tmpdir = path.resolve(os.tmpdir(), 'imageOptimizer')
