@@ -84,7 +84,8 @@ class Controller {
     this.windows.push(id)
   }
 
-  async receiveFiles(files: string[], winId?: string) {
+  async receiveFiles(filePaths: string[], winId?: string) {
+    const files = await fu.flattenFiles(filePaths)
     const dests = (await fu.saveFilesTmp(files)).filter(x => x)
     const win = this.getMainWindow()
     win && win.webContents.send(IpcChannel.FILE_SELECTED, dests)

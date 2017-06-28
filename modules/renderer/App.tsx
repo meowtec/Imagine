@@ -39,7 +39,7 @@ export default class App extends React.PureComponent<{}, {}> {
 
     const files = Array.from(e.dataTransfer.files)
       .filter(file => {
-        return /png|jpeg/.test(file.type)
+        return !file.type || /png|jpeg/.test(file.type)
       })
       .map(file => file.path)
 
