@@ -10,7 +10,7 @@
 
 [GIF(7.4M)](http://7qn7vf.com1.z0.glb.clouddn.com/IMAGINE2.gif)
 
-![](http://7qn7vf.com1.z0.glb.clouddn.com/imagine.png)
+![](http://7qn7vf.com1.z0.glb.clouddn.com/imagine.png?)
 
 ## Features
 
@@ -18,4 +18,4 @@
  - Cross platform
  - Visual
  - Batch optimization
- - Internationalized (简体中文, English)
+ - i18n (简体中文, English)
