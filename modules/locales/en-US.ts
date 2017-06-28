@@ -9,7 +9,7 @@ export default {
   save_dir: 'Export to',
   save_as: 'Save as',
   save_success: 'Save successfully',
-  clear: 'Clear',
+  clear: 'Clear all',
   choose_images: 'Choose images',
   drag_files: 'Drag pictures here from the local folder',
   colors: 'Coloes',
