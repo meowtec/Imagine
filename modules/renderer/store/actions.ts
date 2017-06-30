@@ -1,6 +1,6 @@
 import { createAction, Action } from 'redux-actions'
 import { Enum } from 'typescript-string-enums'
-import { IImageFile, IOptimizeOptions, ITaskItem, TaskStatus } from '../../common/constants'
+import { IImageFile, IOptimizeOptions, ITaskItem, TaskStatus, IUpdateInfo } from '../../common/constants'
 
 export const ACTIONS = Enum(
   'TASK_ADD',
@@ -11,6 +11,7 @@ export const ACTIONS = Enum(
   'TASK_OPTIMIZE_SUCCESS',
   'TASK_OPTIMIZE_FAIL',
   'TASK_DETAIL',
+  'APP_CAN_UPDATE',
 )
 
 export const actions = {
@@ -31,4 +32,6 @@ export const actions = {
   taskOptimizeFail: createAction<string>(ACTIONS.TASK_OPTIMIZE_FAIL),
 
   taskDetail: createAction<string>(ACTIONS.TASK_DETAIL),
+
+  appUpdateInfo: createAction<IUpdateInfo>(ACTIONS.APP_CAN_UPDATE),
 }

@@ -4,7 +4,7 @@ import { IState } from './reducer'
 import { actions } from './actions'
 import { getTaskById } from './filter'
 import { shallowCompare } from '../../common/utils'
-import { IpcChannel, IImageFile, SaveType, IBackendState, ITaskItem } from '../../common/constants'
+import { IpcChannel, IImageFile, SaveType, IBackendState, ITaskItem, IUpdateInfo } from '../../common/constants'
 import { showMessage } from '../components/Messager'
 import * as apis from '../apis'
 import __ from '../../locales'
@@ -53,5 +53,9 @@ export default function(store: Store<IState>) {
     if (emptyTask && data.length === 1) {
       store.dispatch(actions.taskDetail(data[0].id))
     }
+  })
+
+  ipcRenderer.on(IpcChannel.APP_UPDATE, (event: any, data: IUpdateInfo) => {
+    store.dispatch(actions.appUpdateInfo(data))
   })
 }

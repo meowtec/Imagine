@@ -11,7 +11,7 @@
     "build": "tsc && cross-env NODE_ENV=production webpack",
     "start": "npm run build && electron .",
     "pack": "npm run build && build --dir",
-    "dist": "npm run build && build",
+    "release": "npm run build && build",
     "test": "tsc && npm run lint && jest"
   },
   "author": "meowtec",
@@ -69,6 +69,7 @@
   "dependencies": {
     "child-process-promise": "^2.2.1",
     "electron-log": "^2.2.6",
+    "electron-updater": "^2.4.3",
     "file-type": "^5.2.0",
     "fs-extra": "^3.0.0",
     "lodash": "^4.17.4",
