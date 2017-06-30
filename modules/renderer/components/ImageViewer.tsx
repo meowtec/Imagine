@@ -23,7 +23,7 @@ interface ImageViewerState {
   material: string
 }
 
-const ZOOM_MIN = 0.125
+const ZOOM_MIN = 1 / 8
 const ZOOM_MAX = 16
 
 const zoomCoop = coop(ZOOM_MIN, ZOOM_MAX)

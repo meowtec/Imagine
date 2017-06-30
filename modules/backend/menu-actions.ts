@@ -30,6 +30,7 @@ export const open = () => {
     }],
     properties: [
       'openFile',
+      'openDirectory',
       'multiSelections',
     ],
   }, filePaths => {

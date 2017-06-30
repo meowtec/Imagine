@@ -6,6 +6,7 @@ import * as fileType from 'file-type'
 import * as readChunk from 'read-chunk'
 import * as rawBody from 'raw-body'
 import { IImageFile, IOptimizeOptions, SupportedExt } from '../common/constants'
+import log from 'electron-log'
 
 export const tmpdir = path.resolve(os.tmpdir(), 'imageOptimizer')
 
@@ -41,7 +42,7 @@ export const getFilePath = (image: IImageFile) => path.resolve(tmpdir, image.id 
 export const saveFilesTmp = (files: string[]) => {
   return Promise.all(files.map(async file => {
     const type = await imageType(file)
-    if (!(type.ext in SupportedExt)) {
+    if (!(type && type.ext in SupportedExt)) {
       return
     }
 
@@ -78,4 +79,30 @@ export const unoccupiedFile = (filePath: string, index = 0): Promise<string> => 
   return fs.access(accessPath)
     .then(() => unoccupiedFile(filePath, index + 1))
     .catch(() => accessPath)
+}
+
+/**
+ * walk dir/file list to a flat files list
+ */
+export const flattenFiles = async (filePaths: string[]) => {
+  let list: string[] = []
+
+  for (const filePath of filePaths) {
+    try {
+      const stat = await fs.stat(filePath)
+      if (stat.isFile()) {
+        list.push(filePath)
+      } else if (stat.isDirectory()) {
+        const dirFileNames = await fs.readdir(filePath)
+        const dirFiles = dirFileNames.map(name => path.resolve(filePath, name))
+        const dirFlatFiles = await flattenFiles(dirFiles)
+        list = list.concat(dirFlatFiles)
+      }
+
+    } catch (e) {
+      log.error(`Failed to access file ${filePath}`)
+    }
+  }
+
+  return list
 }
