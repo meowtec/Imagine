@@ -12,7 +12,7 @@ export default {
   clear: 'Clear all',
   choose_images: 'Choose images',
   drag_files: 'Drag pictures here from the local folder',
-  colors: 'Coloes',
+  colors: 'Colors',
   quality: 'Quality',
   visit: 'Visit homepage',
   ok: 'OK',
