@@ -1,0 +1,33 @@
+platform:
+  - x64
+
+cache:
+  - node_modules
+  - '%APPDATA%\npm-cache'
+  - '%USERPROFILE%\.electron'
+
+# branches:
+#   only:
+#     - master
+
+# Test against the latest version of this Node.js version
+environment:
+  nodejs_version: "6"
+
+# Install scripts. (runs after repo cloning)
+install:
+  # Get the latest stable version of Node.js or io.js
+  - ps: Install-Product node $env:nodejs_version
+  # install modules
+  - npm install
+
+# Post-install test scripts.
+test_script:
+  - npm run test
+  - npm run release
+
+build_script:
+  - npm run release
+
+# Don't actually build.
+# build: off
