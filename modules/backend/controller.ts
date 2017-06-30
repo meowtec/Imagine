@@ -27,7 +27,7 @@ class Controller {
   menu = menuManager
 
   start() {
-    const shouldQuit = app.makeSingleInstance(this.createWindow)
+    const shouldQuit = app.makeSingleInstance(this.onOtherInstance)
     if (shouldQuit) {
       app.quit()
       return
@@ -39,7 +39,7 @@ class Controller {
     this.listenMenu()
   }
 
-  onOtherInstance() {
+  onOtherInstance = () => {
     const win = this.getMainWindow()
     win && win.focus()
   }
