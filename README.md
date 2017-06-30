@@ -2,9 +2,17 @@
 
 [![build](https://travis-ci.org/meowtec/Imagine.svg?branch=master)](https://travis-ci.org/meowtec/Imagine)
 
+Imagine is a desktop app for compression of PNG and JPEG, with a modern and friendly UI.
+
+Save images for web!
+
 ## Install
 
+For Windows and macOS, download the binary below:
+
 [https://github.com/meowtec/Imagine/releases](https://github.com/meowtec/Imagine/releases)
+
+[国内加速](https://github.com/meowtec/Imagine/issues/7)
 
 ## Screenshot
 
