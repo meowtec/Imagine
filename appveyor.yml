@@ -22,9 +22,10 @@ install:
   - npm install
 
 # Post-install test scripts.
-test_script:
-  - npm run test
-  - npm run release
+# test_script:
+#   - npm run test
+#   - npm run release
+test: off
 
 build_script:
   - npm run release
