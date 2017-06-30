@@ -18,4 +18,5 @@ export default {
   ok: 'OK',
   before_optimized: 'before',
   after_optimized: 'after',
+  new_version: 'New version available',
 }

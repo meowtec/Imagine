@@ -1,6 +1,6 @@
 import { Reducer, combineReducers } from 'redux'
 import { handleActions, Action } from 'redux-actions'
-import { IImageFile, IOptimizeOptions, ITaskItem, TaskStatus } from '../../common/constants'
+import { IImageFile, IOptimizeOptions, ITaskItem, TaskStatus, IUpdateInfo } from '../../common/constants'
 import { ACTIONS } from './actions'
 import deamon from './daemon'
 
@@ -8,6 +8,7 @@ type Tasks = ITaskItem[]
 
 interface IGlobals {
   activeId: string
+  updateInfo: IUpdateInfo
 }
 
 export interface IState {
@@ -96,8 +97,15 @@ export const globalsReducer = handleActions<IGlobals>({
       activeId: action.payload,
     }
   },
+  [ACTIONS.APP_CAN_UPDATE](state, action: Action<IUpdateInfo>) {
+    return {
+      ...state,
+      updateInfo: action.payload,
+    }
+  },
 }, {
   activeId: null,
+  updateInfo: null,
 })
 
 export default combineReducers<IState>({

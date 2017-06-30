@@ -18,4 +18,5 @@ export default {
   ok: '好的',
   before_optimized: '优化前',
   after_optimized: '优化后',
+  new_version: '有新版本',
 }

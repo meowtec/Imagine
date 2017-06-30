@@ -14,6 +14,7 @@ export const IpcChannel = Enum(
   'SAVE',
   'SAVED',
   'SYNC',
+  'APP_UPDATE',
 )
 export type IpcChannel = Enum<typeof IpcChannel>
 
@@ -55,4 +56,15 @@ export interface IOptimizeRequest {
 export interface IBackendState {
   taskCount: number
   aloneMode: boolean
+}
+
+export interface IUpdateInfo {
+  path: string
+  githubArtifactName: string
+  releaseName: string
+  releaseNotes: string
+  releaseDate: string
+  sha512: string
+  stagingPercentage: number
+  version: string
 }
