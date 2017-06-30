@@ -1,6 +1,6 @@
 {
   "name": "Imagine",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "pngquant gui",
   "homepage": "https://github.com/meowtec/Imagine",
   "main": "./lib/bootstrap.js",
