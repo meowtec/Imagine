@@ -37,6 +37,10 @@ class Controller {
     this.menu.render()
     this.listenIpc()
     this.listenMenu()
+
+    app.on('window-all-closed', () => {
+      app.quit()
+    })
   }
 
   onOtherInstance = () => {
