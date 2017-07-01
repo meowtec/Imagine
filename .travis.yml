@@ -1,8 +1,8 @@
-os: osx
+# os: osx
 language: node_js
 node_js:
   - "6"
 
 script:
   - npm run test
-  - if [ "$TRAVIS_BRANCH" = "master" -a "$TRAVIS_PULL_REQUEST" = "false" ]; npm run release; fi
+  # - if [ "$TRAVIS_BRANCH" = "master" -a "$TRAVIS_PULL_REQUEST" = "false" ]; npm run release; fi
