@@ -27,3 +27,9 @@ For Windows and macOS, download the binary below:
  - Visual
  - Batch optimization
  - i18n (简体中文, English)
+
+## Built on
+
+ - [Electron](https://electron.atom.io/): Build cross platform desktop apps with JavaScript, HTML, and CSS
+ - [pngquant](https://pngquant.org/): Lossy PNG compressor
+ - [mozjpeg](https://github.com/mozilla/mozjpeg): Improved JPEG encoder
