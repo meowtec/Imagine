@@ -4,7 +4,7 @@
 
 Imagine is a desktop app for compression of PNG and JPEG, with a modern and friendly UI.
 
-Save images for web!
+Save for web!
 
 ## Install
 
