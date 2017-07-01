@@ -1,8 +1,7 @@
 {
   "compilerOptions": {
     "sourceMap": false,
-    "noImplicitAny": true,
-    "alwaysStrict": true,
+    "strict": true,
     "module": "commonjs",
     "target": "es2015",
     "importHelpers": true,

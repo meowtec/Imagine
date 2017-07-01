@@ -29,8 +29,8 @@ export default class Messager extends React.PureComponent<IMessagerProps, {}> {
 }
 
 interface IMessagerManagerState {
-  message?: IMessagerProps
-  key?: number
+  message: IMessagerProps | null
+  key: number
 }
 
 class MessagerManager extends React.PureComponent<{}, IMessagerManagerState> {
@@ -41,6 +41,7 @@ class MessagerManager extends React.PureComponent<{}, IMessagerManagerState> {
 
     this.state = {
       key: 0,
+      message: null,
     }
   }
 
@@ -90,13 +91,12 @@ export const showMessage = (options: string | IMessagerProps & {
     const div = document.createElement('div')
     document.body.appendChild(div)
     ReactDOM.render((
-      <MessagerManager ref={mm => {messagerManager = mm}} />
+      <MessagerManager ref={mm => {messagerManager = mm!}} />
     ), div)
     hasGroupInstance = true
   }
 
   let props: IMessagerProps
-  let duration: number
 
   if (typeof options === 'string') {
     props = {
@@ -105,7 +105,6 @@ export const showMessage = (options: string | IMessagerProps & {
     }
   } else {
     props = options
-    duration = options.duration
   }
 
   if (messagerManager) messagerManager.show(props)

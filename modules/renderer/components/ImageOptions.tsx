@@ -33,7 +33,7 @@ export default class ImageOptions extends React.PureComponent<ImageOptionsProps,
       <div className="image-options">
         <label>{__('colors')}</label>
         <ColorNumber
-          value={this.props.options.color}
+          value={this.props.options.color!}
           onChange={this.handleColorChange}
           nativeStep={this.props.precision ? 0.1 : 1}
         />
@@ -46,7 +46,7 @@ export default class ImageOptions extends React.PureComponent<ImageOptionsProps,
       <div className="image-options">
         <label>{__('quality')}</label>
         <Quality
-          value={this.props.options.quality}
+          value={this.props.options.quality!}
           onChange={this.handleQualityChange}
           nativeStep={this.props.precision ? 0.1 : 1}
         />

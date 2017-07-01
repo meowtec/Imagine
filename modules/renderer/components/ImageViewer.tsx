@@ -9,7 +9,7 @@ import Icon from './Icon'
 import './ImageViewer.less'
 
 interface ImageViewerProps {
-  src: string
+  src?: string
   width?: number
   height?: number
 }
@@ -215,7 +215,7 @@ export default class ImageViewer extends PureComponent<ImageViewerProps, ImageVi
       <div
         className="backdrop"
         onWheel={this.handleWheel}
-        ref={el => {this.backdrop = el}}
+        ref={el => {this.backdrop = el!}}
       >
         <div className={classnames('material-wall', '-' + material)}></div>
         <div
@@ -226,7 +226,7 @@ export default class ImageViewer extends PureComponent<ImageViewerProps, ImageVi
             className="image -transition"
             src={this.props.src}
             onLoad={this.handleImageLoad}
-            ref={el => {this.image = el}}
+            ref={el => {this.image = el!}}
             style={{
               transform: `translate(${x}px, ${y}px) scale(${zoom})`,
             }}

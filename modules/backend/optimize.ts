@@ -12,11 +12,9 @@ const optimize = async (image: IImageFile, options: IOptimizeOptions): Promise<I
   const sourcePath = fu.getFilePath(image)
   const optimizedId = fu.md5(image.id + JSON.stringify(options))
 
-  const dest: IImageFile = {
+  const dest: Partial<IImageFile> = {
     id: optimizedId,
     ext: image.ext,
-    url: null,
-    size: null,
     originalName: image.originalName,
   }
 
@@ -27,7 +25,7 @@ const optimize = async (image: IImageFile, options: IOptimizeOptions): Promise<I
   try {
     dest.size = await fu.getSize(destPath)
   } catch (e) {
-    let Class: IOptimizerConstructor
+    let Class: IOptimizerConstructor | null = null
 
     if (isPNG) {
       Class = PNGQuant
@@ -37,6 +35,10 @@ const optimize = async (image: IImageFile, options: IOptimizeOptions): Promise<I
       Class = Mozjpeg
     }
 
+    if (!Class) {
+      throw new Error(`Unsupported file format: ${image.ext}`)
+    }
+
     const optimizer = new Class(options)
 
     await optimizer.io(sourcePath, destPath)
@@ -44,7 +46,7 @@ const optimize = async (image: IImageFile, options: IOptimizeOptions): Promise<I
     dest.size = await fu.getSize(destPath)
   }
 
-  return dest
+  return dest as IImageFile
 }
 
 export default optimize

@@ -19,6 +19,6 @@ export default connect<ITaskListProps, ITaskListDispatchProps, {}>((state: IStat
     dispatch(actions.taskDetail(task.id))
   },
   onSave(task: ITaskItem, type: SaveType) {
-    apis.fileSave([task.optimized], type)
+    task.optimized && apis.fileSave([task.optimized], type)
   },
 }))(TaskList)

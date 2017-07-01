@@ -7,8 +7,8 @@ import deamon from './daemon'
 type Tasks = ITaskItem[]
 
 interface IGlobals {
-  activeId: string
-  updateInfo: IUpdateInfo
+  activeId: string | null
+  updateInfo?: IUpdateInfo
 }
 
 export interface IState {
@@ -39,7 +39,7 @@ export const taskReducer = handleActions<Tasks>({
   [ACTIONS.TASK_ADD](state, action: Action<IImageFile[]>) {
     return [
       ...state,
-      ...action.payload
+      ...action.payload!
         .filter(image => !state.some(task => task.id === image.id))
         .map<ITaskItem>(image => ({
           id: image.id,
@@ -51,7 +51,7 @@ export const taskReducer = handleActions<Tasks>({
   },
 
   [ACTIONS.TASK_DELETE](state, action: Action<string[]>) {
-    return state.filter(task => !action.payload.some(id => id === task.id))
+    return state.filter(task => !action.payload!.some(id => id === task.id))
   },
 
   [ACTIONS.TASK_CLEAR](state, action: Action<void>) {
@@ -59,7 +59,7 @@ export const taskReducer = handleActions<Tasks>({
   },
 
   [ACTIONS.TASK_UPDATE_OPTIONS](state, action: Action<{ id: string, options: IOptimizeOptions }>) {
-    const { id, options } = action.payload
+    const { id, options } = action.payload!
     return updateTaskHelper(state, id, {
       options,
       status: TaskStatus.PENDING,
@@ -67,14 +67,14 @@ export const taskReducer = handleActions<Tasks>({
   },
 
   [ACTIONS.TASK_OPTIMIZE_START](state, action: Action<string>) {
-    const id = action.payload
+    const id = action.payload!
     return updateTaskHelper(state, id, {
       status: TaskStatus.PROCESSING,
     })
   },
 
   [ACTIONS.TASK_OPTIMIZE_SUCCESS](state, action: Action<{ id: string, optimized: IImageFile }>) {
-    const { id, optimized } = action.payload
+    const { id, optimized } = action.payload!
     return updateTaskHelper(state, id, {
       optimized,
       status: TaskStatus.DONE,
@@ -82,10 +82,9 @@ export const taskReducer = handleActions<Tasks>({
   },
 
   [ACTIONS.TASK_OPTIMIZE_FAIL](state, action: Action<string>) {
-    const id = action.payload
+    const id = action.payload!
     return updateTaskHelper(state, id, {
       status: TaskStatus.FAIL,
-      optimized: null,
     })
   },
 }, [])
@@ -105,7 +104,6 @@ export const globalsReducer = handleActions<IGlobals>({
   },
 }, {
   activeId: null,
-  updateInfo: null,
 })
 
 export default combineReducers<IState>({

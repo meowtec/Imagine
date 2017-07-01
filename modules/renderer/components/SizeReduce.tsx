@@ -5,10 +5,11 @@ import * as _ from '../../common/utils'
 export default function SizeReduce({ task }: { task: ITaskItem }) {
   const { image, optimized } = task
   const beforeSize = _.size(image.size)
-  const afterSize = optimized && _.size(optimized.size)
-  const percent = optimized && _.percent((image.size - optimized.size) / image.size)
 
   if (optimized) {
+    const afterSize = _.size(optimized.size)
+    const percent = _.percent((image.size - optimized.size) / image.size)
+
     return (
       <div className="size-reduce">
         <span className="size-number">{afterSize[0]}</span>

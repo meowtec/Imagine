@@ -11,7 +11,7 @@ const jpg = '../_files/fox.jpg'
 
 test('optimize png success', async () => {
   const files = await saveFilesTmp([relPath(png)])
-  const file = files[0]
+  const file = files[0] as IImageFile
   const optimized = await optimize(file, {})
 
   const diffResult = await fullDiff({
@@ -40,7 +40,7 @@ test('optimize png fail', async () => {
 
 test('optimize jpg success', async () => {
   const files = await saveFilesTmp([relPath(jpg)])
-  const file = files[0]
+  const file = files[0] as IImageFile
   const optimized = await optimize(file, {})
 
   const diffResult = await fullDiff({

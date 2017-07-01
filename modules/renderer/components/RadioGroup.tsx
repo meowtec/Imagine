@@ -12,7 +12,7 @@ interface IRadioGroupProps {
   className?: string
 }
 
-export default class RadioGroup<T> extends React.PureComponent<IRadioGroupProps, {}> {
+export default class RadioGroup extends React.PureComponent<IRadioGroupProps, {}> {
   handleClick = (value: any) => {
     this.props.onChange(value)
   }
@@ -23,8 +23,8 @@ export default class RadioGroup<T> extends React.PureComponent<IRadioGroupProps,
     return (
       <div className={classnames('radio-group', className)}>
         {
-          this.props.data.map((item: T) => {
-            const value = itemValue(item)
+          this.props.data.map((item) => {
+            const value = itemValue!(item)
 
             return (
                 <div
@@ -34,7 +34,7 @@ export default class RadioGroup<T> extends React.PureComponent<IRadioGroupProps,
                   })}
                   onClick={() => this.handleClick(value)}
                 >
-                {renderItem(item)}
+                {renderItem!(item)}
               </div>
             )
           })

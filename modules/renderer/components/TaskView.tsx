@@ -47,8 +47,6 @@ class TaskView extends PureComponent<ITaskViewProps, {}> {
     const { task, onOptionsChange } = this.props
     const { image, optimized, options } = task
     const destImage = task.optimized || task.image
-    const color = Math.pow(2, Math.round(Math.log2(options.color)))
-
     const isProcessing = task.status === TaskStatus.PROCESSING
 
     return (

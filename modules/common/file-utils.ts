@@ -37,7 +37,7 @@ export async function imageType(file: string | Buffer) {
   return fileType(file)
 }
 
-export const getFilePath = (image: IImageFile) => path.resolve(tmpdir, image.id + '.' + image.ext)
+export const getFilePath = (image: Partial<IImageFile>) => path.resolve(tmpdir, image.id + '.' + image.ext)
 
 export const saveFilesTmp = (files: string[]) => {
   return Promise.all(files.map(async file => {
@@ -49,8 +49,7 @@ export const saveFilesTmp = (files: string[]) => {
     const id = md5(file) + await fileMD5(file)
     const size = await getSize(file)
 
-    const descriptor: IImageFile = {
-      url: null,
+    const descriptor: Partial<IImageFile> = {
       size,
       id,
       ext: type.ext as SupportedExt,
@@ -62,7 +61,7 @@ export const saveFilesTmp = (files: string[]) => {
 
     await fs.copy(file, dest)
 
-    return descriptor
+    return descriptor as IImageFile
   }))
 }
 
