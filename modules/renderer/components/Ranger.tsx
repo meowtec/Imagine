@@ -29,7 +29,7 @@ export default class Ranger extends React.PureComponent<IRangerProps, any> {
     const { value } = input
     const { transformOutput } = this.props
 
-    this.props.onChange(this.fixValue(transformOutput(Number(value))))
+    this.props.onChange(this.fixValue(transformOutput!(Number(value))))
   }
 
   handleNumberInputChange  = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,15 +38,15 @@ export default class Ranger extends React.PureComponent<IRangerProps, any> {
 
   render() {
     const { min, max, value, transformInput, transformOutput, nativeStep } = this.props
-    const nativeValue = transformInput(value)
+    const nativeValue = transformInput!(value)
 
     return (
       <div className="ranger">
         <input
           type="range"
           value={nativeValue}
-          min={transformInput(min)}
-          max={transformInput(max)}
+          min={transformInput!(min)}
+          max={transformInput!(max)}
           step={nativeStep}
           onChange={this.handleInputChange}
         />

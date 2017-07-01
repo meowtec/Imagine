@@ -200,7 +200,6 @@ test('task fail', () => {
         quality: 70,
       },
       status: TaskStatus.FAIL,
-      optimized: null,
     },
   ])
 })

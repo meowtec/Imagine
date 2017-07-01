@@ -13,7 +13,7 @@ export default class Select extends React.Component<ISelectProps, {}> {
     return (
       <div className="select">
         {children}
-        <Icon name={iconName} />
+        <Icon name={iconName!} />
       </div>
     )
   }

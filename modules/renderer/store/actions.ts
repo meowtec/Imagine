@@ -31,7 +31,7 @@ export const actions = {
 
   taskOptimizeFail: createAction<string>(ACTIONS.TASK_OPTIMIZE_FAIL),
 
-  taskDetail: createAction<string>(ACTIONS.TASK_DETAIL),
+  taskDetail: createAction<string | null>(ACTIONS.TASK_DETAIL),
 
   appUpdateInfo: createAction<IUpdateInfo>(ACTIONS.APP_CAN_UPDATE),
 }

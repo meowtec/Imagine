@@ -36,10 +36,10 @@ export default function(store: Store<IState>) {
   ipcRenderer.on(IpcChannel.SAVE, (e: any, type: SaveType) => {
     const state = store.getState()
     const { activeId } = state.globals
-    let task: ITaskItem
+    let task: ITaskItem | undefined
     if (activeId) {
       task = getTaskById(state.tasks, activeId)
-      if (task) {
+      if (task && task.optimized) {
         apis.fileSave([task.optimized], type)
         return
       }

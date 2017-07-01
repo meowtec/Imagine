@@ -18,7 +18,7 @@ test('optimize daemon', async () => {
   new Daemon().watch(store)
   let state
 
-  store.dispatch(actions.taskAdd(images))
+  store.dispatch(actions.taskAdd(images as IImageFile[]))
 
   // for debounce
   await sleep(100)
@@ -40,7 +40,7 @@ test('optimize daemon', async () => {
   await sleep(10)
 
   // update options and auto optimized
-  store.dispatch(actions.taskUpdateOptions(images[0].id, {
+  store.dispatch(actions.taskUpdateOptions((images[0] as IImageFile).id, {
     color: 8,
   }))
 

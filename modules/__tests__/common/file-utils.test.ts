@@ -9,6 +9,7 @@ import {
   unoccupiedFile,
   flattenFiles,
 } from '../../common/file-utils'
+import { IImageFile } from '../../common/constants'
 
 const relPath = (file: string) => path.resolve(__dirname, file)
 
@@ -55,8 +56,8 @@ test('saveFilesTmp', async () => {
 
   const files = await saveFilesTmp(paths)
 
-  expect(files[0].ext).toBe('png')
-  expect(files[1].ext).toBe('jpg')
+  expect((files[0] as IImageFile).ext).toBe('png')
+  expect((files[1] as IImageFile).ext).toBe('jpg')
 })
 
 test('unoccupiedFile 1', async () => {

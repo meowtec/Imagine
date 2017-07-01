@@ -16,7 +16,7 @@ import __ from '../../locales'
 import './Alone.less'
 
 interface IAloneProps {
-  task: ITaskItem
+  task?: ITaskItem
 }
 
 interface IAloneDispatchProps {
@@ -43,7 +43,7 @@ class Alone extends React.PureComponent<IAloneProps & IAloneDispatchProps, IAlon
   }
 
   handleOptionsChange = (options: IOptimizeOptions) => {
-    this.props.onOptionsChange(this.props.task.id, options)
+    this.props.onOptionsChange(this.props.task!.id, options)
   }
 
   handleKeyPress = (e: KeyboardEvent) => {
@@ -70,7 +70,7 @@ class Alone extends React.PureComponent<IAloneProps & IAloneDispatchProps, IAlon
     const { task } = this.props
     const { imageStage } = this.state
 
-    let image: IImageFile
+    let image: IImageFile | undefined
     if (task) {
       image = imageStage === ImageStage.after_optimized
         ? task.optimized
