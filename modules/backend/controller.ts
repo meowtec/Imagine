@@ -1,3 +1,4 @@
+import * as os from 'os'
 import { BrowserWindow, ipcMain, dialog, app, shell } from 'electron'
 import * as path from 'path'
 import * as fs from 'fs-extra'
@@ -57,7 +58,7 @@ class Controller {
 
   createWindow() {
     const win = new BrowserWindow({
-      width: 800,
+      width: os.platform() === 'darwin' ? 800 : 834,
       height: 600,
       minWidth: 540,
       // titleBarStyle: 'hidden',
