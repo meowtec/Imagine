@@ -11,9 +11,6 @@ export async function saveFiles(images: IImageFile[], type: SaveType, dirname?: 
     if (!image) continue
 
     let savePath: string = image.originalName
-    if (!savePath.endsWith(image.ext)) {
-      savePath = savePath + '.' + image.ext
-    }
 
     switch (type) {
       case SaveType.OVER:

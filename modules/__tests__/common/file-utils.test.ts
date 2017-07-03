@@ -81,6 +81,13 @@ test('unoccupiedFile 3', async () => {
   expect(pathActual).toBe(pathExpect)
 })
 
+test('unoccupiedFile 4', async () => {
+  const path0 = relPath('../_files/firefox')
+  const pathExpect = relPath('../_files/firefox(1)')
+  const pathActual = await unoccupiedFile(path0)
+  expect(pathActual).toBe(pathExpect)
+})
+
 test('flattenFiles', async () => {
   const sources = [
     '../_files/fox.jpg',
