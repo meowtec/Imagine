@@ -18,13 +18,13 @@ export function md5(text: string) {
   return crypto.createHash('md5').update(text).digest('hex')
 }
 
-export function getSize(path: string) {
-  return fs.stat(path).then(stats => stats.size)
+export function getSize(filePath: string) {
+  return fs.stat(filePath).then(stats => stats.size)
 }
 
-export async function fileMD5(path: string) {
+export async function fileMD5(filePath: string) {
   const hash: any = crypto.createHash('md5')
-  fs.createReadStream(path).pipe(hash)
+  fs.createReadStream(filePath).pipe(hash)
   return rawBody(hash, {
     encoding: 'hex',
   })
