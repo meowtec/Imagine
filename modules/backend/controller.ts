@@ -24,8 +24,13 @@ import __ from '../locales'
 type BrowserWindow = Electron.BrowserWindow
 
 class Controller {
-  windows: number[] = []
-  menu = menuManager
+  private windows: number[] = []
+  private menu = menuManager
+  private readyHook: () => void
+
+  ready = new Promise((resolve) => {
+    this.readyHook = resolve
+  })
 
   start() {
     const shouldQuit = app.makeSingleInstance(this.onOtherInstance)
@@ -155,6 +160,8 @@ class Controller {
       menu.aloneMode = state.aloneMode
       menu.render()
     })
+
+    ipcMain.on(IpcChannel.READY, this.readyHook)
   }
 }
 

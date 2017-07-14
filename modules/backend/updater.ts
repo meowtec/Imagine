@@ -13,12 +13,12 @@ autoUpdater.autoDownload = false
 
 autoUpdater.on('update-available', (info: IUpdateInfo) => {
   log.info('update available', info.version, info.path)
-  setTimeout(() => {
+  controller.ready.then(() => {
     const win = controller.getMainWindow()
     if (win) {
       win.webContents.send(IpcChannel.APP_UPDATE, info)
     }
-  }, 2000)
+  })
 })
 
 export default autoUpdater

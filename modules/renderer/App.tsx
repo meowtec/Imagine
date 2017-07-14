@@ -8,7 +8,6 @@ import List from './containers/List'
 import ActionBar from './containers/ActionBar'
 import Alone from './containers/Alone'
 import { prevent } from './utils/dom-event'
-import { IpcChannel } from '../common/constants'
 import store from './store/store'
 import * as apis from './apis'
 

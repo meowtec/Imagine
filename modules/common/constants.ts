@@ -15,6 +15,7 @@ export const IpcChannel = Enum(
   'SAVED',
   'SYNC',
   'APP_UPDATE',
+  'READY',
 )
 export type IpcChannel = Enum<typeof IpcChannel>
 
