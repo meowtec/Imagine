@@ -14,8 +14,7 @@ let gettext: Gettext
 
 // get os language in main or renderer
 export const setup = () => {
-  // const locale = app ? app.getLocale() : navigator.language
-  const locale = 'nl-TW'
+  const locale = app ? app.getLocale() : navigator.language
   gettext = createLocale(texts, {
     zh: 'zh-CN',
     nl: 'nl-NL',
