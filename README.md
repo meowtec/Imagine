@@ -26,7 +26,7 @@ For Windows and macOS, download the binary below:
  - Cross platform
  - Visual
  - Batch optimization
- - i18n (简体中文, English)
+ - i18n (English, 简体中文, Nederlands)
 
 ## Built on
 

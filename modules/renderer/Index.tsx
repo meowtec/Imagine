@@ -1,8 +1,10 @@
+import { ipcRenderer } from 'electron'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
 import store from './store/store'
 import App from './App'
+import { IpcChannel } from '../common/constants'
 
 if (process.env.NODE_ENV === 'development') {
   const render = () => {
@@ -26,3 +28,5 @@ if (process.env.NODE_ENV === 'development') {
     document.getElementById('app'),
   )
 }
+
+ipcRenderer.send(IpcChannel.READY)

@@ -1,3 +1,4 @@
+import * as os from 'os'
 import { Menu, dialog, shell } from 'electron'
 import { EventEmitter } from 'events'
 import controller from './controller'
@@ -19,6 +20,15 @@ export const about = () => {
 }
 
 export const open = () => {
+  const properties = [
+    'openFile',
+    'multiSelections',
+  ]
+
+  if (os.platform() === 'darwin') {
+    properties.push('openDirectory')
+  }
+
   dialog.showOpenDialog({
     title: __('choose_images'),
     filters: [{
@@ -28,11 +38,7 @@ export const open = () => {
         'png',
       ],
     }],
-    properties: [
-      'openFile',
-      'openDirectory',
-      'multiSelections',
-    ],
+    properties: properties as any,
   }, filePaths => {
     controller.receiveFiles(filePaths)
   })
