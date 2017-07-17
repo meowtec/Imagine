@@ -14,6 +14,15 @@ For Windows and macOS, download the binary below:
 
 [国内加速](https://github.com/meowtec/Imagine/issues/7)
 
+### Install on linux
+
+App for linux is distributed in [AppImage](http://appimage.org/) format.
+Just download the AppImage file, make it executable, and run.
+```
+chmod a+x Imagine-xxx.AppImage
+```
+
+
 ## Screenshot
 
 [GIF(7.4M)](http://7qn7vf.com1.z0.glb.clouddn.com/IMAGINE2.gif)
