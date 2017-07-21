@@ -4,12 +4,14 @@ import en_US from './en-US'
 import zh_CN from './zh-CN'
 import nl_NL from './nl-NL'
 import es_ES from './es-ES'
+import fr_FR from './fr-FR'
 
 const texts = {
   'zh-CN': zh_CN,
   'en-US': en_US,
   'nl-NL': nl_NL,
   'es-ES': es_ES,
+  'fr-FR': fr_FR,
 }
 
 let gettext: Gettext
@@ -20,7 +22,8 @@ export const setup = () => {
   gettext = createLocale(texts, {
     zh: 'zh-CN',
     nl: 'nl-NL',
-    es: 'es-ES'
+    es: 'es-ES',
+    fr: 'fr-FR',
   }, 'en-US', locale)
 }
 
