@@ -35,7 +35,7 @@ chmod a+x Imagine-xxx.AppImage
  - Cross platform
  - Visual
  - Batch optimization
- - i18n (English, 简体中文, Nederlands)
+ - i18n (English, 简体中文, Nederlands, Spanish)
 
 ## Built on
 
