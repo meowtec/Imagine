@@ -35,12 +35,12 @@ class ActionBar extends React.PureComponent<IActionBarProps, {}> {
       <div className="action-bar">
         <button onClick={this.props.onAdd}>
           <Icon name="add" />
-          <span>{__('add')}</span>
+          <span className="ellipsis">{__('add')}</span>
         </button>
 
         <button className="tooltip-hover" disabled={!count}>
           <Icon name="down" />
-          <span>{__('save')}</span>
+          <span className="ellipsis">{__('save')}</span>
           <Tooltip>
             <a href="#" className="tooltip-item" onClick={e => this.handleSaveClick(e, SaveType.OVER)}>
               {__('save_cover')}
@@ -56,14 +56,14 @@ class ActionBar extends React.PureComponent<IActionBarProps, {}> {
 
         <button onClick={this.props.onRemoveAll} disabled={!count}>
           <Icon name="delete" />
-          <span>{__('clear')}</span>
+          <span className="ellipsis">{__('clear')}</span>
         </button>
 
         {
           updateInfo ? (
             <button onClick={this.props.onUpdateClick} className="has-update">
               <Icon name="up"/>
-              <span>{__('new_version')}</span>
+              <span className="ellipsis">{__('new_version')}</span>
             </button>
           ) : null
         }
