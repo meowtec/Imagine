@@ -15,12 +15,13 @@ interface IModalProps {
 export default class Modal extends React.PureComponent<IModalProps, {}> {
   render() {
     return (
-      <Root className={classnames('modal-container', this.props.className)}>
+      <Root>
         <CSSTransitionGroup
           transitionName="modal"
           transitionEnterTimeout={300}
           transitionLeaveTimeout={300}
           component="div"
+          className={classnames('modal-container', this.props.className)}
         >
           {
             this.props.visible ? (

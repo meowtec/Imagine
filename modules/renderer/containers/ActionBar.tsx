@@ -2,7 +2,7 @@ import { shell } from 'electron'
 import * as React from 'react'
 import { connect, Dispatch } from 'react-redux'
 import Icon from '../components/Icon'
-import Tooltip from '../components/Tooltip'
+import Popper from '../components/Popper'
 import { actions } from '../store/actions'
 import { IState } from '../store/reducer'
 import store from '../store/store'
@@ -38,21 +38,24 @@ class ActionBar extends React.PureComponent<IActionBarProps, {}> {
           <span className="ellipsis">{__('add')}</span>
         </button>
 
-        <button className="tooltip-hover" disabled={!count}>
-          <Icon name="down" />
-          <span className="ellipsis">{__('save')}</span>
-          <Tooltip>
-            <a href="#" className="tooltip-item" onClick={e => this.handleSaveClick(e, SaveType.OVER)}>
+        <Popper popper={(
+          <div className="popper-menu">
+            <a href="#" onClick={e => this.handleSaveClick(e, SaveType.OVER)}>
               {__('save_cover')}
             </a>
-            <a href="#" className="tooltip-item" onClick={e => this.handleSaveClick(e, SaveType.NEW_NAME)}>
+            <a href="#" onClick={e => this.handleSaveClick(e, SaveType.NEW_NAME)}>
               {__('save_new')}
             </a>
-            <a href="#" className="tooltip-item" onClick={e => this.handleSaveClick(e, SaveType.NEW_DIR)}>
+            <a href="#" onClick={e => this.handleSaveClick(e, SaveType.NEW_DIR)}>
               {__('save_dir')}
             </a>
-          </Tooltip>
-        </button>
+          </div>
+          )}>
+          <button className="tooltip-hover" disabled={!count}>
+            <Icon name="down" />
+            <span className="ellipsis">{__('save')}</span>
+          </button>
+        </Popper>
 
         <button onClick={this.props.onRemoveAll} disabled={!count}>
           <Icon name="delete" />
