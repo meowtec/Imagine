@@ -1,9 +1,11 @@
 import { shell } from 'electron'
 import * as React from 'react'
 import { connect, Dispatch } from 'react-redux'
+import * as classnames from 'classnames'
 import Icon from '../components/Icon'
 import Popper from '../components/Popper'
-import { actions } from '../store/actions'
+import OptionsPanel from './OptionsPanel'
+import actions from '../store/actionCreaters'
 import { IState } from '../store/reducer'
 import store from '../store/store'
 import { IpcChannel, SaveType, IUpdateInfo } from '../../common/constants'
@@ -16,16 +18,26 @@ import './ActionBar.less'
 interface IActionBarProps {
   count: number
   updateInfo: IUpdateInfo
+  optionsVisible: boolean
   onRemoveAll(): void
   onSave(type: SaveType): void
   onAdd(): void
   onUpdateClick(): void
+  onOptionsVisibleToggle(visible: boolean): void
 }
 
 class ActionBar extends React.PureComponent<IActionBarProps, {}> {
   handleSaveClick(e: React.MouseEvent<HTMLElement>, type: SaveType) {
     e.preventDefault()
     this.props.onSave(type)
+  }
+
+  onOptionsVisibleClick = () => {
+    this.props.onOptionsVisibleToggle(!this.props.optionsVisible)
+  }
+
+  onOptionsHide = () => {
+    this.props.onOptionsVisibleToggle(false)
   }
 
   render() {
@@ -38,18 +50,20 @@ class ActionBar extends React.PureComponent<IActionBarProps, {}> {
           <span className="ellipsis">{__('add')}</span>
         </button>
 
-        <Popper popper={(
-          <div className="popper-menu">
-            <a href="#" onClick={e => this.handleSaveClick(e, SaveType.OVER)}>
-              {__('save_cover')}
-            </a>
-            <a href="#" onClick={e => this.handleSaveClick(e, SaveType.NEW_NAME)}>
-              {__('save_new')}
-            </a>
-            <a href="#" onClick={e => this.handleSaveClick(e, SaveType.NEW_DIR)}>
-              {__('save_dir')}
-            </a>
-          </div>
+        <Popper
+          hoverMode={true}
+          popper={(
+            <div className="popper-menu">
+              <a href="#" onClick={e => this.handleSaveClick(e, SaveType.OVER)}>
+                {__('save_cover')}
+              </a>
+              <a href="#" onClick={e => this.handleSaveClick(e, SaveType.NEW_NAME)}>
+                {__('save_new')}
+              </a>
+              <a href="#" onClick={e => this.handleSaveClick(e, SaveType.NEW_DIR)}>
+                {__('save_dir')}
+              </a>
+            </div>
           )}>
           <button className="tooltip-hover" disabled={!count}>
             <Icon name="down" />
@@ -70,6 +84,22 @@ class ActionBar extends React.PureComponent<IActionBarProps, {}> {
             </button>
           ) : null
         }
+
+        <div className="blank" />
+
+        <Popper
+          visible={this.props.optionsVisible}
+          popper={(
+            <OptionsPanel onApplyClick={this.onOptionsHide} />
+          )}>
+          <button
+            className={classnames({
+              '-active': this.props.optionsVisible,
+            })}
+            onClick={this.onOptionsVisibleClick}>
+            <Icon name="tune" />
+          </button>
+        </Popper>
       </div>
     )
   }
@@ -78,9 +108,14 @@ class ActionBar extends React.PureComponent<IActionBarProps, {}> {
 export default connect((state: IState) => ({
   count: state.tasks.length,
   updateInfo: state.globals.updateInfo,
-}), dispatch => ({
+  optionsVisible: state.globals.optionsVisible,
+}), (dispatch) => ({
   onRemoveAll() {
     dispatch(actions.taskClear())
+  },
+
+  onOptionsVisibleToggle(visible: boolean) {
+    dispatch(actions.optionsVisible(visible))
   },
 
   onAdd() {
@@ -94,4 +129,4 @@ export default connect((state: IState) => ({
   onUpdateClick() {
     shell.openExternal(pkg.homepage + '/releases')
   },
-}))(ActionBar) as React.ComponentClass<{}>
+}))(ActionBar)

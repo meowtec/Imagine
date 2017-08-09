@@ -1,5 +1,9 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
+import { Provider } from 'react-redux'
+import store from '../store/store'
+
+const renderSubtreeIntoContainer = ReactDOM.unstable_renderSubtreeIntoContainer
 
 export default class Layer<P, S> extends React.PureComponent<P, S> {
   $root: HTMLDivElement
@@ -12,13 +16,13 @@ export default class Layer<P, S> extends React.PureComponent<P, S> {
     document.body.appendChild(div)
     this.$root = div
 
-    ReactDOM.render(this.renderElement(), div, () => {
+    renderSubtreeIntoContainer(this, this.renderElement(), div, () => {
       this.popperDidMount()
     })
   }
 
   componentDidUpdate() {
-    ReactDOM.render(this.renderElement(), this.$root, () => {
+    renderSubtreeIntoContainer(this, this.renderElement(), this.$root, () => {
       this.popperDidUpdate()
     })
   }

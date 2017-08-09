@@ -5,20 +5,24 @@
   top: 0;
   left: 0;
   right: 0;
-  padding: 0 20px;
+  padding-left: 10px;
   background: #fff;
   box-shadow: 0 0 4px rgba(0, 0, 0, .2);
   z-index: 100;
 
-  button {
+  > .blank {
+    flex: 1;
+  }
+
+  > button {
     background: none;
     border: 0;
     outline: none;
     min-width: 70px;
     max-width: 120px;
 
-    .icon, span {
-      transition: all .2s;
+    &.-active {
+      background: #f0f0f0;
     }
 
     &:disabled {
@@ -35,6 +39,10 @@
           color: #000;
         }
       }
+    }
+
+    .icon, span {
+      transition: all .2s;
     }
 
     .icon {

@@ -9,7 +9,8 @@ import './Popper.less'
 interface IPopperProps {
   popper: React.ReactElement<any>
   placement?: string
-  renderToBody?: boolean
+  hoverMode?: boolean
+  visible?: boolean
 }
 
 interface IPopperState {
@@ -22,8 +23,8 @@ export default class Popper extends Root<IPopperProps, IPopperState> {
   popperElement: HTMLDivElement
   referenceElement: HTMLElement | ReactInstance
   popper: Popperjs
-  enterTimer: number
-  leaveTimer: number
+  private enterTimer: number
+  private leaveTimer: number
 
   $refs = {
     popperElement: (el: HTMLDivElement) => { this.popperElement = el },
@@ -35,10 +36,14 @@ export default class Popper extends Root<IPopperProps, IPopperState> {
   }
 
   renderElement() {
+    const visible = this.props.hoverMode
+      ? this.state.visible
+      : this.props.visible
+
     return (
       <div
         className={classnames('popper', {
-          '-hidden': !this.state.visible,
+          '-hidden': !visible,
         })}
         ref={this.$refs.popperElement}
         onMouseOver={this.onmouseover}
@@ -68,9 +73,10 @@ export default class Popper extends Root<IPopperProps, IPopperState> {
       },
     })
 
-    referenceElement.addEventListener('mouseover', this.onmouseover)
-
-    referenceElement.addEventListener('mouseleave', this.onmouseleave)
+    if (this.props.hoverMode) {
+      referenceElement.addEventListener('mouseover', this.onmouseover)
+      referenceElement.addEventListener('mouseleave', this.onmouseleave)
+    }
   }
 
   onmouseover = () => {

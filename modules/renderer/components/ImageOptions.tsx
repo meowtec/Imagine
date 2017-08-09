@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { shallowCompare } from '../../common/utils'
 import { SupportedExt, IOptimizeOptions } from '../../common/constants'
 import ColorNumber from './ColorNumber'
 import Quality from './Quality'
@@ -13,7 +14,11 @@ interface ImageOptionsProps {
   onChange(options: IOptimizeOptions): void
 }
 
-export default class ImageOptions extends React.PureComponent<ImageOptionsProps, {}> {
+export default class ImageOptions extends React.Component<ImageOptionsProps, {}> {
+  shouldComponentUpdate(nextProps: ImageOptionsProps) {
+    return !shallowCompare(this.props, nextProps, ['ext', 'options', 'precision'])
+  }
+
   handleColorChange = (color: number) => {
     this.props.onChange({
       ...this.props.options,

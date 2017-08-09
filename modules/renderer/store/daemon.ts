@@ -1,7 +1,7 @@
 import { Store } from 'redux'
 import optimize from '../apis/optimize'
 import { TaskStatus } from '../../common/constants'
-import { actions } from './actions'
+import actions from '../store/actionCreaters'
 import { IState } from './reducer'
 import { debounce } from 'lodash'
 

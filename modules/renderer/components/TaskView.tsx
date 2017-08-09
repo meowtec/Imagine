@@ -62,22 +62,24 @@ class TaskView extends PureComponent<ITaskViewProps, {}> {
                 })}
               />
             </span>
-            <Popper popper={(
-              <div className="popper-menu">
-                <a
-                  href="#"
-                  onClick={e => this.handleSave(e, SaveType.OVER)}
-                >
-                  {__('save')}
-                </a>
-                <a
-                  href="#"
-                  onClick={e => this.handleSave(e, SaveType.SAVE_AS)}
-                >
-                  {__('save_as')}
-                </a>
-              </div>
-            )}>
+            <Popper
+              hoverMode={true}
+                popper={(
+                <div className="popper-menu">
+                  <a
+                    href="#"
+                    onClick={e => this.handleSave(e, SaveType.OVER)}
+                  >
+                    {__('save')}
+                  </a>
+                  <a
+                    href="#"
+                    onClick={e => this.handleSave(e, SaveType.SAVE_AS)}
+                  >
+                    {__('save_as')}
+                  </a>
+                </div>
+              )}>
               <span className="save-btn">
                 <Icon name="down" />
               </span>

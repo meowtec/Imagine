@@ -1,14 +1,31 @@
 import { Reducer, combineReducers } from 'redux'
 import { handleActions, Action } from 'redux-actions'
-import { IImageFile, IOptimizeOptions, ITaskItem, TaskStatus, IUpdateInfo } from '../../common/constants'
-import { ACTIONS } from './actions'
-import deamon from './daemon'
+import {
+  IImageFile,
+  IOptimizeOptions,
+  ITaskItem,
+  TaskStatus,
+  IUpdateInfo,
+  SupportedExt,
+} from '../../common/constants'
+import {
+  ACTIONS,
+  ITaskAddPayloadItem,
+  IDefaultOptionsPayload,
+} from './actions'
 
 type Tasks = ITaskItem[]
+
+export interface IDefaultOptions {
+  jpg: IOptimizeOptions
+  png: IOptimizeOptions
+}
 
 interface IGlobals {
   activeId: string | null
   updateInfo?: IUpdateInfo
+  optionsVisible: boolean
+  defaultOptions: IDefaultOptions
 }
 
 export interface IState {
@@ -16,7 +33,7 @@ export interface IState {
   globals: IGlobals
 }
 
-const newIOptimizeOptions: () => IOptimizeOptions = () => ({
+const newOptimizeOptions = () => ({
   color: 128,
   quality: 70,
 })
@@ -36,15 +53,15 @@ const updateTaskHelper = (tasks: Tasks, id: string, partial: Partial<ITaskItem>)
 }
 
 export const taskReducer = handleActions<Tasks>({
-  [ACTIONS.TASK_ADD](state, action: Action<IImageFile[]>) {
+  [ACTIONS.TASK_ADD](state, action: Action<ITaskAddPayloadItem[]>) {
     return [
       ...state,
       ...action.payload!
-        .filter(image => !state.some(task => task.id === image.id))
-        .map<ITaskItem>(image => ({
-          id: image.id,
-          image,
-          options: newIOptimizeOptions(),
+        .filter(item => !state.some(task => task.id === item.image.id))
+        .map<ITaskItem>(item => ({
+          id: item.image.id,
+          image: item.image,
+          options: item.options,
           status: TaskStatus.PENDING,
         })),
     ]
@@ -87,6 +104,16 @@ export const taskReducer = handleActions<Tasks>({
       status: TaskStatus.FAIL,
     })
   },
+
+  [ACTIONS.OPTIONS_APPLY](state, action: Action<IDefaultOptions>) {
+    return state.map(item => {
+      return {
+        ...item,
+        options: action.payload![item.image.ext],
+        status: TaskStatus.PENDING,
+      }
+    })
+  },
 }, [])
 
 export const globalsReducer = handleActions<IGlobals>({
@@ -102,8 +129,29 @@ export const globalsReducer = handleActions<IGlobals>({
       updateInfo: action.payload,
     }
   },
+  [ACTIONS.OPTIONS_VISIBLE](state, action: Action<boolean>) {
+    return {
+      ...state,
+      optionsVisible: action.payload,
+    }
+  },
+  [ACTIONS.DEFAULT_OPTIONS](state, action: Action<IDefaultOptionsPayload>) {
+    const { ext, options } = action.payload!
+    return {
+      ...state,
+      defaultOptions: {
+        ...state.defaultOptions,
+        [ext]: options,
+      },
+    }
+  },
 }, {
   activeId: null,
+  optionsVisible: false,
+  defaultOptions: {
+    png: newOptimizeOptions(),
+    jpg: newOptimizeOptions(),
+  },
 })
 
 export default combineReducers<IState>({
