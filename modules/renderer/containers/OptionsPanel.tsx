@@ -15,6 +15,7 @@ interface IProps {
 interface IDispatchProps {
   onOptionsChange(ext: SupportedExt, options: IOptimizeOptions): void
   onApplyClick(): void
+  onClose(): void
 }
 
 interface IOwnProps {
@@ -27,27 +28,32 @@ class OptionsPanel extends React.PureComponent<IProps & IDispatchProps, {}> {
 
     return (
       <div className="options">
-        <Collapse title="PNG" initialVisible={true}>
-          <ImageOptions
-            precision={true}
-            ext={SupportedExt.png}
-            options={optionsMap.png}
-            onChange={options => this.props.onOptionsChange('png', options)}
-          />
-        </Collapse>
+        <div className="options-body">
+          <Collapse title="PNG" initialVisible={true}>
+            <ImageOptions
+              precision={true}
+              ext={SupportedExt.png}
+              options={optionsMap.png}
+              onChange={options => this.props.onOptionsChange('png', options)}
+            />
+          </Collapse>
 
-        <Collapse title="JPEG" initialVisible={true}>
-          <ImageOptions
-            precision={true}
-            ext={SupportedExt.jpg}
-            options={optionsMap.jpg}
-            onChange={options => this.props.onOptionsChange('jpg', options)}
-          />
-        </Collapse>
-        <footer>
+          <Collapse title="JPEG" initialVisible={true}>
+            <ImageOptions
+              precision={true}
+              ext={SupportedExt.jpg}
+              options={optionsMap.jpg}
+              onChange={options => this.props.onOptionsChange('jpg', options)}
+            />
+          </Collapse>
+        </div>
+        <footer className="clearfix">
           <button onClick={this.props.onApplyClick}>
             <Icon name="doneall" />
             Apply now
+          </button>
+          <button className="-right" onClick={this.props.onClose}>
+            Close
           </button>
         </footer>
       </div>
@@ -71,6 +77,10 @@ export default connect<IProps, IOwnProps, IOwnProps>(
     onApplyClick() {
       dispatch(actions.optionsApply())
       ownProps && ownProps.onApplyClick && ownProps.onApplyClick()
+    },
+
+    onClose() {
+      dispatch(actions.optionsVisible(false))
     },
   })
 )(OptionsPanel)

@@ -19,3 +19,9 @@ body {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.clearfix::after {
+  display: block;
+  content: '';
+  clear: both;
+}
