@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { PureComponent } from 'react'
-import { CSSTransitionGroup } from 'react-transition-group'
+import CSSTransition from 'react-transition-group/CSSTransition'
+import TransitionGroup from 'react-transition-group/TransitionGroup'
 import { ITaskItem, IOptimizeOptions, SaveType } from '../../common/constants'
 import Item from './TaskView'
 import __ from '../../locales'
@@ -22,23 +23,21 @@ export default class TaskList extends PureComponent<ITaskListProps & ITaskListDi
   render() {
     if (this.props.tasks.length) {
       return (
-        <CSSTransitionGroup
-          transitionName="task"
+        <TransitionGroup
           className="task-list"
-          transitionEnterTimeout={500}
-          transitionLeaveTimeout={300}
         >
           {this.props.tasks.map(task => (
-            <Item
-              onRemove={this.props.onRemove}
-              onClick={this.props.onClick}
-              onOptionsChange={this.props.onOptionsChange}
-              onSave={this.props.onSave}
-              key={task.id}
-              task={task}
-            />
+            <CSSTransition classNames="task" timeout={200} key={task.id}>
+              <Item
+                onRemove={this.props.onRemove}
+                onClick={this.props.onClick}
+                onOptionsChange={this.props.onOptionsChange}
+                onSave={this.props.onSave}
+                task={task}
+              />
+            </CSSTransition>
           ))}
-        </CSSTransitionGroup>
+        </TransitionGroup>
       )
     }
 
