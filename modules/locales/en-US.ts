@@ -19,4 +19,5 @@ export default {
   before_optimized: 'before',
   after_optimized: 'after',
   new_version: 'Upgrade',
+  apply_now: 'Apply now',
 }

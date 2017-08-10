@@ -19,4 +19,5 @@ export default {
   before_optimized: 'Antes',
   after_optimized: 'Después',
   new_version: 'Actualizar',
+  apply_now: 'Apply now', // TODO: translate
 }

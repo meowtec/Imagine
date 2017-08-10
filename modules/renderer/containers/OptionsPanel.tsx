@@ -6,6 +6,8 @@ import Collapse from '../components/Collapse'
 import ImageOptions from '../components/ImageOptions'
 import { IDefaultOptions, IState } from '../store/reducer'
 import actions from '../store/actionCreaters'
+import __ from '../../locales'
+
 import './OptionsPanel.less'
 
 interface IProps {
@@ -50,7 +52,7 @@ class OptionsPanel extends React.PureComponent<IProps & IDispatchProps, {}> {
         <footer className="clearfix">
           <button onClick={this.props.onApplyClick}>
             <Icon name="doneall" />
-            Apply now
+            {__('apply_now')}
           </button>
           <button className="-right" onClick={this.props.onClose}>
             Close
