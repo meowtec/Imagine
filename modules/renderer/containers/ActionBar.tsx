@@ -88,6 +88,7 @@ class ActionBar extends React.PureComponent<IActionBarProps, {}> {
         <div className="blank" />
 
         <Popper
+          className="options-popper"
           visible={this.props.optionsVisible}
           popper={(
             <OptionsPanel onApplyClick={this.onOptionsHide} />

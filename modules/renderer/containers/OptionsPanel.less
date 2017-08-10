@@ -1,3 +1,7 @@
+.options-popper {
+  border-radius: 0;
+}
+
 .options-body {
   width: 500px;
   padding: 10px;
@@ -12,9 +16,14 @@
 }
 
 .options > footer {
+  display: flex;
   padding: 0;
   background: #fafafa;
   border-top: 1px solid #eee;
+
+  > .blank {
+    flex: 1;
+  }
 
   button {
     padding: 8px 10px;
@@ -28,7 +37,7 @@
     transition: .4s;
     cursor: pointer;
 
-    .icon {
+    .icon-doneall {
       font-size: 14px;
       margin-right: 4px;
       vertical-align: top;
@@ -42,6 +51,11 @@
 
     &.-right {
       float: right;
+    }
+
+    .icon-close {
+      font-size: 12px;
+      display: block;
     }
   }
 }

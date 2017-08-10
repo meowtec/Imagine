@@ -54,8 +54,9 @@ class OptionsPanel extends React.PureComponent<IProps & IDispatchProps, {}> {
             <Icon name="doneall" />
             {__('apply_now')}
           </button>
-          <button className="-right" onClick={this.props.onClose}>
-            Close
+          <div className="blank" />
+          <button onClick={this.props.onClose}>
+            <Icon name="close" />
           </button>
         </footer>
       </div>

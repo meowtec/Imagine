@@ -11,6 +11,7 @@ interface IPopperProps {
   placement?: string
   hoverMode?: boolean
   visible?: boolean
+  className?: string
 }
 
 interface IPopperState {
@@ -42,7 +43,7 @@ export default class Popper extends Root<IPopperProps, IPopperState> {
 
     return (
       <div
-        className={classnames('popper', {
+        className={classnames('popper', this.props.className, {
           '-hidden': !visible,
         })}
         ref={this.$refs.popperElement}
