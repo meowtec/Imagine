@@ -21,6 +21,7 @@ interface ImageViewerState {
   x: number
   y: number
   material: string
+  imageError: boolean
 }
 
 const ZOOM_MIN = 1 / 8
@@ -64,6 +65,7 @@ export default class ImageViewer extends PureComponent<ImageViewerProps, ImageVi
       x: 0,
       y: 0,
       material: materials[0],
+      imageError: false,
     }
   }
 
@@ -100,13 +102,23 @@ export default class ImageViewer extends PureComponent<ImageViewerProps, ImageVi
   handleImageLoad = () => {
     const { naturalWidth, naturalHeight } = this.image
 
+    this.setState({
+      imageNaturalWidth: naturalWidth,
+      imageNaturalHeight: naturalHeight,
+      imageError: false,
+    })
+
     if (!this.state.imageNaturalWidth) {
       this.setState({
-        imageNaturalWidth: naturalWidth,
-        imageNaturalHeight: naturalHeight,
         zoom: this.initialZoom(),
       })
     }
+  }
+
+  handleImageError = () => {
+    this.setState({
+      imageError: true,
+    })
   }
 
   handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -222,15 +234,19 @@ export default class ImageViewer extends PureComponent<ImageViewerProps, ImageVi
           className="image-wrapper"
           onMouseDown={this.handleMouseDown}
         >
-          <img
-            className="image -transition"
-            src={this.props.src}
-            onLoad={this.handleImageLoad}
-            ref={el => {this.image = el!}}
-            style={{
-              transform: `translate(${x}px, ${y}px) scale(${zoom})`,
-            }}
-          />
+          {
+            this.props.src && !this.state.imageError ?
+              <img
+                className="image -transition"
+                src={this.props.src}
+                onLoad={this.handleImageLoad}
+                onError={this.handleImageError}
+                ref={el => {this.image = el!}}
+                style={{
+                  transform: `translate(${x}px, ${y}px) scale(${zoom})`,
+                }}
+              /> : <div className="image-fail">FAILED</div>
+          }
         </div>
 
         <div className="zoom-control">
