@@ -99,10 +99,10 @@
   height: 30px;
   background: rgba(255, 255, 255, .3);
   display: flex;
-  align-items: center;
   color: #555;
   font-size: 12px;
   transition: background .4s;
+  font-size: 18px;
 
   > span,
   > a {
@@ -110,20 +110,16 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    color: currentColor;
   }
 
-  .__center {
+  > a:hover {
+    background: #669;
+    color: #fff;
+  }
+
+  .blank {
     flex: 1;
-  }
-
-  .save-btn {
-    height: 30px;
-    flex-direction: column;
-
-    .icon {
-      flex: 1;
-      font-size: 18px;
-    }
   }
 
   .close {

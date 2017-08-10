@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { PureComponent } from 'react'
+import { PureComponent, MouseEvent as RMouseEvent } from 'react'
 import * as classnames from 'classnames'
 import Popper from '../components/Popper'
 import Select from './Select'
@@ -21,14 +21,13 @@ interface ITaskViewProps {
 }
 
 class TaskView extends PureComponent<ITaskViewProps, {}> {
-  handleClear = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault()
-    e.stopPropagation()
+  handleClear = (e: RMouseEvent<HTMLAnchorElement>) => {
+    this.stopEvent(e)
 
     this.props.onRemove(this.props.task)
   }
 
-  handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+  handleClick = (e: RMouseEvent<HTMLDivElement>) => {
     this.props.onClick(this.props.task)
   }
 
@@ -36,11 +35,22 @@ class TaskView extends PureComponent<ITaskViewProps, {}> {
     this.props.onOptionsChange(this.props.task, options)
   }
 
-  handleSave = (e: React.MouseEvent<any>, type: SaveType) => {
-    e.preventDefault()
-    e.stopPropagation()
+  handleSave = (e: RMouseEvent<Element>, type: SaveType) => {
+    this.stopEvent(e)
 
     this.props.onSave(this.props.task, type)
+  }
+
+  handleRefreah = (e: RMouseEvent<Element>) => {
+    this.stopEvent(e)
+
+    const { task } = this.props
+    this.props.onOptionsChange(task, task.options)
+  }
+
+  stopEvent = (e: RMouseEvent<Element>) => {
+    e.preventDefault()
+    e.stopPropagation()
   }
 
   render() {
@@ -62,6 +72,15 @@ class TaskView extends PureComponent<ITaskViewProps, {}> {
                 })}
               />
             </span>
+
+            {
+              task.status === 'FAIL' ? (
+                <a href="#" onClick={this.handleRefreah}>
+                  <Icon name="refresh" />
+                </a>
+              ) : null
+            }
+
             <Popper
               hoverMode={true}
                 popper={(
@@ -80,12 +99,14 @@ class TaskView extends PureComponent<ITaskViewProps, {}> {
                   </a>
                 </div>
               )}>
-              <span className="save-btn">
+              <a href="#" onClick={this.stopEvent}>
                 <Icon name="down" />
-              </span>
+              </a>
             </Popper>
-            <span className="__center" />
-            <a className="close" onClick={this.handleClear} href="#">
+
+            <span className="blank" />
+
+            <a className="close" href="#" onClick={this.handleClear}>
               <Icon name="clear" />
             </a>
           </div>
