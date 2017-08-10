@@ -1,6 +1,6 @@
 {
   "name": "Imagine",
-  "version": "0.1.4",
+  "version": "0.2.0",
   "description": "PNG/JPEG optimization app available for macOS, Windows and Linux.",
   "homepage": "https://github.com/meowtec/Imagine",
   "main": "./lib/bootstrap.js",
