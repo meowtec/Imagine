@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { PureComponent } from 'react'
 import * as classnames from 'classnames'
-import Tooltip from '../components/Tooltip'
+import Popper from '../components/Popper'
 import Select from './Select'
 import Icon from './Icon'
 import ImageOptions from './ImageOptions'
@@ -62,25 +62,28 @@ class TaskView extends PureComponent<ITaskViewProps, {}> {
                 })}
               />
             </span>
-            <span className="save-btn tooltip-hover">
-              <Icon name="down" />
-              <Tooltip>
-                <a
-                  className="tooltip-item"
-                  href="#"
-                  onClick={e => this.handleSave(e, SaveType.OVER)}
-                >
-                  {__('save')}
-                </a>
-                <a
-                  className="tooltip-item"
-                  href="#"
-                  onClick={e => this.handleSave(e, SaveType.SAVE_AS)}
-                >
-                  {__('save_as')}
-                </a>
-              </Tooltip>
-            </span>
+            <Popper
+              hoverMode={true}
+                popper={(
+                <div className="popper-menu">
+                  <a
+                    href="#"
+                    onClick={e => this.handleSave(e, SaveType.OVER)}
+                  >
+                    {__('save')}
+                  </a>
+                  <a
+                    href="#"
+                    onClick={e => this.handleSave(e, SaveType.SAVE_AS)}
+                  >
+                    {__('save_as')}
+                  </a>
+                </div>
+              )}>
+              <span className="save-btn">
+                <Icon name="down" />
+              </span>
+            </Popper>
             <span className="__center" />
             <a className="close" onClick={this.handleClear} href="#">
               <Icon name="clear" />

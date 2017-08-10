@@ -16,7 +16,8 @@ export default {
   quality: 'Quality',
   visit: 'Visit homepage',
   ok: 'OK',
-  before_optimized: 'before',
-  after_optimized: 'after',
+  before_optimized: 'Before',
+  after_optimized: 'After',
   new_version: 'Upgrade',
+  apply_now: 'Apply now',
 }

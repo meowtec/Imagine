@@ -1,6 +1,24 @@
+import store from './store'
 import { createAction, Action } from 'redux-actions'
 import { Enum } from 'typescript-string-enums'
-import { IImageFile, IOptimizeOptions, ITaskItem, TaskStatus, IUpdateInfo } from '../../common/constants'
+import {
+  IImageFile,
+  IOptimizeOptions,
+  ITaskItem,
+  TaskStatus,
+  IUpdateInfo,
+  SupportedExt,
+} from '../../common/constants'
+
+export interface ITaskAddPayloadItem {
+  image: IImageFile
+  options: IOptimizeOptions
+}
+
+export interface IDefaultOptionsPayload {
+  ext: SupportedExt
+  options: IOptimizeOptions
+}
 
 export const ACTIONS = Enum(
   'TASK_ADD',
@@ -12,26 +30,7 @@ export const ACTIONS = Enum(
   'TASK_OPTIMIZE_FAIL',
   'TASK_DETAIL',
   'APP_CAN_UPDATE',
+  'OPTIONS_VISIBLE',
+  'DEFAULT_OPTIONS',
+  'OPTIONS_APPLY',
 )
-
-export const actions = {
-  taskAdd: createAction<IImageFile[]>(ACTIONS.TASK_ADD),
-
-  taskDelete: createAction<string[]>(ACTIONS.TASK_DELETE),
-
-  taskClear: createAction(ACTIONS.TASK_CLEAR),
-
-  taskUpdateOptions: createAction<{ id: string, options: IOptimizeOptions }, string, IOptimizeOptions>
-    (ACTIONS.TASK_UPDATE_OPTIONS, (id, options) => ({ id, options })),
-
-  taskOptimizeStart: createAction<string>(ACTIONS.TASK_OPTIMIZE_START),
-
-  taskOptimizeSuccess: createAction<{ id: string, optimized: IImageFile }, string, IImageFile>
-    (ACTIONS.TASK_OPTIMIZE_SUCCESS, (id, optimized) => ({ id, optimized })),
-
-  taskOptimizeFail: createAction<string>(ACTIONS.TASK_OPTIMIZE_FAIL),
-
-  taskDetail: createAction<string | null>(ACTIONS.TASK_DETAIL),
-
-  appUpdateInfo: createAction<IUpdateInfo>(ACTIONS.APP_CAN_UPDATE),
-}

@@ -1,5 +1,6 @@
 import * as React from 'react'
-import { CSSTransitionGroup } from 'react-transition-group'
+import CSSTransition from 'react-transition-group/CSSTransition'
+import TransitionGroup from 'react-transition-group/TransitionGroup'
 import * as classnames from 'classnames'
 import Root from './Root'
 import Icon from './Icon'
@@ -15,24 +16,23 @@ interface IModalProps {
 export default class Modal extends React.PureComponent<IModalProps, {}> {
   render() {
     return (
-      <Root className={classnames('modal-container', this.props.className)}>
-        <CSSTransitionGroup
-          transitionName="modal"
-          transitionEnterTimeout={300}
-          transitionLeaveTimeout={300}
-          component="div"
+      <Root>
+        <TransitionGroup
+          className={classnames('modal-container', this.props.className)}
         >
           {
             this.props.visible ? (
-              <div className="modal">
-                <button className="close" onClick={this.props.onClose}>
-                  <Icon name="close"/>
-                </button>
-                {this.props.children}
-              </div>
+              <CSSTransition classNames="modal" timeout={500}>
+                <div className="modal">
+                  <button className="close" onClick={this.props.onClose}>
+                    <Icon name="close"/>
+                  </button>
+                  {this.props.children}
+                </div>
+              </CSSTransition>
             ) : null
           }
-        </CSSTransitionGroup>
+        </TransitionGroup>
       </Root>
     )
   }

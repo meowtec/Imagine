@@ -1,34 +1,42 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
+import { Provider } from 'react-redux'
+import store from '../store/store'
 
-export default class Layer extends React.PureComponent<any, {}> {
-  root: HTMLDivElement
+const renderSubtreeIntoContainer = ReactDOM.unstable_renderSubtreeIntoContainer
+
+export default class Layer<P, S> extends React.PureComponent<P, S> {
+  $root: HTMLDivElement
+
+  popperDidMount() {/**/}
+  popperDidUpdate() {/**/}
 
   componentDidMount() {
     const div = document.createElement('div')
     document.body.appendChild(div)
-    this.root = div
-    this.renderInBody()
+    this.$root = div
+
+    renderSubtreeIntoContainer(this, this.renderElement(), div, () => {
+      this.popperDidMount()
+    })
   }
 
   componentDidUpdate() {
-    this.renderInBody()
+    renderSubtreeIntoContainer(this, this.renderElement(), this.$root, () => {
+      this.popperDidUpdate()
+    })
   }
 
   componentWillUnmount() {
-    ReactDOM.unmountComponentAtNode(this.root)
-    document.body.removeChild(this.root)
+    ReactDOM.unmountComponentAtNode(this.$root)
+    document.body.removeChild(this.$root)
   }
 
-  renderInBody() {
-    const { props } = this
-
-    ReactDOM.render((
-      <div {...props}>{props.children}</div>
-    ), this.root)
+  renderElement(): React.ReactElement<any> {
+    return React.Children.only(this.props.children)
   }
 
-  render(): any {
+  render(): React.ReactElement<any> | null {
     return null
   }
 }

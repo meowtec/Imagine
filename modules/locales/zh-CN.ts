@@ -19,4 +19,5 @@ export default {
   before_optimized: '优化前',
   after_optimized: '优化后',
   new_version: '有新版本',
+  apply_now: '立即应用',
 }

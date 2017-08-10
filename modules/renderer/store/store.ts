@@ -1,17 +1,19 @@
-import { createStore } from 'redux'
+import { createStore as _createStore } from 'redux'
+import { setStore } from './actionCreaters'
 import reducer, { IState } from './reducer'
-import Daemon from './daemon'
-import subscribe from './subscribe'
 
-const { __REDUX_DEVTOOLS_EXTENSION__ } = window as any
+export function createStore() {
+  const { __REDUX_DEVTOOLS_EXTENSION__ } = window as any
 
-const store = createStore<IState>(
-  reducer,
-  __REDUX_DEVTOOLS_EXTENSION__ && __REDUX_DEVTOOLS_EXTENSION__()
-)
+  const store = _createStore<IState>(
+    reducer,
+    __REDUX_DEVTOOLS_EXTENSION__ && __REDUX_DEVTOOLS_EXTENSION__()
+  )
 
-const daemon = new Daemon()
-daemon.watch(store)
-subscribe(store)
+  // actionCreaters will visit store directly
+  setStore(store)
 
-export default store
+  return store
+}
+
+export default createStore()

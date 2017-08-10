@@ -1,10 +1,9 @@
 jest.mock('../../renderer/apis/optimize')
 
 import * as path from 'path'
-import { createStore } from 'redux'
-import reducer from '../../renderer/store/reducer'
+import { createStore } from '../../renderer/store/store'
 import Daemon from '../../renderer/store/daemon'
-import { actions } from '../../renderer/store/actions'
+import actions, { setStore } from '../../renderer/store/actionCreaters'
 import controller from '../../backend/controller'
 import { saveFilesTmp } from '../../common/file-utils'
 import { sleep } from '../../common/utils'
@@ -14,7 +13,7 @@ test('optimize daemon', async () => {
   const images = await saveFilesTmp(
     ['600_600.png', 'qr.png'].map(x => path.resolve(__dirname, '../_files', x))
   )
-  const store = createStore(reducer)
+  const store = createStore()
   new Daemon().watch(store)
   let state
 

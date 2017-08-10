@@ -1,6 +1,7 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-import { CSSTransitionGroup } from 'react-transition-group'
+import CSSTransition from 'react-transition-group/CSSTransition'
+import TransitionGroup from 'react-transition-group/TransitionGroup'
 import * as classnames from 'classnames'
 import Icon from './Icon'
 import { sleep } from '../../common/utils'
@@ -47,19 +48,16 @@ class MessagerManager extends React.PureComponent<{}, IMessagerManagerState> {
 
   render() {
     return (
-      <CSSTransitionGroup
-        component="div"
-        transitionName="messager"
-        className="global-messager"
-        transitionEnterTimeout={500}
-        transitionLeaveTimeout={300}
-      >
+      <TransitionGroup>
         {
           this.state.message
-            ? <Messager key={this.state.key} {...this.state.message} />
-            : null
+            ? (
+              <CSSTransition classNames="messager" timeout={500}>
+                <Messager key={this.state.key} {...this.state.message} />
+              </CSSTransition>
+            ) : null
         }
-      </CSSTransitionGroup>
+      </TransitionGroup>
     )
   }
 

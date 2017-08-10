@@ -1,0 +1,51 @@
+.collapse {
+  margin-bottom: 15px;
+}
+
+.collapse-title {
+  position: relative;
+  font-weight: normal;
+  font-size: 12px;
+  padding: 3px;
+  padding-left: 14px;
+  transition: .1s;
+  margin: 10px 0;
+  color: #999;
+  font-weight: 100;
+  cursor: pointer;
+
+  &:hover {
+    background: #999;
+    color: #fff;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: 4px solid transparent;
+    border-left-color: currentColor;
+    top: 50%;
+    left: 6px;
+    margin-top: -4px;
+    transform: rotate(45deg);
+    transform-origin: 1px 50%;
+    transition: transform .2s;
+  }
+}
+
+.collapse-content {
+  padding-left: 4px;
+  color: #666;
+}
+
+.collapse.-hide {
+  .collapse-content {
+    display: none;
+  }
+
+  .collapse-title::before {
+    transform: rotate(0);
+  }
+}

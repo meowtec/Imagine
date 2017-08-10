@@ -1,0 +1,61 @@
+.options-popper {
+  border-radius: 0;
+}
+
+.options-body {
+  width: 500px;
+  padding: 10px;
+
+  .percent-symbol {
+    display: none;
+  }
+
+  .collapse-title {
+    letter-spacing: 2px;
+  }
+}
+
+.options > footer {
+  display: flex;
+  padding: 0;
+  background: #fafafa;
+  border-top: 1px solid #eee;
+
+  > .blank {
+    flex: 1;
+  }
+
+  button {
+    padding: 8px 10px;
+    border-radius: 2px;
+    font-size: 12px;
+    outline: 0;
+    border: 0;
+    background: transparent;
+    color: #667;
+    line-height: 14px;
+    transition: .4s;
+    cursor: pointer;
+
+    .icon-doneall {
+      font-size: 14px;
+      margin-right: 4px;
+      vertical-align: top;
+    }
+
+    &:hover,
+    &:active {
+      color: #000;
+      background: #eee;
+    }
+
+    &.-right {
+      float: right;
+    }
+
+    .icon-close {
+      font-size: 12px;
+      display: block;
+    }
+  }
+}
