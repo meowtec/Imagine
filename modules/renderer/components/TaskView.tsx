@@ -66,14 +66,19 @@ class TaskView extends PureComponent<ITaskViewProps, {}> {
         <div className="image-view" onClick={this.handleClick}>
           <img src={destImage.url} alt="task-cover"/>
           <div className="image-view-menu">
-            <span className="traffic">
-              <Icon
-                name={isProcessing ? 'color' : 'dot'}
-                className={classnames({
-                  '-spin': isProcessing,
-                })}
-              />
-            </span>
+            <Popper
+              hoverMode={true}
+              popper={<div className="popper-body">{task.status}</div>}
+            >
+              <span className="traffic">
+                <Icon
+                  name={isProcessing ? 'color' : 'dot'}
+                  className={classnames({
+                    '-spin': isProcessing,
+                  })}
+                />
+              </span>
+            </Popper>
 
             {
               task.status === 'FAIL' ? (
@@ -85,7 +90,7 @@ class TaskView extends PureComponent<ITaskViewProps, {}> {
 
             <Popper
               hoverMode={true}
-                popper={(
+              popper={(
                 <div className="popper-menu">
                   <a
                     href="#"
