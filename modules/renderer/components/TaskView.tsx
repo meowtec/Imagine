@@ -28,6 +28,8 @@ class TaskView extends PureComponent<ITaskViewProps, {}> {
   }
 
   handleClick = (e: RMouseEvent<HTMLDivElement>) => {
+    if (this.props.task.status === 'FAIL') return
+
     this.props.onClick(this.props.task)
   }
 
