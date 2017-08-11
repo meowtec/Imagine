@@ -48,7 +48,7 @@ class MessagerManager extends React.PureComponent<{}, IMessagerManagerState> {
 
   render() {
     return (
-      <TransitionGroup>
+      <TransitionGroup className="global-messager">
         {
           this.state.message
             ? (
