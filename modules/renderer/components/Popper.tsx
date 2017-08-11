@@ -80,6 +80,10 @@ export default class Popper extends Root<IPopperProps, IPopperState> {
     }
   }
 
+  popperDidUpdate() {
+    this.popper.update()
+  }
+
   onmouseover = () => {
     clearTimeout(this.leaveTimer)
 
