@@ -12,7 +12,7 @@ For Windows, macOS and Linux, download binaries from:
 
 [https://github.com/meowtec/Imagine/releases](https://github.com/meowtec/Imagine/releases)
 
-国内用户从 GitHub 下载可能比较慢，可以使用[国内加速](https://github.com/meowtec/Imagine/issues/7)
+国内用户从 GitHub 下载可能比较慢，可以使用[国内加速](https://github.com/meowtec/Imagine/issues/7)
 
 ### Install on linux
 
