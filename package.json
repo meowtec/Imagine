@@ -1,7 +1,7 @@
 {
   "name": "Imagine",
   "version": "0.2.0",
-  "description": "PNG/JPEG optimization app available for macOS, Windows and Linux.",
+  "description": "PNG/JPEG optimization",
   "homepage": "https://github.com/meowtec/Imagine",
   "main": "./lib/bootstrap.js",
   "scripts": {
@@ -84,6 +84,12 @@
     "typescript-string-enums": "^0.3.2"
   },
   "build": {
-    "appId": "com.meowtec.imagine.app"
+    "appId": "com.meowtec.imagine.app",
+    "mac": {
+      "category": "public.app-category.graphics-design"
+    },
+    "linux": {
+      "category": "Graphics"
+    }
   }
 }
