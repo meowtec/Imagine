@@ -64,7 +64,7 @@ class OptionsPanel extends React.PureComponent<IProps & IDispatchProps, {}> {
   }
 }
 
-export default connect<IProps, IOwnProps, IOwnProps>(
+export default connect<IProps, IDispatchProps, IOwnProps>(
   (state: IState) => ({
     optionsMap: state.globals.defaultOptions,
   }),

@@ -1,6 +1,6 @@
 import * as React from 'react'
-import CSSTransition from 'react-transition-group/CSSTransition'
-import TransitionGroup from 'react-transition-group/TransitionGroup'
+import * as CSSTransition from 'react-transition-group/CSSTransition'
+import * as TransitionGroup from 'react-transition-group/TransitionGroup'
 import * as classnames from 'classnames'
 import Root from './Root'
 import Icon from './Icon'
