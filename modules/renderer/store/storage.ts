@@ -11,7 +11,11 @@ interface IStorageContent {
 
 const key = 'options'
 
+const hasLocalStorage = !(typeof localStorage === 'undefined')
+
 export const getOptions = () => {
+  if (!hasLocalStorage) return
+
   try {
     return JSON.parse(localStorage.getItem(key)!) as IStorageContent
   } catch (e) {
@@ -20,6 +24,8 @@ export const getOptions = () => {
 }
 
 export const saveOptions = (options: IStorageContent) => {
+  if (!hasLocalStorage) return
+
   try {
     localStorage.setItem(key, JSON.stringify(options))
   } catch (e) {
