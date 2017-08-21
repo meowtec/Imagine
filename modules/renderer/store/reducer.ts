@@ -1,5 +1,6 @@
 import { Reducer, combineReducers } from 'redux'
 import { handleActions, Action } from 'redux-actions'
+import * as storage from './storage'
 import {
   IImageFile,
   IOptimizeOptions,
@@ -37,6 +38,8 @@ const newOptimizeOptions = () => ({
   color: 128,
   quality: 70,
 })
+
+const savedDefaultOptions = storage.getOptions()
 
 const updateTaskHelper = (tasks: Tasks, id: string, partial: Partial<ITaskItem>) => {
   const index = tasks.findIndex(task => task.id === id)
@@ -123,26 +126,36 @@ export const globalsReducer = handleActions<IGlobals>({
       activeId: action.payload,
     }
   },
+
   [ACTIONS.APP_CAN_UPDATE](state, action: Action<IUpdateInfo>) {
     return {
       ...state,
       updateInfo: action.payload,
     }
   },
+
   [ACTIONS.OPTIONS_VISIBLE](state, action: Action<boolean>) {
     return {
       ...state,
       optionsVisible: action.payload,
     }
   },
+
   [ACTIONS.DEFAULT_OPTIONS](state, action: Action<IDefaultOptionsPayload>) {
     const { ext, options } = action.payload!
+    const defaultOptions = {
+      ...state.defaultOptions,
+      [ext]: options,
+    }
+
+    /**
+     * save to localStorage
+     */
+    storage.saveOptions({defaultOptions})
+
     return {
       ...state,
-      defaultOptions: {
-        ...state.defaultOptions,
-        [ext]: options,
-      },
+      defaultOptions,
     }
   },
 }, {
@@ -152,6 +165,7 @@ export const globalsReducer = handleActions<IGlobals>({
     png: newOptimizeOptions(),
     jpg: newOptimizeOptions(),
   },
+  ...savedDefaultOptions,
 })
 
 export default combineReducers<IState>({
