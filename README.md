@@ -51,7 +51,7 @@ A PR with all checks passed is welcome.
 
 Before submit a PR, please run `npm run test` and make sure it success on your machine.
 
-Up to now, there are only [5 locales](https://github.com/meowtec/Imagine/tree/dev/modules/locales). To add a new locale, you can either submit a PR, or [create an issue](https://github.com/meowtec/Imagine/issues/new), or just send me an email(find in [my profile](https://github.com/meowtec)).
+Up to now, there are only [5 locales](https://github.com/meowtec/Imagine/tree/dev/modules/locales). To add a new locale, you can either submit a PR, or [create an issue](https://github.com/meowtec/Imagine/issues/new), or just send me an email(found in [my profile](https://github.com/meowtec)).
 
 ## Built on
 
