@@ -1,7 +1,7 @@
 import { ipcRenderer } from 'electron'
 import { Store } from 'redux'
 import actions from '../store/actionCreaters'
-import { getTaskById } from '../store/filter'
+import { getActiveTask } from '../store/selectors'
 import store from '../store/store'
 import { shallowCompare } from '../../common/utils'
 import { IpcChannel, IImageFile, SaveType, ITaskItem, IUpdateInfo } from '../../common/constants'
@@ -22,7 +22,7 @@ export default function listenIpc() {
     const { activeId } = state.globals
     let task: ITaskItem | undefined
     if (activeId) {
-      task = getTaskById(state.tasks, activeId)
+      task = getActiveTask(state)
       if (task && task.optimized) {
         apis.fileSave([task.optimized], type)
         return

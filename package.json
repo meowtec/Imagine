@@ -61,6 +61,7 @@
     "react-transition-group": "^2.2.0",
     "redux": "^3.7.2",
     "redux-actions": "^2.2.1",
+    "reselect": "^3.0.1",
     "style-loader": "^0.18.2",
     "svg-sprite-loader": "^3.2.3",
     "ts-jest": "^20.0.10",

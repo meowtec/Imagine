@@ -9,7 +9,7 @@ import SizeReduce from '../components/SizeReduce'
 import RadioGroup from '../components/RadioGroup'
 import actions from '../store/actionCreaters'
 import { IState } from '../store/reducer'
-import { getTaskById } from '../store/filter'
+import { getActiveTask } from '../store/selectors'
 import { ITaskItem, IOptimizeOptions, TaskStatus, IImageFile } from '../../common/constants'
 import __ from '../../locales'
 
@@ -112,7 +112,7 @@ class Alone extends React.PureComponent<IAloneProps & IAloneDispatchProps, IAlon
 }
 
 export default connect<IAloneProps, IAloneDispatchProps, {}>(state => ({
-  task: state.globals.activeId && getTaskById(state.tasks, state.globals.activeId),
+  task: getActiveTask(state),
 }), dispatch => ({
   onClose() {
     dispatch(actions.taskDetail(null))
