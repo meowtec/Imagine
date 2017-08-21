@@ -20,5 +20,9 @@ export const getOptions = () => {
 }
 
 export const saveOptions = (options: IStorageContent) => {
-  localStorage.setItem(key, JSON.stringify(options))
+  try {
+    localStorage.setItem(key, JSON.stringify(options))
+  } catch (e) {
+    log.error(`Failed to set options to localStorage, ${e}`)
+  }
 }
