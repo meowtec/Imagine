@@ -79,15 +79,21 @@
     "file-type": "^6.1.0",
     "fs-extra": "^4.0.1",
     "lodash": "^4.17.4",
-    "mozjpeg": "^4.1.1",
     "pify": "^3.0.0",
-    "pngquant-bin": "^3.1.1",
     "raw-body": "^2.3.0",
     "read-chunk": "^2.1.0",
     "tslib": "^1.7.1",
     "typescript-string-enums": "^0.3.5"
   },
   "build": {
+    "files": [
+      "lib",
+      "htdocs",
+      "bin/${os}/**/*"
+    ],
+    "asarUnpack": [
+      "bin"
+    ],
     "appId": "com.meowtec.imagine.app",
     "mac": {
       "category": "public.app-category.graphics-design"

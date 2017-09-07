@@ -2,7 +2,7 @@ import * as fs from 'fs'
 import * as path from 'path'
 import { Readable, Duplex } from 'stream'
 import { spawn } from 'child-process-promise'
-import * as pngquantBin from 'pngquant-bin'
+import { pngquant } from './bin'
 import * as rawBody from 'raw-body'
 import log from 'electron-log'
 
@@ -12,9 +12,7 @@ export default class PNGQuant extends Optimizer {
   io(input: string, output: string) {
     const { color = 256 } = this.options
 
-    const pngquantBinFixed = pngquantBin.replace('app.asar', 'app.asar.unpacked')
-
-    return spawn(pngquantBinFixed, [
+    return spawn(pngquant, [
       color.toString(),
       input,
       '-o',
@@ -22,7 +20,7 @@ export default class PNGQuant extends Optimizer {
     ], {
       capture: [ 'stdout', 'stderr' ],
     }).catch(e => {
-      throw new Error(e.message + '\n' + e.stderr)
+      throw new Error(e.message + '\n' + (e.stderr || ''))
     })
   }
 }
