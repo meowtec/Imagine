@@ -39,6 +39,12 @@ chmod a+x Imagine-[v]-x86_64.AppImage # make executable
  - Batch optimization
  - i18n (English, 简体中文, Nederlands, español, Français)
 
+## 'ImageMagick required'
+
+Since version 0.3.0, you can choose the format of target image. For example, if you pick a PNG file, you can convert it to JPEG and compress it with MozJPEG optimizer.
+
+But there is an exception: pngquant on windows can't read JPEG files, so if you want to convert JPEG to PNG, you should install ImageMagick firstly, and add it to your PATH environment variable.
+
 ## Build and Contribute
 
 ```bash
