@@ -6,7 +6,9 @@ import { IElectronResponse } from '../../common/constants'
  * create a [request - response] API
  * @param channel channel name
  */
-export const requestCreater = <I, O>(channel: string) => (data: I) => new Promise<O>((resolve, reject) => {
+
+export const requestCreater = <I, O>(channel: string) => (data?: I) =>
+new Promise<O>((resolve, reject) => {
   const sessionId = randomId()
 
   ipcRenderer.send(channel, sessionId, data)

@@ -60,4 +60,6 @@ export default {
   optionsApply: createAction(ACTIONS.OPTIONS_APPLY, () => {
     return store!.getState().globals.defaultOptions
   }),
+
+  imageMagickInstalled: createAction<boolean>(ACTIONS.IMAGEMAGICK_CHECKED),
 }

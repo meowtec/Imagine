@@ -16,6 +16,7 @@ export const IpcChannel = Enum(
   'SYNC',
   'APP_UPDATE',
   'READY',
+  'DETECT_IMAGEMAGICK',
 )
 export type IpcChannel = Enum<typeof IpcChannel>
 

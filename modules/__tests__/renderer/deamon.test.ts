@@ -1,4 +1,4 @@
-jest.mock('../../renderer/apis/optimize')
+jest.mock('../../renderer/apis/')
 
 import * as path from 'path'
 import { createStore } from '../../renderer/store/store'

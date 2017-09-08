@@ -214,6 +214,36 @@ export default class ImageViewer extends PureComponent<ImageViewerProps, ImageVi
     return <div className={classnames('material-cube', '-' + material)} />
   }
 
+  renderContent() {
+    const {
+      zoom,
+      x,
+      y,
+      imageError,
+    } = this.state
+
+    if (imageError) {
+      return <div className="image-fail">FAILED</div>
+    }
+
+    if (this.props.src) {
+      return (
+        <img
+          className="image -transition"
+          src={this.props.src}
+          onLoad={this.handleImageLoad}
+          onError={this.handleImageError}
+          ref={el => {this.image = el!}}
+          style={{
+            transform: `translate(${x}px, ${y}px) scale(${zoom})`,
+          }}
+        />
+      )
+    }
+
+    return null
+  }
+
   render() {
     const {
       zoom,
@@ -235,17 +265,7 @@ export default class ImageViewer extends PureComponent<ImageViewerProps, ImageVi
           onMouseDown={this.handleMouseDown}
         >
           {
-            this.props.src && !this.state.imageError ?
-              <img
-                className="image -transition"
-                src={this.props.src}
-                onLoad={this.handleImageLoad}
-                onError={this.handleImageError}
-                ref={el => {this.image = el!}}
-                style={{
-                  transform: `translate(${x}px, ${y}px) scale(${zoom})`,
-                }}
-              /> : <div className="image-fail">FAILED</div>
+            this.renderContent()
           }
         </div>
 

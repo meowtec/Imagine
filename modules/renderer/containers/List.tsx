@@ -12,8 +12,8 @@ export default connect<ITaskListProps, ITaskListDispatchProps, {}>((state: IStat
   onRemove(task: ITaskItem) {
     dispatch(actions.taskDelete([task.id]))
   },
-  onOptionsChange(task: ITaskItem, options: IOptimizeOptions) {
-    dispatch(actions.taskUpdateOptions(task.id, options))
+  onOptionsChange(id: string, options: IOptimizeOptions) {
+    dispatch(actions.taskUpdateOptions(id, options))
   },
   onClick(task: ITaskItem) {
     dispatch(actions.taskDetail(task.id))

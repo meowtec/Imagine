@@ -15,7 +15,12 @@ const getBin = (name: string) => {
     name = name + '.exe'
   }
 
-  return path.resolve(__dirname, '../../../bin', targetDir, name)
+  return path.resolve(
+    __dirname,
+    '../../bin',
+    targetDir,
+    name
+  ).replace('app.asar', 'app.asar.unpacked')
 }
 
 export const pngquant = getBin('pngquant')

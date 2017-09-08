@@ -25,6 +25,7 @@ export interface IDefaultOptions {
 interface IGlobals {
   activeId: string | null
   updateInfo?: IUpdateInfo
+  imageMagickInstalled: boolean
   optionsVisible: boolean
   defaultOptions: IDefaultOptions
 }
@@ -158,9 +159,17 @@ export const globalsReducer = handleActions<IGlobals>({
       defaultOptions,
     }
   },
+
+  [ACTIONS.IMAGEMAGICK_CHECKED](state, action: Action<boolean>) {
+    return {
+      ...state,
+      imageMagickInstalled: action.payload,
+    }
+  },
 }, {
   activeId: null,
   optionsVisible: false,
+  imageMagickInstalled: false,
   defaultOptions: {
     png: newOptimizeOptions(),
     jpg: newOptimizeOptions(),

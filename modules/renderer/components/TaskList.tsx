@@ -16,7 +16,7 @@ export interface ITaskListDispatchProps {
   onRemove(task: ITaskItem): void
   onClick(task: ITaskItem): void
   onSave(task: ITaskItem, type: SaveType): void
-  onOptionsChange(task: ITaskItem, options: IOptimizeOptions): void
+  onOptionsChange(id: string, options: IOptimizeOptions): void
 }
 
 export default class TaskList extends PureComponent<ITaskListProps & ITaskListDispatchProps, {}> {
