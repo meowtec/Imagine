@@ -1,5 +1,4 @@
 import { connect } from 'react-redux'
-import store from '../store/store'
 import actions from '../store/actionCreaters'
 import { IState } from '../store/reducer'
 import TaskList, { ITaskListProps, ITaskListDispatchProps } from '../components/TaskList'

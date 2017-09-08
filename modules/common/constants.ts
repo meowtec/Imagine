@@ -38,8 +38,20 @@ export interface IImageFile {
 }
 
 export interface IOptimizeOptions {
+  /**
+   * 2~256, for PNG
+   */
   color?: number
+
+  /**
+   * 10~100, for JPEG
+   */
   quality?: number
+
+  /**
+   * PNG and JPEG can convert to each other
+   */
+  exportExt?: SupportedExt
 }
 
 export interface ITaskItem {

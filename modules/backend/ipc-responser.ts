@@ -1,4 +1,4 @@
-import { BrowserWindow, ipcMain } from 'electron'
+import { ipcMain } from 'electron'
 import { IElectronResponse, IpcChannel } from '../common/constants'
 import log from 'electron-log'
 

@@ -1,5 +1,5 @@
 import { Store } from 'redux'
-import optimize from '../apis/optimize'
+import { optimize } from '../apis/'
 import { TaskStatus } from '../../common/constants'
 import actions from '../store/actionCreaters'
 import { IState } from './reducer'
