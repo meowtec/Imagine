@@ -4,6 +4,7 @@ import { IState } from '../store/reducer'
 import {
   SupportedExt,
 } from '../../common/constants'
+import __ from '../../locales'
 
 interface ITargetTypeSelectProps {
   sourceExt: SupportedExt
@@ -24,7 +25,7 @@ class TargetTypeSelect extends React.PureComponent<ITargetTypeSelectProps, {}> {
     return (
       <select style={{width: 60}} value={targetExt} onChange={this.handleChange}>
         <option value={SupportedExt.png} disabled={PNGDisabled}>
-        PNG { PNGDisabled ? ' (ImageMagick required)' : ''}
+        PNG { PNGDisabled ? ` (${__('imagemagick_required')})` : ''}
         </option>
         <option value={SupportedExt.jpg}>JPG</option>
       </select>

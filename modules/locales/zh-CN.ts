@@ -20,4 +20,5 @@ export default {
   after_optimized: '优化后',
   new_version: '有新版本',
   apply_now: '立即应用',
+  imagemagick_required: '需要安装 ImageMagick',
 }
