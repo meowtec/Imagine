@@ -13,7 +13,7 @@ import {
 } from '../common/constants'
 import * as fu from '../common/file-utils'
 import { url } from './dev'
-import { listenIpc } from './ipc-responser'
+import { listenIpc } from '../ipc-bridge/backend'
 import optimize from './optimize'
 import { saveFiles, saveFile } from './save'
 import menuManager from './menu'

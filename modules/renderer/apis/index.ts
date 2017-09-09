@@ -6,7 +6,7 @@ import {
   SaveType,
   IOptimizeRequest
 } from '../../common/constants'
-import { requestCreater } from './core'
+import { requestCreater } from '../../ipc-bridge/renderer'
 
 export const fileAdd = (files: string[]) => ipcRenderer.send(IpcChannel.FILE_ADD, files)
 

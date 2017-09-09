@@ -1,13 +1,24 @@
 import { ipcRenderer } from 'electron'
-import { randomId } from '../../common/utils'
-import { IElectronResponse } from '../../common/constants'
+import { randomId } from '../common/utils'
+import { IElectronResponse, IpcChannel } from '../common/constants'
 
 /**
- * create a [request - response] API
+ * make cross process method call easier.
+ * the renderer side.
+ *
+ * usage:
+ * ```
+ * const methods = requestCreater<Arg, Result>(channalName)
+ * let arg: Arg = {}
+ * method(arg).then((result: Result) => {
+ *   console.log(result)
+ * })
+ * ```
+ *
  * @param channel channel name
  */
 
-export const requestCreater = <I, O>(channel: string) => (data?: I) =>
+export const requestCreater = <I, O>(channel: IpcChannel) => (data?: I) =>
 new Promise<O>((resolve, reject) => {
   const sessionId = randomId()
 
