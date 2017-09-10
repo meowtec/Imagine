@@ -9,7 +9,7 @@ import {
   unoccupiedFile,
   flattenFiles,
 } from '../../common/file-utils'
-import { IImageFile } from '../../common/constants'
+import { IImageFile, SupportedExt } from '../../common/constants'
 
 const relPath = (file: string) => path.resolve(__dirname, file)
 
@@ -42,7 +42,7 @@ test('getFilePath', async () => {
     id: 'abcd',
     url: '/',
     size: 0,
-    ext: 'png',
+    ext: SupportedExt.png,
     originalName: '',
   })
   expect(size).toMatch(/\/abcd.png$/)

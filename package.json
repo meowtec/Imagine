@@ -9,7 +9,7 @@
   },
   "main": "./lib/bootstrap.js",
   "scripts": {
-    "lint": "tslint -t verbose -p .",
+    "lint": "tsc && tslint -t verbose -p .",
     "tscw": "tsc -w",
     "dev": "tsc && cross-env NODE_ENV=development electron .",
     "build": "rimraf lib htdocs dist && tsc && cross-env NODE_ENV=production webpack",
@@ -83,8 +83,7 @@
     "pify": "^3.0.0",
     "raw-body": "^2.3.0",
     "read-chunk": "^2.1.0",
-    "tslib": "^1.7.1",
-    "typescript-string-enums": "^0.3.5"
+    "tslib": "^1.7.1"
   },
   "build": {
     "files": [

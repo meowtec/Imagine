@@ -1,6 +1,5 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
-import { Enum } from 'typescript-string-enums'
 import ImageOptions from '../components/ImageOptions'
 import ImageViewer from '../components/ImageViewer'
 import Modal from '../components/Modal'
@@ -31,10 +30,12 @@ interface IAloneDispatchProps {
   onOptionsChange(id: string, options: IOptimizeOptions): void
 }
 
-export const ImageStage = Enum('before_optimized', 'after_optimized')
-export type ImageStage = Enum<typeof ImageStage>
+const enum ImageStage {
+  beforeOptimized = 'before_optimized',
+  afterOptimized = 'after_optimized',
+}
 
-const imageStageList = [ImageStage.before_optimized, ImageStage.after_optimized]
+const imageStageList = [ImageStage.beforeOptimized, ImageStage.afterOptimized]
 
 interface IAloneState {
   imageStage: ImageStage,
@@ -45,7 +46,7 @@ class Alone extends React.PureComponent<IAloneProps & IAloneDispatchProps, IAlon
     super()
 
     this.state = {
-      imageStage: ImageStage.after_optimized,
+      imageStage: ImageStage.afterOptimized,
     }
   }
 
@@ -126,7 +127,7 @@ class Alone extends React.PureComponent<IAloneProps & IAloneDispatchProps, IAlon
      */
     let image: IImageFile | undefined
     if (task) {
-      image = imageStage === ImageStage.after_optimized
+      image = imageStage === ImageStage.afterOptimized
         ? task.optimized
         : task.image
     }

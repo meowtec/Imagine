@@ -2,13 +2,19 @@ import * as path from 'path'
 import { createStore } from '../../renderer/store/store'
 import actions, { setStore } from '../../renderer/store/actionCreaters'
 import controller from '../../backend/controller'
-import { IImageFile, IOptimizeOptions, ITaskItem, TaskStatus, SupportedExt } from '../../common/constants'
+import {
+  IImageFile,
+  IOptimizeOptions,
+  ITaskItem,
+  TaskStatus,
+  SupportedExt,
+} from '../../common/constants'
 
 const image1: IImageFile = {
   id: '01',
   url: '01.png',
   size: 100,
-  ext: 'png',
+  ext: SupportedExt.png,
   originalName: 'file.png',
 }
 
@@ -16,7 +22,7 @@ const image2: IImageFile = {
   id: '02',
   url: '02.jpg',
   size: 101,
-  ext: 'jpg',
+  ext: SupportedExt.jpg,
   originalName: 'file.jpg',
 }
 
@@ -142,7 +148,7 @@ test('task success', () => {
     id: '03',
     url: '02.jpg',
     size: 101,
-    ext: 'jpg',
+    ext: SupportedExt.jpg,
     originalName: 'file-result.jpg',
   }))
   store.dispatch(actions.taskOptimizeSuccess('notexist', {} as IImageFile))
@@ -221,14 +227,14 @@ test('set globalOptions', () => {
   const store = createStore()
 
   store.dispatch(actions.defaultOptions({
-    ext: 'png',
+    ext: SupportedExt.png,
     options: {
       color: 8,
     },
   }))
 
   store.dispatch(actions.defaultOptions({
-    ext: 'jpg',
+    ext: SupportedExt.jpg,
     options: {
       quality: 60,
     },

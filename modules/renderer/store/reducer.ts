@@ -18,12 +18,14 @@ import {
 type Tasks = ITaskItem[]
 
 export interface IDefaultOptions {
+  // TODO: if possible, change `string` to `SupportedExt`
+  [key: string]: IOptimizeOptions
   jpg: IOptimizeOptions
   png: IOptimizeOptions
 }
 
 interface IGlobals {
-  activeId: string | null
+  activeId?: string
   updateInfo?: IUpdateInfo
   imageMagickInstalled: boolean
   optionsVisible: boolean
@@ -56,7 +58,7 @@ const updateTaskHelper = (tasks: Tasks, id: string, partial: Partial<ITaskItem>)
   ]
 }
 
-export const taskReducer = handleActions<Tasks>({
+export const taskReducer = handleActions<Tasks, any>({
   [ACTIONS.TASK_ADD](state, action: Action<ITaskAddPayloadItem[]>) {
     return [
       ...state,
@@ -120,7 +122,7 @@ export const taskReducer = handleActions<Tasks>({
   },
 }, [])
 
-export const globalsReducer = handleActions<IGlobals>({
+export const globalsReducer = handleActions<IGlobals, any>({
   [ACTIONS.TASK_DETAIL](state, action: Action<string>) {
     return {
       ...state,
@@ -138,7 +140,7 @@ export const globalsReducer = handleActions<IGlobals>({
   [ACTIONS.OPTIONS_VISIBLE](state, action: Action<boolean>) {
     return {
       ...state,
-      optionsVisible: action.payload,
+      optionsVisible: action.payload!,
     }
   },
 
@@ -163,11 +165,10 @@ export const globalsReducer = handleActions<IGlobals>({
   [ACTIONS.IMAGEMAGICK_CHECKED](state, action: Action<boolean>) {
     return {
       ...state,
-      imageMagickInstalled: action.payload,
+      imageMagickInstalled: action.payload!,
     }
   },
 }, {
-  activeId: null,
   optionsVisible: false,
   imageMagickInstalled: false,
   defaultOptions: {

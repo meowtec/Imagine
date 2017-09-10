@@ -10,6 +10,10 @@ import log from 'electron-log'
 
 export const tmpdir = path.resolve(os.tmpdir(), 'imageOptimizer')
 
+export const isSupportedExt = (type: string): type is SupportedExt => {
+  return type in SupportedExt
+}
+
 export const cleanTmpdir = () => fs.emptyDirSync(tmpdir)
 
 const takeSubHash = (hash: string) => hash.replace(/[/+=]/g, '').slice(0, 32)
@@ -42,9 +46,9 @@ export const getFilePath = (image: Partial<IImageFile>) => path.resolve(tmpdir, 
 export const saveFilesTmp = (files: string[]) => {
   return Promise.all(files.map(async file => {
     const type = await imageType(file)
-    if (!(type && type.ext in SupportedExt)) {
-      return
-    }
+    const ext = type && type.ext
+
+    if (!isSupportedExt(ext)) return
 
     const id = md5(file) + await fileMD5(file)
     const size = await getSize(file)
@@ -52,7 +56,7 @@ export const saveFilesTmp = (files: string[]) => {
     const descriptor: Partial<IImageFile> = {
       size,
       id,
-      ext: type.ext as SupportedExt,
+      ext,
       originalName: file,
     }
 
