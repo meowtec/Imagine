@@ -8,6 +8,8 @@ import log from 'electron-log'
 
 cleanTmpdir()
 
+log.transports.file.level = 'info'
+
 app.on('ready', () => {
   log.info('app launch')
   setupLocales()

@@ -1,8 +1,10 @@
+import '../_tools/before-test'
+
 import * as path from 'path'
 import optimize from '../../backend/optimize'
 import { saveFilesTmp, getFilePath } from '../../common/file-utils'
 import { fullDiff } from '../_tools/image-diff'
-import { IImageFile } from '../../common/constants'
+import { IImageFile, SupportedExt } from '../../common/constants'
 
 const relPath = (file: string) => path.resolve(__dirname, file)
 
@@ -12,7 +14,7 @@ const jpg = '../_files/fox.jpg'
 test('optimize png success', async () => {
   const files = await saveFilesTmp([relPath(png)])
   const file = files[0] as IImageFile
-  const optimized = await optimize(file, {})
+  const optimized = await optimize(file, SupportedExt.png, {})
 
   const diffResult = await fullDiff({
     actualImage: getFilePath(optimized),
@@ -27,12 +29,12 @@ test('optimize png fail', async () => {
     id: '404',
     url: '/',
     size: 0,
-    ext: 'png',
+    ext: SupportedExt.png,
     originalName: '',
   }
 
   try {
-    optimize(image, {})
+    await optimize(image, SupportedExt.png, {})
   } catch (e) {
     expect(e).toBeTruthy()
   }
@@ -41,7 +43,7 @@ test('optimize png fail', async () => {
 test('optimize jpg success', async () => {
   const files = await saveFilesTmp([relPath(jpg)])
   const file = files[0] as IImageFile
-  const optimized = await optimize(file, {})
+  const optimized = await optimize(file, SupportedExt.jpg, {})
 
   const diffResult = await fullDiff({
     actualImage: getFilePath(optimized),
@@ -56,12 +58,12 @@ test('optimize jpg fail', async () => {
     id: '404',
     url: '/',
     size: 0,
-    ext: 'jpg',
+    ext: SupportedExt.jpg,
     originalName: '',
   }
 
   try {
-    await optimize(image, {})
+    await optimize(image, SupportedExt.jpg, {})
   } catch (e) {
     expect(e).toBeTruthy()
   }

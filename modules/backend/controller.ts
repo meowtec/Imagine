@@ -13,12 +13,12 @@ import {
 } from '../common/constants'
 import * as fu from '../common/file-utils'
 import { url } from './dev'
-import PNGQuant from '../optimizers/pngquant'
-import { listenIpc } from './ipc-responser'
+import { listenIpc } from '../ipc-bridge/backend'
 import optimize from './optimize'
 import { saveFiles, saveFile } from './save'
 import menuManager from './menu'
 import * as menuActions from './menu-actions'
+import { detectImageMagick } from './imagemagick'
 import __ from '../locales'
 
 type BrowserWindow = Electron.BrowserWindow
@@ -108,10 +108,41 @@ class Controller {
     })
   }
 
+  handleIpcFileSave = (event: Electron.IpcMessageEvent, images: IImageFile[], type: SaveType) => {
+    const save = async (dirname?: string) => {
+      await saveFiles(images, type, dirname)
+      event.sender.send(IpcChannel.SAVED)
+    }
+
+    if (type === SaveType.NEW_DIR) {
+      dialog.showOpenDialog({
+        title: 'Save files',
+        properties: ['openDirectory', 'createDirectory'],
+      }, async filePaths => {
+        if (!filePaths || !filePaths.length) return
+        const dirpath = filePaths[0]
+        await save(dirpath)
+        shell.openItem(dirpath)
+      })
+    } else if (type === SaveType.SAVE_AS) {
+      dialog.showSaveDialog({
+        title: 'Save files',
+        defaultPath: images[0].originalName,
+      }, async filePath => {
+        await saveFile(images[0], filePath)
+        event.sender.send(IpcChannel.SAVED)
+      })
+    } else {
+      save()
+    }
+  }
+
   listenIpc() {
-    listenIpc<IOptimizeRequest, IImageFile>(IpcChannel.OPTIMIZE, ({image, options}) => {
-      return optimize(image, options)
-    })
+    listenIpc<IOptimizeRequest, IImageFile>(IpcChannel.OPTIMIZE, ({image, exportExt, options}) =>
+      optimize(image, exportExt, options)
+    )
+
+    listenIpc<void, boolean>(IpcChannel.DETECT_IMAGEMAGICK, detectImageMagick)
 
     ipcMain.on(IpcChannel.FILE_SELECT, () => {
       menuActions.open()
@@ -121,38 +152,7 @@ class Controller {
       this.receiveFiles(files)
     })
 
-    ipcMain.on(IpcChannel.SAVE, (event: Electron.IpcMessageEvent, images: IImageFile[], type: SaveType) => {
-      const save = (dirname?: string) =>
-        saveFiles(images, type, dirname)
-          .then(() => {
-            event.sender.send(IpcChannel.SAVED)
-          })
-
-      if (type === SaveType.NEW_DIR) {
-        dialog.showOpenDialog({
-          title: 'Save files',
-          properties: ['openDirectory', 'createDirectory'],
-        }, filePaths => {
-          if (!filePaths || !filePaths.length) return
-          const dirpath = filePaths[0]
-          save(dirpath).then(() => {
-            shell.openItem(dirpath)
-          })
-        })
-      } else if (type === SaveType.SAVE_AS) {
-        dialog.showSaveDialog({
-          title: 'Save files',
-          defaultPath: images[0].originalName,
-        }, filePath => {
-          saveFile(images[0], filePath)
-            .then(() => {
-              event.sender.send(IpcChannel.SAVED)
-            })
-        })
-      } else {
-        save()
-      }
-    })
+    ipcMain.on(IpcChannel.SAVE, this.handleIpcFileSave)
 
     ipcMain.on(IpcChannel.SYNC, (event: any, state: IBackendState) => {
       const { menu } = this

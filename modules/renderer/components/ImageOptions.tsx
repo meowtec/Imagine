@@ -14,11 +14,7 @@ interface ImageOptionsProps {
   onChange(options: IOptimizeOptions): void
 }
 
-export default class ImageOptions extends React.Component<ImageOptionsProps, {}> {
-  shouldComponentUpdate(nextProps: ImageOptionsProps) {
-    return !shallowCompare(this.props, nextProps, ['ext', 'options', 'precision'])
-  }
-
+export default class ImageOptions extends React.PureComponent<ImageOptionsProps, {}> {
   handleColorChange = (color: number) => {
     this.props.onChange({
       ...this.props.options,
@@ -46,7 +42,7 @@ export default class ImageOptions extends React.Component<ImageOptionsProps, {}>
     )
   }
 
-  renderJPG() {
+  renderJPGWebp() {
     return (
       <div className="image-options">
         <label>{__('quality')}</label>
@@ -65,10 +61,13 @@ export default class ImageOptions extends React.Component<ImageOptionsProps, {}>
 
     switch (ext) {
       case SupportedExt.jpg:
-        return this.renderJPG()
+      case SupportedExt.webp:
+        return this.renderJPGWebp()
 
       case SupportedExt.png:
         return this.renderPNG()
     }
+
+    return null
   }
 }

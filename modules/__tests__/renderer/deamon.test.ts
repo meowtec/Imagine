@@ -1,4 +1,6 @@
-jest.mock('../../renderer/apis/optimize')
+jest.mock('../../renderer/apis/')
+
+import '../_tools/before-test'
 
 import * as path from 'path'
 import { createStore } from '../../renderer/store/store'

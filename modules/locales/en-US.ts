@@ -20,4 +20,5 @@ export default {
   after_optimized: 'After',
   new_version: 'Upgrade',
   apply_now: 'Apply now',
+  imagemagick_required: 'ImageMagick required',
 }

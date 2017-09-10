@@ -1,6 +1,28 @@
-import { BrowserWindow, ipcMain } from 'electron'
+import { ipcMain } from 'electron'
 import { IElectronResponse, IpcChannel } from '../common/constants'
 import log from 'electron-log'
+
+/**
+ * make cross process method call easier.
+ * the backend side.
+ *
+ * In main render there is a method whose type is:
+ * ```
+ * function backendMethod (arg: Arg): Promise<Result> | Result
+ * ```
+ *
+ * We need call it in renderer process, so we should use `electron.rpc`
+ * `ipc-bridge` provides a convenient way.
+ *
+ * usage:
+ * ```
+ * listenIpc<Arg, Result>(channelName, backendMethod)
+ * ```
+ *
+ * Now we can call the method in renderer side. see renderer.ts for detail.
+ *
+ * @param channel channel name
+ */
 
 export const listenIpc = <I, O>(channel: IpcChannel, responser: (input: I) => Promise<O> | O) => {
   ipcMain.on(channel, async (event: Electron.Event, sessionId: string, data: I) => {

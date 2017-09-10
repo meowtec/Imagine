@@ -1,26 +1,35 @@
-import { Enum } from 'typescript-string-enums'
+export enum SupportedExt {
+  png = 'png',
+  jpg = 'jpg',
+  webp = 'webp',
+}
 
-export const SupportedExt = Enum('png', 'jpg')
-export type SupportedExt = Enum<typeof SupportedExt>
+export const enum TaskStatus {
+  PENDING = 'PENDING',
+  PROCESSING = 'PROCESSING',
+  DONE = 'DONE',
+  FAIL = 'FAIL',
+}
 
-export const TaskStatus = Enum('PENDING', 'PROCESSING', 'DONE', 'FAIL')
-export type TaskStatus = Enum<typeof TaskStatus>
+export const enum IpcChannel {
+  FILE_SELECT = 'FILE_SELECT',
+  FILE_SELECTED = 'FILE_SELECTED',
+  FILE_ADD = 'FILE_ADD',
+  OPTIMIZE = 'OPTIMIZE',
+  SAVE = 'SAVE',
+  SAVED = 'SAVED',
+  SYNC = 'SYNC',
+  APP_UPDATE = 'APP_UPDATE',
+  READY = 'READY',
+  DETECT_IMAGEMAGICK = 'DETECT_IMAGEMAGICK',
+}
 
-export const IpcChannel = Enum(
-  'FILE_SELECT',
-  'FILE_SELECTED',
-  'FILE_ADD',
-  'OPTIMIZE',
-  'SAVE',
-  'SAVED',
-  'SYNC',
-  'APP_UPDATE',
-  'READY',
-)
-export type IpcChannel = Enum<typeof IpcChannel>
-
-export const SaveType = Enum('OVER', 'NEW_NAME', 'NEW_DIR', 'SAVE_AS')
-export type SaveType = Enum<typeof SaveType>
+export const enum SaveType {
+  OVER = 'OVER',
+  NEW_NAME = 'NEW_NAME',
+  NEW_DIR = 'NEW_DIR',
+  SAVE_AS = 'SAVE_AS',
+}
 
 export interface IElectronResponse<T> {
   session: string
@@ -37,7 +46,14 @@ export interface IImageFile {
 }
 
 export interface IOptimizeOptions {
+  /**
+   * 2~256, for PNG
+   */
   color?: number
+
+  /**
+   * 10~100, for JPEG
+   */
   quality?: number
 }
 
@@ -47,11 +63,13 @@ export interface ITaskItem {
   options: IOptimizeOptions
   optimized?: IImageFile
   status: TaskStatus
+  exportExt?: SupportedExt
 }
 
 export interface IOptimizeRequest {
   image: IImageFile
   options: IOptimizeOptions
+  exportExt?: SupportedExt
 }
 
 export interface IBackendState {

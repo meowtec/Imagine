@@ -1,3 +1,5 @@
+import '../_tools/before-test'
+
 import * as path from 'path'
 import {
   md5,
@@ -9,7 +11,7 @@ import {
   unoccupiedFile,
   flattenFiles,
 } from '../../common/file-utils'
-import { IImageFile } from '../../common/constants'
+import { IImageFile, SupportedExt } from '../../common/constants'
 
 const relPath = (file: string) => path.resolve(__dirname, file)
 
@@ -42,7 +44,7 @@ test('getFilePath', async () => {
     id: 'abcd',
     url: '/',
     size: 0,
-    ext: 'png',
+    ext: SupportedExt.png,
     originalName: '',
   })
   expect(size).toMatch(/\/abcd.png$/)
@@ -97,6 +99,7 @@ test('flattenFiles', async () => {
   const output = await flattenFiles(sources)
   expect(output).toEqual([
     '../_files/fox.jpg',
+    '../_tools/before-test.ts',
     '../_tools/image-diff.ts',
   ].map(relPath))
 })

@@ -42,4 +42,8 @@ export default function listenIpc() {
   ipcRenderer.on(IpcChannel.APP_UPDATE, (event: any, data: IUpdateInfo) => {
     store.dispatch(actions.appUpdateInfo(data))
   })
+
+  apis.detectImageMagick().then(installed => {
+    store.dispatch(actions.imageMagickInstalled(installed))
+  })
 }

@@ -1,12 +1,23 @@
 import * as React from 'react'
-import { PureComponent, MouseEvent as RMouseEvent } from 'react'
+import {
+  PureComponent,
+  MouseEvent as MouseEvent,
+  ChangeEvent as ChangeEvent,
+} from 'react'
 import * as classnames from 'classnames'
 import Popper from '../components/Popper'
 import Select from './Select'
 import Icon from './Icon'
 import ImageOptions from './ImageOptions'
 import SizeReduce from './SizeReduce'
-import { ITaskItem, TaskStatus, IOptimizeOptions, SaveType } from '../../common/constants'
+import TargetTypeSelect from './TargetTypeSelect'
+import {
+  ITaskItem,
+  TaskStatus,
+  IOptimizeOptions,
+  SaveType,
+  SupportedExt,
+} from '../../common/constants'
 import * as _ from '../../common/utils'
 import __ from '../../locales'
 
@@ -17,40 +28,46 @@ interface ITaskViewProps {
   onRemove(task: ITaskItem): void
   onClick(task: ITaskItem): void
   onSave(task: ITaskItem, type: SaveType): void
-  onOptionsChange(task: ITaskItem, options: IOptimizeOptions): void
+  onOptionsChange(id: string, options: IOptimizeOptions): void
+  onExportChange(id: string, ext: SupportedExt): void
 }
 
 class TaskView extends PureComponent<ITaskViewProps, {}> {
-  handleClear = (e: RMouseEvent<HTMLAnchorElement>) => {
+  handleClear = (e: MouseEvent<HTMLAnchorElement>) => {
     this.stopEvent(e)
 
     this.props.onRemove(this.props.task)
   }
 
-  handleClick = (e: RMouseEvent<HTMLDivElement>) => {
+  handleClick = (e: MouseEvent<HTMLDivElement>) => {
     if (this.props.task.status === 'FAIL') return
 
     this.props.onClick(this.props.task)
   }
 
   handleOptionsChange = (options: IOptimizeOptions) => {
-    this.props.onOptionsChange(this.props.task, options)
+    this.props.onOptionsChange(this.props.task.id, options)
   }
 
-  handleSave = (e: RMouseEvent<Element>, type: SaveType) => {
+  handleExtChange = (ext: SupportedExt) => {
+    const { task } = this.props
+    this.props.onExportChange(task.id, ext)
+  }
+
+  handleSave = (e: MouseEvent<Element>, type: SaveType) => {
     this.stopEvent(e)
 
     this.props.onSave(this.props.task, type)
   }
 
-  handleRefreah = (e: RMouseEvent<Element>) => {
+  handleRefreah = (e: MouseEvent<Element>) => {
     this.stopEvent(e)
 
     const { task } = this.props
-    this.props.onOptionsChange(task, task.options)
+    this.props.onOptionsChange(task.id, task.options)
   }
 
-  stopEvent = (e: RMouseEvent<Element>) => {
+  stopEvent = (e: MouseEvent<Element>) => {
     e.preventDefault()
     e.stopPropagation()
   }
@@ -60,6 +77,7 @@ class TaskView extends PureComponent<ITaskViewProps, {}> {
     const { image, optimized, options } = task
     const destImage = task.optimized || task.image
     const isProcessing = task.status === TaskStatus.PROCESSING
+    const { exportExt = image.ext } = task
 
     return (
       <div className={classnames('task-view', '-' + task.status)}>
@@ -120,13 +138,20 @@ class TaskView extends PureComponent<ITaskViewProps, {}> {
         </div>
         <div className="image-profile">
           <ImageOptions
-            ext={image.ext}
+            ext={exportExt}
             options={options}
             precision={false}
             onChange={this.handleOptionsChange}
           />
-          <div className="image-sizes">
-            <SizeReduce task={task} />
+          <div>
+            <div className="image-sizes">
+              <TargetTypeSelect
+                sourceExt={image.ext}
+                targetExt={exportExt}
+                onChange={this.handleExtChange}
+              />
+              <SizeReduce task={task} />
+            </div>
           </div>
         </div>
       </div>

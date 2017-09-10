@@ -20,4 +20,5 @@ export default {
   after_optimized: 'Después',
   new_version: 'Actualizar',
   apply_now: 'Apply now', // TODO: translate
+  imagemagick_required: 'ImageMagick required', // TODO: translate
 }

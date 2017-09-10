@@ -9,13 +9,13 @@
   },
   "main": "./lib/bootstrap.js",
   "scripts": {
-    "lint": "tslint -t verbose -p .",
+    "lint": "tsc && tslint -t verbose -p .",
     "tscw": "tsc -w",
     "dev": "tsc && cross-env NODE_ENV=development electron .",
-    "build": "tsc && cross-env NODE_ENV=production webpack",
+    "build": "rimraf lib htdocs dist && tsc && cross-env NODE_ENV=production webpack",
     "start": "npm run build && electron .",
     "pack": "npm run build && build --dir",
-    "release": "npm run build && build",
+    "release": "npm run build && build -ml && build --win --ia32",
     "test": "tsc && npm run lint && jest"
   },
   "author": "meowtec<bertonzh@gmail.com>",
@@ -62,6 +62,7 @@
     "redux": "^3.7.2",
     "redux-actions": "^2.2.1",
     "reselect": "^3.0.1",
+    "rimraf": "^2.6.1",
     "style-loader": "^0.18.2",
     "svg-sprite-loader": "^3.2.3",
     "ts-jest": "^20.0.10",
@@ -79,15 +80,20 @@
     "file-type": "^6.1.0",
     "fs-extra": "^4.0.1",
     "lodash": "^4.17.4",
-    "mozjpeg": "^4.1.1",
     "pify": "^3.0.0",
-    "pngquant-bin": "^3.1.1",
     "raw-body": "^2.3.0",
     "read-chunk": "^2.1.0",
-    "tslib": "^1.7.1",
-    "typescript-string-enums": "^0.3.5"
+    "tslib": "^1.7.1"
   },
   "build": {
+    "files": [
+      "lib",
+      "htdocs",
+      "bin/${os}/**/*"
+    ],
+    "asarUnpack": [
+      "bin"
+    ],
     "appId": "com.meowtec.imagine.app",
     "mac": {
       "category": "public.app-category.graphics-design"

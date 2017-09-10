@@ -1,0 +1,7 @@
+{
+  "files.watcherExclude": {
+    "lib": true,
+    "htdocs": true,
+    "dist": true
+  }
+}

@@ -1,14 +1,22 @@
+import '../_tools/before-test'
+
 import * as path from 'path'
 import { createStore } from '../../renderer/store/store'
 import actions, { setStore } from '../../renderer/store/actionCreaters'
 import controller from '../../backend/controller'
-import { IImageFile, IOptimizeOptions, ITaskItem, TaskStatus, SupportedExt } from '../../common/constants'
+import {
+  IImageFile,
+  IOptimizeOptions,
+  ITaskItem,
+  TaskStatus,
+  SupportedExt,
+} from '../../common/constants'
 
 const image1: IImageFile = {
   id: '01',
   url: '01.png',
   size: 100,
-  ext: 'png',
+  ext: SupportedExt.png,
   originalName: 'file.png',
 }
 
@@ -16,7 +24,7 @@ const image2: IImageFile = {
   id: '02',
   url: '02.jpg',
   size: 101,
-  ext: 'jpg',
+  ext: SupportedExt.jpg,
   originalName: 'file.jpg',
 }
 
@@ -38,7 +46,6 @@ test('task add', () => {
       image: image1,
       options: {
         color: 128,
-        quality: 70,
       },
       status: TaskStatus.PENDING,
     },
@@ -46,8 +53,7 @@ test('task add', () => {
       id: image2.id,
       image: image2,
       options: {
-        color: 128,
-        quality: 70,
+        quality: 80,
       },
       status: TaskStatus.PENDING,
     },
@@ -66,7 +72,6 @@ test('task delete', () => {
       image: image1,
       options: {
         color: 128,
-        quality: 70,
       },
       status: TaskStatus.PENDING,
     },
@@ -90,7 +95,6 @@ test('task update options', () => {
       image: image1,
       options: {
         color: 128,
-        quality: 70,
       },
       status: TaskStatus.PENDING,
     },
@@ -118,7 +122,6 @@ test('task start', () => {
       image: image1,
       options: {
         color: 128,
-        quality: 70,
       },
       status: TaskStatus.PENDING,
     },
@@ -126,8 +129,7 @@ test('task start', () => {
       id: image2.id,
       image: image2,
       options: {
-        color: 128,
-        quality: 70,
+        quality: 80,
       },
       status: TaskStatus.PROCESSING,
     },
@@ -142,7 +144,7 @@ test('task success', () => {
     id: '03',
     url: '02.jpg',
     size: 101,
-    ext: 'jpg',
+    ext: SupportedExt.jpg,
     originalName: 'file-result.jpg',
   }))
   store.dispatch(actions.taskOptimizeSuccess('notexist', {} as IImageFile))
@@ -153,7 +155,6 @@ test('task success', () => {
       image: image1,
       options: {
         color: 128,
-        quality: 70,
       },
       status: TaskStatus.PENDING,
     },
@@ -161,8 +162,7 @@ test('task success', () => {
       id: image2.id,
       image: image2,
       options: {
-        color: 128,
-        quality: 70,
+        quality: 80,
       },
       status: TaskStatus.DONE,
       optimized: {
@@ -189,7 +189,6 @@ test('task fail', () => {
       image: image1,
       options: {
         color: 128,
-        quality: 70,
       },
       status: TaskStatus.PENDING,
     },
@@ -197,8 +196,7 @@ test('task fail', () => {
       id: image2.id,
       image: image2,
       options: {
-        color: 128,
-        quality: 70,
+        quality: 80,
       },
       status: TaskStatus.FAIL,
     },
@@ -221,14 +219,14 @@ test('set globalOptions', () => {
   const store = createStore()
 
   store.dispatch(actions.defaultOptions({
-    ext: 'png',
+    ext: SupportedExt.png,
     options: {
       color: 8,
     },
   }))
 
   store.dispatch(actions.defaultOptions({
-    ext: 'jpg',
+    ext: SupportedExt.jpg,
     options: {
       quality: 60,
     },
@@ -241,6 +239,10 @@ test('set globalOptions', () => {
 
     jpg: {
       quality: 60,
+    },
+
+    webp: {
+      quality: 80,
     },
   })
 

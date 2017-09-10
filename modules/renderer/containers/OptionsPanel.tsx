@@ -25,6 +25,12 @@ interface IOwnProps {
 }
 
 class OptionsPanel extends React.PureComponent<IProps & IDispatchProps, {}> {
+  onChanges = {
+    png: this.props.onOptionsChange.bind(null, SupportedExt.png),
+    jpg: this.props.onOptionsChange.bind(null, SupportedExt.jpg),
+    webp: this.props.onOptionsChange.bind(null, SupportedExt.webp),
+  } as {[ext: string]: (options: IOptimizeOptions) => void}
+
   render() {
     const { optionsMap } = this.props
 
@@ -36,7 +42,7 @@ class OptionsPanel extends React.PureComponent<IProps & IDispatchProps, {}> {
               precision={true}
               ext={SupportedExt.png}
               options={optionsMap.png}
-              onChange={options => this.props.onOptionsChange('png', options)}
+              onChange={this.onChanges.png}
             />
           </Collapse>
 
@@ -45,7 +51,16 @@ class OptionsPanel extends React.PureComponent<IProps & IDispatchProps, {}> {
               precision={true}
               ext={SupportedExt.jpg}
               options={optionsMap.jpg}
-              onChange={options => this.props.onOptionsChange('jpg', options)}
+              onChange={this.onChanges.jpg}
+            />
+          </Collapse>
+
+          <Collapse title="WebP" initialVisible={true}>
+            <ImageOptions
+              precision={true}
+              ext={SupportedExt.webp}
+              options={optionsMap.webp}
+              onChange={this.onChanges.webp}
             />
           </Collapse>
         </div>

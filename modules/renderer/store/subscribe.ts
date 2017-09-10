@@ -7,6 +7,9 @@ import { IpcChannel, IBackendState } from '../../common/constants'
 export default function(store: Store<IState>) {
   let backendState: IBackendState
 
+  /**
+   * When `IBackendState` changed, sync to backend
+   */
   store.subscribe(() => {
     const state = store.getState()
     const nextBackendState: IBackendState = {
