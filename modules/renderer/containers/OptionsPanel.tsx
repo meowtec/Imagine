@@ -25,6 +25,11 @@ interface IOwnProps {
 }
 
 class OptionsPanel extends React.PureComponent<IProps & IDispatchProps, {}> {
+  onChanges = {
+    png: this.props.onOptionsChange.bind(null, SupportedExt.png),
+    jpg: this.props.onOptionsChange.bind(null, SupportedExt.jpg),
+  } as {[ext: string]: (options: IOptimizeOptions) => void}
+
   render() {
     const { optionsMap } = this.props
 
@@ -36,7 +41,7 @@ class OptionsPanel extends React.PureComponent<IProps & IDispatchProps, {}> {
               precision={true}
               ext={SupportedExt.png}
               options={optionsMap.png}
-              onChange={options => this.props.onOptionsChange(SupportedExt.png, options)}
+              onChange={this.onChanges.png}
             />
           </Collapse>
 
@@ -45,7 +50,7 @@ class OptionsPanel extends React.PureComponent<IProps & IDispatchProps, {}> {
               precision={true}
               ext={SupportedExt.jpg}
               options={optionsMap.jpg}
-              onChange={options => this.props.onOptionsChange(SupportedExt.jpg, options)}
+              onChange={this.onChanges.jpg}
             />
           </Collapse>
         </div>
