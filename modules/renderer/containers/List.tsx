@@ -2,7 +2,13 @@ import { connect } from 'react-redux'
 import actions from '../store/actionCreaters'
 import { IState } from '../store/reducer'
 import TaskList, { ITaskListProps, ITaskListDispatchProps } from '../components/TaskList'
-import { ITaskItem, IOptimizeOptions, SaveType, IpcChannel } from '../../common/constants'
+import {
+  ITaskItem,
+  IOptimizeOptions,
+  SaveType,
+  IpcChannel,
+  SupportedExt,
+} from '../../common/constants'
 import * as apis from '../apis'
 
 export default connect<ITaskListProps, ITaskListDispatchProps, {}>((state: IState) => ({
@@ -13,6 +19,9 @@ export default connect<ITaskListProps, ITaskListDispatchProps, {}>((state: IStat
   },
   onOptionsChange(id: string, options: IOptimizeOptions) {
     dispatch(actions.taskUpdateOptions(id, options))
+  },
+  onExportChange(id: string, ext: SupportedExt) {
+    dispatch(actions.taskUpdateExport(id, ext))
   },
   onClick(task: ITaskItem) {
     dispatch(actions.taskDetail(task.id))

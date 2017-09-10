@@ -28,6 +28,7 @@ interface IAloneProps {
 interface IAloneDispatchProps {
   onClose(): void
   onOptionsChange(id: string, options: IOptimizeOptions): void
+  onExportChange(id: string, ext: SupportedExt): void
 }
 
 const enum ImageStage {
@@ -76,16 +77,13 @@ class Alone extends React.PureComponent<IAloneProps & IAloneDispatchProps, IAlon
 
   handleExtChange = (ext: SupportedExt) => {
     const task = this.props.task!
-    this.props.onOptionsChange(task.id, {
-      ...task.options,
-      exportExt: ext,
-    })
+    this.props.onExportChange(task.id, ext)
   }
 
   renderControllers() {
     const task = this.props.task!
     const { image, optimized, options, status } = task
-    const { exportExt = image.ext } = options
+    const { exportExt = image.ext } = task
 
     return (
       <div>
@@ -151,5 +149,8 @@ export default connect<IAloneProps, IAloneDispatchProps, {}>((state: IState) => 
   },
   onOptionsChange(id: string, options: IOptimizeOptions) {
     dispatch(actions.taskUpdateOptions(id, options))
+  },
+  onExportChange(id: string, ext: SupportedExt) {
+    dispatch(actions.taskUpdateExport(id, ext))
   },
 }))(Alone)

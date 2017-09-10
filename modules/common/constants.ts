@@ -55,11 +55,6 @@ export interface IOptimizeOptions {
    * 10~100, for JPEG
    */
   quality?: number
-
-  /**
-   * PNG and JPEG can convert to each other
-   */
-  exportExt?: SupportedExt
 }
 
 export interface ITaskItem {
@@ -68,11 +63,13 @@ export interface ITaskItem {
   options: IOptimizeOptions
   optimized?: IImageFile
   status: TaskStatus
+  exportExt?: SupportedExt
 }
 
 export interface IOptimizeRequest {
   image: IImageFile
   options: IOptimizeOptions
+  exportExt?: SupportedExt
 }
 
 export interface IBackendState {

@@ -138,8 +138,8 @@ class Controller {
   }
 
   listenIpc() {
-    listenIpc<IOptimizeRequest, IImageFile>(IpcChannel.OPTIMIZE, ({image, options}) =>
-      optimize(image, options)
+    listenIpc<IOptimizeRequest, IImageFile>(IpcChannel.OPTIMIZE, ({image, exportExt, options}) =>
+      optimize(image, exportExt, options)
     )
 
     listenIpc<void, boolean>(IpcChannel.DETECT_IMAGEMAGICK, detectImageMagick)

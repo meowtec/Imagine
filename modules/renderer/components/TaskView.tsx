@@ -29,6 +29,7 @@ interface ITaskViewProps {
   onClick(task: ITaskItem): void
   onSave(task: ITaskItem, type: SaveType): void
   onOptionsChange(id: string, options: IOptimizeOptions): void
+  onExportChange(id: string, ext: SupportedExt): void
 }
 
 class TaskView extends PureComponent<ITaskViewProps, {}> {
@@ -50,10 +51,7 @@ class TaskView extends PureComponent<ITaskViewProps, {}> {
 
   handleExtChange = (ext: SupportedExt) => {
     const { task } = this.props
-    this.props.onOptionsChange(task.id, {
-      ...task.options,
-      exportExt: ext,
-    })
+    this.props.onExportChange(task.id, ext)
   }
 
   handleSave = (e: MouseEvent<Element>, type: SaveType) => {
@@ -79,7 +77,7 @@ class TaskView extends PureComponent<ITaskViewProps, {}> {
     const { image, optimized, options } = task
     const destImage = task.optimized || task.image
     const isProcessing = task.status === TaskStatus.PROCESSING
-    const { exportExt = image.ext } = options
+    const { exportExt = image.ext } = task
 
     return (
       <div className={classnames('task-view', '-' + task.status)}>

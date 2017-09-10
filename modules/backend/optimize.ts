@@ -9,8 +9,12 @@ import { convert } from './imagemagick'
 
 const platform = os.platform()
 
-const optimize = async (image: IImageFile, options: IOptimizeOptions): Promise<IImageFile> => {
-  const { exportExt = image.ext } = options
+const optimize = async (
+  image: IImageFile,
+  exportExt: SupportedExt = image.ext,
+  options: IOptimizeOptions
+): Promise<IImageFile> => {
+  exportExt = exportExt || image.ext
 
   let sourcePath = fu.getFilePath(image)
   const optimizedId = fu.md5(image.id + JSON.stringify(options))

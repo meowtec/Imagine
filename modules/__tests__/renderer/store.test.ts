@@ -44,7 +44,6 @@ test('task add', () => {
       image: image1,
       options: {
         color: 128,
-        quality: 70,
       },
       status: TaskStatus.PENDING,
     },
@@ -52,8 +51,7 @@ test('task add', () => {
       id: image2.id,
       image: image2,
       options: {
-        color: 128,
-        quality: 70,
+        quality: 80,
       },
       status: TaskStatus.PENDING,
     },
@@ -72,7 +70,6 @@ test('task delete', () => {
       image: image1,
       options: {
         color: 128,
-        quality: 70,
       },
       status: TaskStatus.PENDING,
     },
@@ -96,7 +93,6 @@ test('task update options', () => {
       image: image1,
       options: {
         color: 128,
-        quality: 70,
       },
       status: TaskStatus.PENDING,
     },
@@ -124,7 +120,6 @@ test('task start', () => {
       image: image1,
       options: {
         color: 128,
-        quality: 70,
       },
       status: TaskStatus.PENDING,
     },
@@ -132,8 +127,7 @@ test('task start', () => {
       id: image2.id,
       image: image2,
       options: {
-        color: 128,
-        quality: 70,
+        quality: 80,
       },
       status: TaskStatus.PROCESSING,
     },
@@ -159,7 +153,6 @@ test('task success', () => {
       image: image1,
       options: {
         color: 128,
-        quality: 70,
       },
       status: TaskStatus.PENDING,
     },
@@ -167,8 +160,7 @@ test('task success', () => {
       id: image2.id,
       image: image2,
       options: {
-        color: 128,
-        quality: 70,
+        quality: 80,
       },
       status: TaskStatus.DONE,
       optimized: {
@@ -195,7 +187,6 @@ test('task fail', () => {
       image: image1,
       options: {
         color: 128,
-        quality: 70,
       },
       status: TaskStatus.PENDING,
     },
@@ -203,8 +194,7 @@ test('task fail', () => {
       id: image2.id,
       image: image2,
       options: {
-        color: 128,
-        quality: 70,
+        quality: 80,
       },
       status: TaskStatus.FAIL,
     },
@@ -250,8 +240,7 @@ test('set globalOptions', () => {
     },
 
     webp: {
-      color: 128,
-      quality: 70,
+      quality: 80,
     },
   })
 

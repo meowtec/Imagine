@@ -38,12 +38,22 @@ export interface IState {
   globals: IGlobals
 }
 
-const newOptimizeOptions = () => ({
-  color: 128,
-  quality: 70,
-})
+export const newOptimizeOptions = (ext: SupportedExt) => {
+  switch (ext) {
+    case SupportedExt.jpg:
+    case SupportedExt.webp:
+      return {
+        quality: 80,
+      }
 
-const savedDefaultOptions = storage.getOptions()
+    case SupportedExt.png:
+      return {
+        color: 128,
+      }
+  }
+}
+
+const savedOptions = storage.getOptions()
 
 const updateTaskHelper = (tasks: Tasks, id: string, partial: Partial<ITaskItem>) => {
   const index = tasks.findIndex(task => task.id === id)
@@ -84,8 +94,23 @@ export const taskReducer = handleActions<Tasks, any>({
 
   [ACTIONS.TASK_UPDATE_OPTIONS](state, action: Action<{ id: string, options: IOptimizeOptions }>) {
     const { id, options } = action.payload!
+
     return updateTaskHelper(state, id, {
       options,
+      status: TaskStatus.PENDING,
+    })
+  },
+
+  [ACTIONS.TASK_UPDATE_EXPORT](state, action: Action<{
+    id: string
+    ext: SupportedExt
+    options: IOptimizeOptions
+  }>) {
+    const { id, options, ext } = action.payload!
+
+    return updateTaskHelper(state, id, {
+      options,
+      exportExt: ext,
       status: TaskStatus.PENDING,
     })
   },
@@ -114,9 +139,10 @@ export const taskReducer = handleActions<Tasks, any>({
 
   [ACTIONS.OPTIONS_APPLY](state, action: Action<IDefaultOptions>) {
     return state.map(item => {
+      const { exportExt = item.image.ext } = item
       return {
         ...item,
-        options: action.payload![item.image.ext],
+        options: action.payload![exportExt] || newOptimizeOptions(exportExt),
         status: TaskStatus.PENDING,
       }
     })
@@ -173,11 +199,11 @@ export const globalsReducer = handleActions<IGlobals, any>({
   optionsVisible: false,
   imageMagickInstalled: false,
   defaultOptions: {
-    png: newOptimizeOptions(),
-    jpg: newOptimizeOptions(),
-    webp: newOptimizeOptions(),
+    png: newOptimizeOptions(SupportedExt.png),
+    jpg: newOptimizeOptions(SupportedExt.jpg),
+    webp: newOptimizeOptions(SupportedExt.webp),
   },
-  ...savedDefaultOptions,
+  ...savedOptions,
 })
 
 export default combineReducers<IState>({

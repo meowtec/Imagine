@@ -1,5 +1,5 @@
 import { Store } from 'redux'
-import { IState } from './reducer'
+import { IState, newOptimizeOptions } from './reducer'
 import { createAction, Action } from 'redux-actions'
 import {
   ACTIONS,
@@ -31,7 +31,7 @@ export default {
 
     return items.map(item => ({
       image: item,
-      options: defaultOptions[item.ext],
+      options: defaultOptions[item.ext] || newOptimizeOptions(item.ext),
     }))
   }),
 
@@ -39,8 +39,30 @@ export default {
 
   taskClear: createAction(ACTIONS.TASK_CLEAR),
 
-  taskUpdateOptions: createAction<{ id: string, options: IOptimizeOptions }, string, IOptimizeOptions>
-    (ACTIONS.TASK_UPDATE_OPTIONS, (id, options) => ({ id, options })),
+  taskUpdateOptions: createAction<{
+    id: string
+    options: IOptimizeOptions
+  }, string, IOptimizeOptions>(
+    ACTIONS.TASK_UPDATE_OPTIONS,
+    (id, options) => ({ id, options })
+  ),
+
+  taskUpdateExport: createAction<{
+    id: string
+    ext: SupportedExt
+    options: IOptimizeOptions
+  }, string, SupportedExt>(
+    ACTIONS.TASK_UPDATE_EXPORT,
+    (id, ext) => {
+      const { defaultOptions } = store!.getState().globals
+
+      return {
+        id,
+        ext,
+        options: defaultOptions[ext] || newOptimizeOptions(ext),
+      }
+    }
+  ),
 
   taskOptimizeStart: createAction<string>(ACTIONS.TASK_OPTIMIZE_START),
 
@@ -57,9 +79,9 @@ export default {
 
   defaultOptions: createAction<IDefaultOptionsPayload>(ACTIONS.DEFAULT_OPTIONS),
 
-  optionsApply: createAction(ACTIONS.OPTIONS_APPLY, () => {
-    return store!.getState().globals.defaultOptions
-  }),
+  optionsApply: createAction(ACTIONS.OPTIONS_APPLY, () =>
+    store!.getState().globals.defaultOptions
+  ),
 
   imageMagickInstalled: createAction<boolean>(ACTIONS.IMAGEMAGICK_CHECKED),
 }
