@@ -1,3 +1,5 @@
+import '../_tools/before-test'
+
 import createLocales from '../../common/i18n'
 
 test('locale', () => {

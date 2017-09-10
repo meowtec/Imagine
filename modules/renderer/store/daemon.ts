@@ -4,6 +4,7 @@ import { TaskStatus } from '../../common/constants'
 import actions from '../store/actionCreaters'
 import { IState } from './reducer'
 import { debounce } from 'lodash'
+import log from 'electron-log'
 
 export default class Daemon {
   private running = false
@@ -38,7 +39,7 @@ export default class Daemon {
         const optimized = await optimize(task)
         store.dispatch(actions.taskOptimizeSuccess(task.id, optimized))
       } catch (err) {
-        console.error(err)
+        log.error(err)
         store.dispatch(actions.taskOptimizeFail(task.id))
       }
     }

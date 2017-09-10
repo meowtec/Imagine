@@ -1,5 +1,7 @@
 jest.mock('../../renderer/apis/')
 
+import '../_tools/before-test'
+
 import * as path from 'path'
 import { createStore } from '../../renderer/store/store'
 import Daemon from '../../renderer/store/daemon'

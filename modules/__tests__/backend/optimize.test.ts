@@ -1,3 +1,5 @@
+import '../_tools/before-test'
+
 import * as path from 'path'
 import optimize from '../../backend/optimize'
 import { saveFilesTmp, getFilePath } from '../../common/file-utils'
@@ -32,7 +34,7 @@ test('optimize png fail', async () => {
   }
 
   try {
-    optimize(image, SupportedExt.png, {})
+    await optimize(image, SupportedExt.png, {})
   } catch (e) {
     expect(e).toBeTruthy()
   }

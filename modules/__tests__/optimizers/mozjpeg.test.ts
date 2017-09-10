@@ -1,3 +1,5 @@
+import '../_tools/before-test'
+
 import * as path from 'path'
 import { fullDiff } from '../_tools/image-diff'
 import { tmpdir } from '../../common/file-utils'

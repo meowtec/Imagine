@@ -1,3 +1,5 @@
+import '../_tools/before-test'
+
 import * as path from 'path'
 import {
   md5,
@@ -97,6 +99,7 @@ test('flattenFiles', async () => {
   const output = await flattenFiles(sources)
   expect(output).toEqual([
     '../_files/fox.jpg',
+    '../_tools/before-test.ts',
     '../_tools/image-diff.ts',
   ].map(relPath))
 })

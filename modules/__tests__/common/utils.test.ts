@@ -1,3 +1,5 @@
+import '../_tools/before-test'
+
 import * as _ from '../../common/utils'
 
 test('coop', () => {
