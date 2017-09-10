@@ -55,3 +55,27 @@ export const pngquant: IOptimizeMethod = (
     throw new Error(e.message + '\n' + e.stderr)
   })
 }
+
+export const cwebp: IOptimizeMethod = (
+  input: string,
+  output: string,
+  options: IOptimizeOptions
+) => {
+  const { quality = 80 } = options
+
+  const spawnArgs = [
+    '-q',
+    quality.toString(),
+    input,
+    '-o',
+    output,
+  ]
+
+  log.info('spawn', bins.cwebp, spawnArgs)
+
+  return spawn(bins.cwebp, spawnArgs, {
+    capture: [ 'stdout', 'stderr' ],
+  }).catch(e => {
+    throw new Error(e.message + '\n' + e.stderr)
+  })
+}

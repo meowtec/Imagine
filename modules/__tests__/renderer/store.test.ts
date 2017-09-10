@@ -248,6 +248,11 @@ test('set globalOptions', () => {
     jpg: {
       quality: 60,
     },
+
+    webp: {
+      color: 128,
+      quality: 70,
+    },
   })
 
   store.dispatch(actions.taskAdd([image1, image2]))

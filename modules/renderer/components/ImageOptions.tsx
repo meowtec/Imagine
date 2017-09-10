@@ -42,7 +42,7 @@ export default class ImageOptions extends React.PureComponent<ImageOptionsProps,
     )
   }
 
-  renderJPG() {
+  renderJPGWebp() {
     return (
       <div className="image-options">
         <label>{__('quality')}</label>
@@ -61,7 +61,8 @@ export default class ImageOptions extends React.PureComponent<ImageOptionsProps,
 
     switch (ext) {
       case SupportedExt.jpg:
-        return this.renderJPG()
+      case SupportedExt.webp:
+        return this.renderJPGWebp()
 
       case SupportedExt.png:
         return this.renderPNG()

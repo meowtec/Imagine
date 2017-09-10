@@ -4,7 +4,7 @@ import * as fs from 'fs-extra'
 import log from 'electron-log'
 import { IImageFile, IOptimizeOptions, SupportedExt } from '../common/constants'
 import * as fu from '../common/file-utils'
-import { pngquant, mozjpeg, IOptimizeMethod } from '../optimizers/'
+import { pngquant, mozjpeg, cwebp, IOptimizeMethod } from '../optimizers/'
 import { convert } from './imagemagick'
 
 const platform = os.platform()
@@ -56,6 +56,7 @@ const optimize = async (image: IImageFile, options: IOptimizeOptions): Promise<I
     const factory: {[ext: string]: IOptimizeMethod} = {
       [SupportedExt.png]: pngquant,
       [SupportedExt.jpg]: mozjpeg,
+      [SupportedExt.webp]: cwebp,
     }
 
     const optimizeMethod = factory[exportExt]

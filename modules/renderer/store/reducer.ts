@@ -22,6 +22,7 @@ export interface IDefaultOptions {
   [key: string]: IOptimizeOptions
   jpg: IOptimizeOptions
   png: IOptimizeOptions
+  webp: IOptimizeOptions
 }
 
 interface IGlobals {
@@ -174,6 +175,7 @@ export const globalsReducer = handleActions<IGlobals, any>({
   defaultOptions: {
     png: newOptimizeOptions(),
     jpg: newOptimizeOptions(),
+    webp: newOptimizeOptions(),
   },
   ...savedDefaultOptions,
 })

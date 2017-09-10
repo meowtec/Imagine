@@ -1,6 +1,7 @@
 export enum SupportedExt {
   png = 'png',
   jpg = 'jpg',
+  webp = 'webp',
 }
 
 export const enum TaskStatus {

@@ -25,8 +25,10 @@ const getBin = (name: string) => {
 
 export const pngquant = getBin('pngquant')
 export const mozjpeg = getBin('moz-cjpeg')
+export const cwebp = getBin('cwebp')
 
 log.info('binPath', {
   pngquant,
   mozjpeg,
+  cwebp,
 })
