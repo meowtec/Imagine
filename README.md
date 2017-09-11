@@ -24,7 +24,6 @@ chmod a+x Imagine-[v]-x86_64.AppImage # make executable
 ./Imagine-[v]-x86_64.AppImage # install and run
 ```
 
-
 ## Screenshot (from legacy version)
 
 [GIF(7.4M)](http://7qn7vf.com1.z0.glb.clouddn.com/IMAGINE2.gif)
@@ -33,7 +32,8 @@ chmod a+x Imagine-[v]-x86_64.AppImage # make executable
 
 ## Features
 
- - Multi format (JPEG, PNG)
+ - Multi format (JPEG, PNG, WebP)
+ - Format conversion
  - Cross platform
  - GUI
  - Batch optimization
@@ -41,7 +41,7 @@ chmod a+x Imagine-[v]-x86_64.AppImage # make executable
 
 ## 'ImageMagick required'
 
-Since version 0.3.0, you can choose the format of target image. For example, if you pick a PNG file, you can convert it to JPEG and compress it with MozJPEG optimizer.
+Since version 0.3.0, you can choose the format that you want to convert to. For example, if you pick a PNG file, you can convert it to JPEG and compress it with MozJPEG optimizer.
 
 But there is an exception: pngquant on windows can't read JPEG files, so if you want to convert JPEG to PNG, you should install ImageMagick firstly, and add it to your PATH environment variable.
 
@@ -49,11 +49,12 @@ But there is an exception: pngquant on windows can't read JPEG files, so if you 
 
 ```bash
 git clone https://github.com/meowtec/Imagine.git
+# node 8 is recommended
 npm install
 npm run dev
 ```
 
-A PR with all checks passed is welcome.
+A PR with **all checks passed** is welcome.
 
 Before submit a PR, please run `npm run test` and make sure it success on your machine.
 
@@ -63,4 +64,5 @@ Up to now, there are only [5 locales](https://github.com/meowtec/Imagine/tree/de
 
  - [pngquant](https://pngquant.org/): Lossy PNG compressor
  - [mozjpeg](https://github.com/mozilla/mozjpeg): Improved JPEG encoder
+ - [WebP](https://developers.google.com/speed/webp/): A new image format for the Web
  - [Electron](https://electron.atom.io/): Build cross platform desktop apps with JavaScript, HTML, and CSS
