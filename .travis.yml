@@ -1,8 +1,11 @@
 # os: osx
 language: node_js
 node_js:
-  - "6"
+  - "8"
+
+before_install:
 
 script:
   - npm run test
+  # - npm run release
   # - if [ "$TRAVIS_BRANCH" = "master" -a "$TRAVIS_PULL_REQUEST" = "false" ]; npm run release; fi
