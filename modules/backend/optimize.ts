@@ -14,14 +14,12 @@ const optimize = async (
   exportExt: SupportedExt = image.ext,
   options: IOptimizeOptions
 ): Promise<IImageFile> => {
-  exportExt = exportExt || image.ext
-
   let sourcePath = fu.getFilePath(image)
   const optimizedId = fu.md5(image.id + JSON.stringify(options))
 
   const dest: Partial<IImageFile> = {
     id: optimizedId,
-    ext: image.ext,
+    ext: exportExt,
     originalName: image.originalName,
   }
 
@@ -46,15 +44,16 @@ const optimize = async (
         'pngquant cannot read JPEG on Windows, will have an intermediate step that convert JPEG to PNG'
       )
 
-      const intermediate = sourcePath.replace(/\.jpg$/, '.1.jpg')
+      const intermediate = sourcePath.replace(/\.jpg$/, '.1.png')
 
       try {
         await fs.access(intermediate)
       } catch (err) {
         log.info('optimize', `never intermediate: ${intermediate}, will do via ImageMagick.`, )
         await convert(sourcePath, intermediate)
-        sourcePath = intermediate
       }
+
+      sourcePath = intermediate
     }
 
     const factory: {[ext: string]: IOptimizeMethod} = {
