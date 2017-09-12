@@ -1,3 +1,4 @@
+import * as os from 'os'
 import * as React from 'react'
 import { connect } from 'react-redux'
 import { IState } from '../store/reducer'
@@ -20,7 +21,15 @@ class TargetTypeSelect extends React.PureComponent<ITargetTypeSelectProps, {}> {
 
   render() {
     const { sourceExt, targetExt, imageMagickInstalled } = this.props
-    const PNGDisabled = sourceExt === SupportedExt.jpg && !imageMagickInstalled
+
+    /**
+     * on the Mac, pngquant can read JPEG, so we don't need ImageMagick
+     * on other systems, ImageMagick should be installed independently
+     */
+    const PNGDisabled =
+      os.platform() !== 'darwin' &&
+      sourceExt === SupportedExt.jpg &&
+      !imageMagickInstalled
 
     return (
       <select style={{width: 62}} value={targetExt} onChange={this.handleChange}>
