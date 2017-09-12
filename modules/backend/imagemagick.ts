@@ -10,13 +10,13 @@ export const detectImageMagick = async () => {
     const { stdout } = await exec('magick -version')
 
     if (stdout.indexOf('ImageMagick') === -1) {
-      log.error('magick detect error, stdout is:', stdout)
+      log.warn('magick detect error, stdout is:', stdout)
       return false
     }
 
     return true
   } catch (err) {
-    log.error('magick detect error', err)
+    log.warn('magick detect error', err)
     return false
   }
 }

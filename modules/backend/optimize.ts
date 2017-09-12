@@ -32,7 +32,7 @@ const optimize = async (
   try {
     dest.size = await fu.getSize(destPath)
   } catch (err) {
-    log.info('optimize', `miss target: ${destPath}, will execute optimization.`, )
+    log.info('optimize', `miss cache (desk)`, )
 
     /**
      * pngquant on linux / windows does not support JPEG to PNG.
@@ -41,7 +41,7 @@ const optimize = async (
     if (platform !== 'darwin' && image.ext === 'jpg' && exportExt === 'png') {
       log.info(
         'optimize',
-        'pngquant cannot read JPEG on Windows, will have an intermediate step that convert JPEG to PNG'
+        'should use ImageMagick for converting JPEG to PNG'
       )
 
       const intermediate = sourcePath.replace(/\.jpg$/, '.1.png')
@@ -49,7 +49,7 @@ const optimize = async (
       try {
         await fs.access(intermediate)
       } catch (err) {
-        log.info('optimize', `never intermediate: ${intermediate}, will do via ImageMagick.`, )
+        log.info('optimize', `miss cache (ImageMagick)`, )
         await convert(sourcePath, intermediate)
       }
 
