@@ -45,6 +45,12 @@ Since version 0.3.0, you can choose the format that you want to convert to. For 
 
 But there is an exception: pngquant on windows can't read JPEG files, so if you want to convert JPEG to PNG, you should install ImageMagick firstly, and add it to your PATH environment variable.
 
+Imagine use this command below to check if ImageMagick installed, so make sure it work.
+
+```bash
+magick -version
+```
+
 ## Build and Contribute
 
 ```bash
