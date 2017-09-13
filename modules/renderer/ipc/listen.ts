@@ -32,11 +32,7 @@ export default function listenIpc() {
   })
 
   ipcRenderer.on(IpcChannel.FILE_SELECTED, (event: any, data: IImageFile[]) => {
-    const emptyTask = store.getState().tasks.length === 0
     store.dispatch(actions.taskAdd(data))
-    if (emptyTask && data.length === 1) {
-      store.dispatch(actions.taskDetail(data[0].id))
-    }
   })
 
   ipcRenderer.on(IpcChannel.APP_UPDATE, (event: any, data: IUpdateInfo) => {
