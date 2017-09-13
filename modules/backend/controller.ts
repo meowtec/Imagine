@@ -48,9 +48,11 @@ class Controller {
     })
   }
 
-  onOtherInstance = () => {
+  onOtherInstance = (argv: string[]) => {
     const win = this.getMainWindow()
     win && win.focus()
+
+    this.receiveFiles(argv.slice(1))
   }
 
   getMainWindow() {
@@ -93,9 +95,12 @@ class Controller {
     this.windows.push(id)
   }
 
-  async receiveFiles(filePaths: string[], winId?: string) {
+  async receiveFiles(filePaths: string[]) {
     const files = await fu.flattenFiles(filePaths)
     const dests = (await fu.saveFilesTmp(files)).filter(x => x)
+
+    await this.ready
+
     const win = this.getMainWindow()
     win && win.webContents.send(IpcChannel.FILE_SELECTED, dests)
   }
