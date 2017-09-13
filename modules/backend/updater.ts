@@ -11,14 +11,13 @@ import controller from './controller'
 autoUpdater.logger = log
 autoUpdater.autoDownload = false
 
-autoUpdater.on('update-available', (info: IUpdateInfo) => {
+autoUpdater.on('update-available', async (info: IUpdateInfo) => {
   log.info('update available', info.version, info.path)
-  controller.ready.then(() => {
-    const win = controller.getMainWindow()
-    if (win) {
-      win.webContents.send(IpcChannel.APP_UPDATE, info)
-    }
-  })
+
+  await controller.ready
+
+  const win = controller.getMainWindow()
+  win && win.webContents.send(IpcChannel.APP_UPDATE, info)
 })
 
 export default autoUpdater

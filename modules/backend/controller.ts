@@ -26,10 +26,9 @@ type BrowserWindow = Electron.BrowserWindow
 class Controller {
   private windows: number[] = []
   private menu = menuManager
-  private readyHook: () => void
 
   ready = new Promise((resolve) => {
-    this.readyHook = resolve
+    ipcMain.once(IpcChannel.READY, resolve)
   })
 
   start() {
@@ -160,8 +159,6 @@ class Controller {
       menu.aloneMode = state.aloneMode
       menu.render()
     })
-
-    ipcMain.on(IpcChannel.READY, this.readyHook)
   }
 }
 
