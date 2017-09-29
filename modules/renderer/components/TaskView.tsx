@@ -99,7 +99,7 @@ class TaskView extends PureComponent<ITaskViewProps, {}> {
             </Popper>
 
             {
-              task.status === 'FAIL' ? (
+              task.status === TaskStatus.FAIL ? (
                 <a href="#" onClick={this.handleRefreah}>
                   <Icon name="refresh" />
                 </a>
