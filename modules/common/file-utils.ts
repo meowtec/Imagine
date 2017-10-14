@@ -109,3 +109,25 @@ export const flattenFiles = async (filePaths: string[]) => {
 
   return list
 }
+
+/**
+ * 'path/to/image.png' + jpg -> 'path/to/image.jpg'
+ * @param filename - 'path/to/image.png'
+ * @param ext - jpg
+ */
+export const reext = (filename: string, ext: SupportedExt) => {
+  return filename.replace(/(?:\.(\w+))?$/i, ($0, $1: string) => {
+    $1 = $1.toLowerCase()
+
+    // make sure `x.PNG` not be transformed to `x.png`
+    if ($1 === ext) {
+      return $0
+    }
+
+    if ($1 in SupportedExt) {
+      return '.' + ext
+    } else {
+      return $0 + '.' + ext
+    }
+  })
+}

@@ -10,6 +10,7 @@ import {
   saveFilesTmp,
   unoccupiedFile,
   flattenFiles,
+  reext,
 } from '../../common/file-utils'
 import { IImageFile, SupportedExt } from '../../common/constants'
 
@@ -102,4 +103,11 @@ test('flattenFiles', async () => {
     '../_tools/before-test.ts',
     '../_tools/image-diff.ts',
   ].map(relPath))
+})
+
+test('reext', () => {
+  expect(reext('a/b/c.png', SupportedExt.jpg)).toBe('a/b/c.jpg')
+  expect(reext('a/b/c.jpg', SupportedExt.webp)).toBe('a/b/c.webp')
+  expect(reext('a/b/c.old', SupportedExt.webp)).toBe('a/b/c.old.webp')
+  expect(reext('a/b/c.PNG', SupportedExt.png)).toBe('a/b/c.PNG')
 })

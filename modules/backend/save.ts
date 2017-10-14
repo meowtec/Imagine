@@ -10,7 +10,7 @@ export async function saveFiles(images: IImageFile[], type: SaveType, dirname?: 
   for (const image of images) {
     if (!image) continue
 
-    let savePath: string = image.originalName
+    let savePath: string = fu.reext(image.originalName, image.ext)
 
     switch (type) {
       case SaveType.OVER:
