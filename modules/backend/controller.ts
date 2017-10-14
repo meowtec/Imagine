@@ -109,7 +109,7 @@ class Controller {
   }
 
   handleIpcFileSave = (event: Electron.IpcMessageEvent, images: IImageFile[], type: SaveType) => {
-    const save = async (dirname?: string) => {
+    const saveToDir = async (dirname?: string) => {
       await saveFiles(images, type, dirname)
       event.sender.send(IpcChannel.SAVED)
     }
@@ -121,19 +121,25 @@ class Controller {
       }, async filePaths => {
         if (!filePaths || !filePaths.length) return
         const dirpath = filePaths[0]
-        await save(dirpath)
+        await saveToDir(dirpath)
         shell.openItem(dirpath)
       })
     } else if (type === SaveType.SAVE_AS) {
+      const image = images[0]
+
       dialog.showSaveDialog({
         title: 'Save files',
-        defaultPath: images[0].originalName,
+        defaultPath: fu.reext(image.originalName, image.ext),
+        filters: [{
+          name: 'Images',
+          extensions: [image.ext],
+        }],
       }, async filePath => {
         await saveFile(images[0], filePath)
         event.sender.send(IpcChannel.SAVED)
       })
     } else {
-      save()
+      saveToDir()
     }
   }
 
