@@ -113,6 +113,9 @@
         ],
         "role": "Editor"
       }
-    ]
+    ],
+    "win": {
+      "target": ["nsis", "zip"]
+    }
   }
 }
