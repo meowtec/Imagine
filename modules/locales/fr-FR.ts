@@ -1,5 +1,5 @@
 export default {
-  about: 'A propos {0}',
+  about: 'À propos {0}',
   file: 'Fichier',
   open: 'Ouvrir...',
   add: 'Ajouter',
@@ -8,7 +8,7 @@ export default {
   save_new: 'Sauvegarder avec un nom automatique',
   save_dir: 'Exporter',
   save_as: 'Sauvegarder sous',
-  save_success: 'Sauvegarde réussi',
+  save_success: 'Sauvegarde réussie',
   clear: 'Tout retirer',
   choose_images: 'Sélectionnez des images',
   drag_files: 'Déplacez des images ici',
@@ -19,6 +19,6 @@ export default {
   before_optimized: 'original',
   after_optimized: 'optimisé',
   new_version: 'Mettre à jour',
-  apply_now: 'Apply now', // TODO: translate
-  imagemagick_required: 'ImageMagick required', // TODO: translate
+  apply_now: 'Appliquer maintenant',
+  imagemagick_required: 'ImageMagick requis',
 }
