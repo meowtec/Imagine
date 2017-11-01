@@ -28,7 +28,7 @@ chmod a+x Imagine-[v]-x86_64.AppImage # make executable
 
 [GIF(7.4M)](http://7qn7vf.com1.z0.glb.clouddn.com/IMAGINE2.gif)
 
-![](http://7qn7vf.com1.z0.glb.clouddn.com/Imagine.png)
+![](http://meowtec.qiniudn.com/Imagine.jpg)
 
 ## Features
 
