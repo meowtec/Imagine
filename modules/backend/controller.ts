@@ -21,8 +21,6 @@ import * as menuActions from './menu-actions'
 import { detectImageMagick } from './imagemagick'
 import __ from '../locales'
 
-type BrowserWindow = Electron.BrowserWindow
-
 class Controller {
   private windows: number[] = []
   private menu = menuManager
