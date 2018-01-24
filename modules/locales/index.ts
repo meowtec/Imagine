@@ -29,7 +29,7 @@ export const setup = () => {
     es: 'es-ES',
     fr: 'fr-FR',
     ar: 'ar-SA',
-    it: 'it-IT'
+    it: 'it-IT',
   }, 'en-US', locale)
 }
 
