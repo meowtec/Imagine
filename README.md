@@ -12,6 +12,10 @@ For Windows, macOS and Linux, download binaries from:
 
 [https://github.com/meowtec/Imagine/releases](https://github.com/meowtec/Imagine/releases)
 
+ - `Imagine-Setup-x.y.z.exe`      - *Windows*
+ - `Imagine-x.y.z.dmg`            - *macOS*
+ - `Imagine-0.4.1-x.y.z.AppImage` - *Linux*
+
 国内用户从 GitHub 下载可能比较慢，可以使用[国内加速](https://github.com/meowtec/Imagine/issues/7)
 
 ### Install on linux
@@ -20,8 +24,8 @@ App for linux is distributed in [AppImage](http://appimage.org/) format.
 Install it with command line:
 
 ```bash
-chmod a+x Imagine-[v]-x86_64.AppImage # make executable
-./Imagine-[v]-x86_64.AppImage # install and run
+chmod a+x Imagine-x.y.z-x86_64.AppImage # make executable
+./Imagine-x.y.z-x86_64.AppImage # install and run
 ```
 
 ## Screenshot (from legacy version)
