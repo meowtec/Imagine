@@ -10,17 +10,21 @@ const platformAlias: {[key: string]: string} = {
 const platform = os.platform()
 const targetDir = platformAlias[platform] || platform
 
+export const basePath = path.resolve(
+  __dirname,
+  '../../bin',
+  targetDir,
+).replace('app.asar', 'app.asar.unpacked')
+
 const getBin = (name: string) => {
   if (platform === 'win32') {
     name = name + '.exe'
   }
 
   return path.resolve(
-    __dirname,
-    '../../bin',
-    targetDir,
-    name
-  ).replace('app.asar', 'app.asar.unpacked')
+    basePath,
+    name,
+  )
 }
 
 export const pngquant = getBin('pngquant')

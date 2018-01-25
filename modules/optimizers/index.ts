@@ -3,6 +3,13 @@ import log from 'electron-log'
 import * as bins from './bin'
 import { IOptimizeOptions } from '../common/constants'
 
+const createEnv = () => {
+  return {
+    ...process.env,
+    LD_LIBRARY_PATH: bins.basePath,
+  } as NodeJS.ProcessEnv
+}
+
 export type IOptimizeMethod = (
   input: string,
   output: string,
@@ -28,6 +35,7 @@ export const mozjpeg: IOptimizeMethod = (
 
   return spawn(bins.mozjpeg, spawnArgs, {
     capture: [ 'stdout', 'stderr' ],
+    env: createEnv(),
   }).catch(e => {
     throw new Error(e.message + '\n' + e.stderr)
   })
@@ -51,6 +59,7 @@ export const pngquant: IOptimizeMethod = (
 
   return spawn(bins.pngquant, spawnArgs, {
     capture: [ 'stdout', 'stderr' ],
+    env: createEnv(),
   }).catch(e => {
     throw new Error(e.message + '\n' + e.stderr)
   })
@@ -75,6 +84,7 @@ export const cwebp: IOptimizeMethod = (
 
   return spawn(bins.cwebp, spawnArgs, {
     capture: [ 'stdout', 'stderr' ],
+    env: createEnv(),
   }).catch(e => {
     throw new Error(e.message + '\n' + e.stderr)
   })
