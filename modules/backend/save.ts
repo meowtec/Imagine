@@ -21,7 +21,7 @@ export async function saveFiles(images: IImageFile[], type: SaveType, dirname?: 
         break
 
       case SaveType.NEW_DIR:
-        savePath = await fu.unoccupiedFile(path.resolve(dirname, path.basename(savePath)))
+        savePath = await fu.unoccupiedFile(path.resolve(dirname!, path.basename(savePath)))
         break
     }
 
