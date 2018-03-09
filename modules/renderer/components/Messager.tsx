@@ -37,8 +37,8 @@ interface IMessagerManagerState {
 class MessagerManager extends React.PureComponent<{}, IMessagerManagerState> {
   closeTimer: any
 
-  constructor() {
-    super()
+  constructor(props: {}) {
+    super(props)
 
     this.state = {
       key: 0,

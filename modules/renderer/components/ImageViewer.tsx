@@ -55,8 +55,8 @@ export default class ImageViewer extends PureComponent<ImageViewerProps, ImageVi
   private prevScreenY = 0
   private dragging = false
 
-  constructor() {
-    super()
+  constructor(props: ImageViewerProps) {
+    super(props)
 
     this.state = {
       imageNaturalWidth: 0,

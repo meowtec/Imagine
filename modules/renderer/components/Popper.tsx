@@ -2,7 +2,7 @@ import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import * as classnames from 'classnames'
 import Popperjs from 'popper.js'
-import Root from './Root'
+import Portal from './Portal'
 
 import './Popper.less'
 
@@ -20,7 +20,7 @@ interface IPopperState {
 
 type ReactInstance = React.ReactInstance
 
-export default class Popper extends Root<IPopperProps, IPopperState> {
+export default class Popper extends React.PureComponent<IPopperProps, IPopperState> {
   popperElement?: HTMLDivElement
   referenceElement?: HTMLElement | ReactInstance
   popper?: Popperjs
@@ -41,33 +41,7 @@ export default class Popper extends Root<IPopperProps, IPopperState> {
     visible: false,
   }
 
-  renderElement() {
-    const visible = this.props.hoverMode
-      ? this.state.visible
-      : this.props.visible
-
-    return (
-      <div
-        className={classnames('popper', this.props.className, {
-          '-hidden': !visible,
-        })}
-        ref={this.$refs.popperElement}
-        onMouseOver={this.onmouseover}
-        onMouseLeave={this.onmouseleave}
-      >
-        <div className="arrow"></div>
-        {this.props.popper}
-      </div>
-    )
-  }
-
-  render() {
-    return React.cloneElement(React.Children.only(this.props.children), {
-      ref: this.$refs.referenceElement,
-    })
-  }
-
-  popperDidMount() {
+  componentDidMount() {
     const referenceElement = ReactDOM.findDOMNode(this.referenceElement!)
 
     this.popper = new Popperjs(referenceElement, this.popperElement!, {
@@ -85,7 +59,7 @@ export default class Popper extends Root<IPopperProps, IPopperState> {
     }
   }
 
-  popperDidUpdate() {
+  componentDidUpdate() {
     this.popper!.update()
   }
 
@@ -111,5 +85,34 @@ export default class Popper extends Root<IPopperProps, IPopperState> {
 
   static defaultProps = {
     placement: 'bottom',
+  }
+
+  render() {
+    const visible = this.props.hoverMode
+      ? this.state.visible
+      : this.props.visible
+
+    return (
+      <>
+        <Portal>
+          <div
+            className={classnames('popper', this.props.className, {
+              '-hidden': !visible,
+            })}
+            ref={this.$refs.popperElement}
+            onMouseOver={this.onmouseover}
+            onMouseLeave={this.onmouseleave}
+          >
+            <div className="arrow"></div>
+            {this.props.popper}
+          </div>
+        </Portal>
+        {
+          React.cloneElement(React.Children.only(this.props.children), {
+            ref: this.$refs.referenceElement,
+          })
+        }
+      </>
+    )
   }
 }

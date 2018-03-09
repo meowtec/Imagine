@@ -2,7 +2,7 @@ import * as React from 'react'
 import * as CSSTransition from 'react-transition-group/CSSTransition'
 import * as TransitionGroup from 'react-transition-group/TransitionGroup'
 import * as classnames from 'classnames'
-import Root from './Root'
+import Portal from './Portal'
 import Icon from './Icon'
 
 import './Modal.less'
@@ -16,7 +16,7 @@ interface IModalProps {
 export default class Modal extends React.PureComponent<IModalProps, {}> {
   render() {
     return (
-      <Root>
+      <Portal>
         <TransitionGroup
           className={classnames('modal-container', this.props.className)}
         >
@@ -33,7 +33,7 @@ export default class Modal extends React.PureComponent<IModalProps, {}> {
             ) : null
           }
         </TransitionGroup>
-      </Root>
+      </Portal>
     )
   }
 }

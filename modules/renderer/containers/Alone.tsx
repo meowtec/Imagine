@@ -43,8 +43,8 @@ interface IAloneState {
 }
 
 class Alone extends React.PureComponent<IAloneProps & IAloneDispatchProps, IAloneState> {
-  constructor() {
-    super()
+  constructor(props: IAloneProps & IAloneDispatchProps) {
+    super(props)
 
     this.state = {
       imageStage: ImageStage.afterOptimized,
