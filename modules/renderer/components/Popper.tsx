@@ -21,15 +21,20 @@ interface IPopperState {
 type ReactInstance = React.ReactInstance
 
 export default class Popper extends Root<IPopperProps, IPopperState> {
-  popperElement: HTMLDivElement
-  referenceElement: HTMLElement | ReactInstance
-  popper: Popperjs
-  private enterTimer: number
-  private leaveTimer: number
+  popperElement?: HTMLDivElement
+  referenceElement?: HTMLElement | ReactInstance
+  popper?: Popperjs
+  private enterTimer = -1
+  private leaveTimer = -1
 
   $refs = {
-    popperElement: (el: HTMLDivElement) => { this.popperElement = el },
-    referenceElement: (el: HTMLElement | ReactInstance) => { this.referenceElement = el },
+    popperElement: (el: HTMLDivElement | null) => {
+      this.popperElement = el || undefined
+    },
+
+    referenceElement: (el: HTMLElement | ReactInstance) => {
+      this.referenceElement = el
+    },
   }
 
   state = {
@@ -63,9 +68,9 @@ export default class Popper extends Root<IPopperProps, IPopperState> {
   }
 
   popperDidMount() {
-    const referenceElement = ReactDOM.findDOMNode(this.referenceElement)
+    const referenceElement = ReactDOM.findDOMNode(this.referenceElement!)
 
-    this.popper = new Popperjs(referenceElement, this.popperElement, {
+    this.popper = new Popperjs(referenceElement, this.popperElement!, {
       placement: this.props.placement as any,
       modifiers: {
         arrow: {
@@ -81,7 +86,7 @@ export default class Popper extends Root<IPopperProps, IPopperState> {
   }
 
   popperDidUpdate() {
-    this.popper.update()
+    this.popper!.update()
   }
 
   onmouseover = () => {

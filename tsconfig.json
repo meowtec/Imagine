@@ -3,7 +3,7 @@
     "sourceMap": false,
     "strict": true,
     "module": "commonjs",
-    "target": "es2015",
+    "target": "es2017",
     "importHelpers": true,
     "experimentalDecorators": true,
     // "allowSyntheticDefaultImports": true,
@@ -17,3 +17,4 @@
     "types/**/*"
   ]
 }
+

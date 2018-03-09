@@ -8,7 +8,7 @@ import log from 'electron-log'
 
 export default class Daemon {
   private running = false
-  private store: Store<IState>
+  private store?: Store<IState>
 
   trigger = debounce(() => {
     if (this.running) return
@@ -21,13 +21,13 @@ export default class Daemon {
   }
 
   private pickPendingTask() {
-    const state = this.store.getState()
+    const state = this.store!.getState()
     return state.tasks.find(task => task.status === TaskStatus.PENDING)
   }
 
   private async start() {
     this.running = true
-    const { store } = this
+    const store = this.store!
 
     while (true) {
       const task = this.pickPendingTask()

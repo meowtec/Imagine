@@ -1,6 +1,7 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import * as classnanes from 'classnames'
+import { hot } from 'react-hot-loader'
 import { Provider } from 'react-redux'
 import { IState } from './store/reducer'
 import Modal from './components/Modal'
@@ -14,7 +15,7 @@ import * as apis from './apis'
 import './components/Icon'
 import './App.less'
 
-export default class App extends React.PureComponent<{}, {}> {
+class App extends React.PureComponent<{}, {}> {
   state = {
     onion: 0,
   }
@@ -65,3 +66,5 @@ export default class App extends React.PureComponent<{}, {}> {
     )
   }
 }
+
+export default hot(module)(App)

@@ -49,10 +49,10 @@ const materials = [
 
 export default class ImageViewer extends PureComponent<ImageViewerProps, ImageViewerState> {
 
-  private image: HTMLImageElement
-  private backdrop: HTMLDivElement
-  private prevScreenX: number
-  private prevScreenY: number
+  private image?: HTMLImageElement
+  private backdrop?: HTMLDivElement
+  private prevScreenX = 0
+  private prevScreenY = 0
   private dragging = false
 
   constructor() {
@@ -74,9 +74,9 @@ export default class ImageViewer extends PureComponent<ImageViewerProps, ImageVi
     document.addEventListener('mouseup', this.handleMouseUp)
   }
 
-  private forcePaint() {
-    /* tslint:disable-next-line no-unused-expression */
-    this.image.clientWidth
+  componentWillUnmount() {
+    document.removeEventListener('mousemove', this.handleMouseMove)
+    document.removeEventListener('mouseup', this.handleMouseUp)
   }
 
   private imageSize() {
@@ -93,14 +93,18 @@ export default class ImageViewer extends PureComponent<ImageViewerProps, ImageVi
   }
 
   private initialZoom() {
+    if (!this.image) {
+      return 1
+    }
+
     const { naturalWidth, naturalHeight } = this.image
-    const { clientWidth, clientHeight } = this.backdrop
+    const { clientWidth, clientHeight } = this.backdrop!
 
     return floorZoom(Math.min(clientWidth / naturalWidth, clientHeight / naturalHeight) * 0.9)
   }
 
   handleImageLoad = () => {
-    const { naturalWidth, naturalHeight } = this.image
+    const { naturalWidth, naturalHeight } = this.image!
 
     this.setState({
       imageNaturalWidth: naturalWidth,
@@ -239,6 +243,8 @@ export default class ImageViewer extends PureComponent<ImageViewerProps, ImageVi
           }}
         />
       )
+    } else {
+      this.image = undefined
     }
 
     return null

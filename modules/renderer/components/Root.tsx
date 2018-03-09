@@ -6,30 +6,27 @@ import store from '../store/store'
 const renderSubtreeIntoContainer = ReactDOM.unstable_renderSubtreeIntoContainer
 
 export default class Layer<P, S> extends React.PureComponent<P, S> {
-  $root: HTMLDivElement
-
+  $$root = document.createElement('div')
   popperDidMount() {/**/}
   popperDidUpdate() {/**/}
 
   componentDidMount() {
-    const div = document.createElement('div')
-    document.body.appendChild(div)
-    this.$root = div
-
-    renderSubtreeIntoContainer(this, this.renderElement(), div, () => {
+    (window as any).sss = this
+    document.body.appendChild(this.$$root)
+    renderSubtreeIntoContainer(this, this.renderElement(), this.$$root, () => {
       this.popperDidMount()
     })
   }
 
   componentDidUpdate() {
-    renderSubtreeIntoContainer(this, this.renderElement(), this.$root, () => {
+    renderSubtreeIntoContainer(this, this.renderElement(), this.$$root, () => {
       this.popperDidUpdate()
     })
   }
 
   componentWillUnmount() {
-    ReactDOM.unmountComponentAtNode(this.$root)
-    document.body.removeChild(this.$root)
+    ReactDOM.unmountComponentAtNode(this.$$root)
+    document.body.removeChild(this.$$root)
   }
 
   renderElement(): React.ReactElement<any> {

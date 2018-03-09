@@ -1,10 +1,10 @@
+const path = require('path')
 const webpack = require('webpack')
+const merge = require('webpack-merge')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const BabiliPlugin = require('babili-webpack-plugin')
-const merge = require('webpack-merge')
-const path = require('path')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 const rel = filename => path.resolve(__dirname, filename)
 
@@ -26,7 +26,9 @@ let config = {
       {
         test: /\.tsx?$/,
         use: [
-          'react-hot-loader/webpack',
+          {
+            loader: 'babel-loader',
+          },
           {
             loader: 'ts-loader',
             options: {
@@ -34,7 +36,7 @@ let config = {
                 module: 'es2015',
               },
             },
-          }
+          },
         ],
       },
       {
@@ -105,17 +107,12 @@ const envConfigs = {
   // 生产环境
   production: {
     plugins: [
-      new BabiliPlugin(),
-    ],
-
-    resolve: {
-      alias: {
-      },
-    },
-
-    externals: {
-      'react-hot-loader': '{}',
-    },
+      new UglifyJsPlugin({
+        uglifyOptions: {
+          ecma: 8,
+        },
+      }),
+    ]
   },
 
   // 开发环境
@@ -123,11 +120,6 @@ const envConfigs = {
     plugins: [
       new webpack.NamedModulesPlugin(),
     ],
-
-    resolve: {
-      alias: {
-      },
-    },
   }
 }
 
