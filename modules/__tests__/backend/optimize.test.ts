@@ -14,7 +14,9 @@ const jpg = '../_files/fox.jpg'
 test('optimize png success', async () => {
   const files = await saveFilesTmp([relPath(png)])
   const file = files[0] as IImageFile
-  const optimized = await optimize(file, SupportedExt.png, {})
+  const optimized = await optimize(file, {
+    exportExt: SupportedExt.png,
+  })
 
   const diffResult = await fullDiff({
     actualImage: getFilePath(optimized),
@@ -34,7 +36,9 @@ test('optimize png fail', async () => {
   }
 
   try {
-    await optimize(image, SupportedExt.png, {})
+    await optimize(image, {
+      exportExt: SupportedExt.png,
+    })
   } catch (e) {
     expect(e).toBeTruthy()
   }
@@ -43,7 +47,9 @@ test('optimize png fail', async () => {
 test('optimize jpg success', async () => {
   const files = await saveFilesTmp([relPath(jpg)])
   const file = files[0] as IImageFile
-  const optimized = await optimize(file, SupportedExt.jpg, {})
+  const optimized = await optimize(file, {
+    exportExt: SupportedExt.jpg,
+  })
 
   const diffResult = await fullDiff({
     actualImage: getFilePath(optimized),
@@ -63,7 +69,9 @@ test('optimize jpg fail', async () => {
   }
 
   try {
-    await optimize(image, SupportedExt.jpg, {})
+    await optimize(image, {
+      exportExt: SupportedExt.jpg,
+    })
   } catch (e) {
     expect(e).toBeTruthy()
   }

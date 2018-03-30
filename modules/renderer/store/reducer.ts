@@ -39,18 +39,26 @@ export interface IState {
 }
 
 export const newOptimizeOptions = (ext: SupportedExt) => {
+  const optimizeOptions: IOptimizeOptions = {
+    exportExt: ext,
+  }
+
   switch (ext) {
     case SupportedExt.jpg:
     case SupportedExt.webp:
-      return {
+      Object.assign(optimizeOptions, {
         quality: 80,
-      }
+      })
+      break
 
     case SupportedExt.png:
-      return {
+      Object.assign(optimizeOptions, {
         color: 128,
-      }
+      })
+      break
   }
+
+  return optimizeOptions
 }
 
 const savedOptions = storage.getOptions()
@@ -101,20 +109,6 @@ export const taskReducer = handleActions<Tasks, any>({
     })
   },
 
-  [ACTIONS.TASK_UPDATE_EXPORT](state, action: Action<{
-    id: string
-    ext: SupportedExt
-    options: IOptimizeOptions
-  }>) {
-    const { id, options, ext } = action.payload!
-
-    return updateTaskHelper(state, id, {
-      options,
-      exportExt: ext,
-      status: TaskStatus.PENDING,
-    })
-  },
-
   [ACTIONS.TASK_OPTIMIZE_START](state, action: Action<string>) {
     const id = action.payload!
     return updateTaskHelper(state, id, {
@@ -138,11 +132,12 @@ export const taskReducer = handleActions<Tasks, any>({
   },
 
   [ACTIONS.OPTIONS_APPLY](state, action: Action<IDefaultOptions>) {
+    const defaultOptions = action.payload!
     return state.map(item => {
-      const { exportExt = item.image.ext } = item
+      const exportExt = defaultOptions[item.image.ext].exportExt!
       return {
         ...item,
-        options: action.payload![exportExt] || newOptimizeOptions(exportExt),
+        options: defaultOptions[exportExt] || newOptimizeOptions(exportExt),
         status: TaskStatus.PENDING,
       }
     })
@@ -150,28 +145,28 @@ export const taskReducer = handleActions<Tasks, any>({
 }, [])
 
 export const globalsReducer = handleActions<IGlobals, any>({
-  [ACTIONS.TASK_DETAIL](state, action: Action<string>) {
+  [ACTIONS.TASK_SELECTED_ID_UPDATE](state, action: Action<string>) {
     return {
       ...state,
       activeId: action.payload,
     }
   },
 
-  [ACTIONS.APP_CAN_UPDATE](state, action: Action<IUpdateInfo>) {
+  [ACTIONS.APP_UPDATABLE](state, action: Action<IUpdateInfo>) {
     return {
       ...state,
       updateInfo: action.payload,
     }
   },
 
-  [ACTIONS.OPTIONS_VISIBLE](state, action: Action<boolean>) {
+  [ACTIONS.OPTIONS_VISIBLE_UPDATE](state, action: Action<boolean>) {
     return {
       ...state,
       optionsVisible: action.payload!,
     }
   },
 
-  [ACTIONS.DEFAULT_OPTIONS](state, action: Action<IDefaultOptionsPayload>) {
+  [ACTIONS.DEFAULT_OPTIONS_UPDATE](state, action: Action<IDefaultOptionsPayload>) {
     const { ext, options } = action.payload!
     const defaultOptions = {
       ...state.defaultOptions,
@@ -189,7 +184,7 @@ export const globalsReducer = handleActions<IGlobals, any>({
     }
   },
 
-  [ACTIONS.IMAGEMAGICK_CHECKED](state, action: Action<boolean>) {
+  [ACTIONS.IMAGEMAGICK_CHECKED_UPDATE](state, action: Action<boolean>) {
     return {
       ...state,
       imageMagickInstalled: action.payload!,

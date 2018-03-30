@@ -83,7 +83,7 @@ class Alone extends React.PureComponent<IAloneProps & IAloneDispatchProps, IAlon
   renderControllers() {
     const task = this.props.task!
     const { image, optimized, options, status } = task
-    const { exportExt = image.ext } = task
+    const exportExt = options.exportExt || image.ext
 
     return (
       <div>

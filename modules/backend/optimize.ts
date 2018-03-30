@@ -11,11 +11,11 @@ const platform = os.platform()
 
 const optimize = async (
   image: IImageFile,
-  exportExt: SupportedExt = image.ext,
   options: IOptimizeOptions
 ): Promise<IImageFile> => {
   let sourcePath = fu.getFilePath(image)
   const optimizedId = fu.md5(image.id + JSON.stringify(options))
+  const exportExt = options.exportExt || image.ext
 
   const dest: Partial<IImageFile> = {
     id: optimizedId,

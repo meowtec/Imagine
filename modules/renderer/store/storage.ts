@@ -9,7 +9,7 @@ interface IStorageContent {
   defaultOptions: IDefaultOptions,
 }
 
-const key = 'options-v2'
+const key = 'options-v3'
 
 const hasLocalStorage = !(typeof localStorage === 'undefined')
 

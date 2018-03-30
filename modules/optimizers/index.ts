@@ -1,7 +1,7 @@
 import { spawn } from 'child-process-promise'
 import log from 'electron-log'
 import * as bins from './bin'
-import { IOptimizeOptions } from '../common/constants'
+import { IOptimizeOptions, SupportedExt } from '../common/constants'
 
 const createEnv = () => {
   return {
@@ -17,9 +17,9 @@ export type IOptimizeMethod = (
 ) => Promise<any>
 
 export const mozjpeg: IOptimizeMethod = (
-  input: string,
-  output: string,
-  options: IOptimizeOptions
+  input,
+  output,
+  options,
 ) => {
   const { quality = 70 } = options
 
@@ -42,9 +42,9 @@ export const mozjpeg: IOptimizeMethod = (
 }
 
 export const pngquant: IOptimizeMethod = (
-  input: string,
-  output: string,
-  options: IOptimizeOptions
+  input,
+  output,
+  options,
 ) => {
   const { color = 256 } = options
 
@@ -66,9 +66,9 @@ export const pngquant: IOptimizeMethod = (
 }
 
 export const cwebp: IOptimizeMethod = (
-  input: string,
-  output: string,
-  options: IOptimizeOptions
+  input,
+  output,
+  options,
 ) => {
   const { quality = 80 } = options
 

@@ -4,6 +4,7 @@ import { SupportedExt, IOptimizeOptions } from '../../common/constants'
 import Icon from '../components/Icon'
 import Collapse from '../components/Collapse'
 import ImageOptions from '../components/ImageOptions'
+import TargetTypeSelect from '../components/TargetTypeSelect'
 import { IDefaultOptions, IState } from '../store/reducer'
 import actions from '../store/actionCreaters'
 import __ from '../../locales'
@@ -25,11 +26,25 @@ interface IOwnProps {
 }
 
 class OptionsPanel extends React.PureComponent<IProps & IDispatchProps, {}> {
-  onChanges = {
+  onOptionsChanges = {
     png: this.props.onOptionsChange.bind(null, SupportedExt.png),
     jpg: this.props.onOptionsChange.bind(null, SupportedExt.jpg),
     webp: this.props.onOptionsChange.bind(null, SupportedExt.webp),
   } as {[ext: string]: (options: IOptimizeOptions) => void}
+
+  onExtChanges = (() => {
+    const createExtChangeHandler = (ext: SupportedExt) =>
+      (exportExt: SupportedExt) =>
+        this.props.onOptionsChange(ext, {
+          ...this.props.optionsMap[ext],
+          exportExt,
+        })
+
+    return {
+      png: createExtChangeHandler(SupportedExt.png),
+      jpg: createExtChangeHandler(SupportedExt.jpg),
+    }
+  })()
 
   render() {
     const { optionsMap } = this.props
@@ -38,21 +53,39 @@ class OptionsPanel extends React.PureComponent<IProps & IDispatchProps, {}> {
       <div className="options">
         <div className="options-body">
           <Collapse title="PNG" initialVisible={true}>
-            <ImageOptions
-              precision={true}
-              ext={SupportedExt.png}
-              options={optionsMap.png}
-              onChange={this.onChanges.png}
-            />
+            <div className="collapse-row">
+              <ImageOptions
+                precision={true}
+                ext={SupportedExt.png}
+                options={optionsMap.png}
+                onChange={this.onOptionsChanges.png}
+              />
+            </div>
+            <div className="collapse-row">
+              <TargetTypeSelect
+                onChange={this.onExtChanges.png}
+                sourceExt={SupportedExt.png}
+                targetExt={optionsMap.png.exportExt || SupportedExt.png}
+              />
+            </div>
           </Collapse>
 
           <Collapse title="JPEG" initialVisible={true}>
-            <ImageOptions
-              precision={true}
-              ext={SupportedExt.jpg}
-              options={optionsMap.jpg}
-              onChange={this.onChanges.jpg}
-            />
+            <div className="collapse-row">
+              <ImageOptions
+                precision={true}
+                ext={SupportedExt.jpg}
+                options={optionsMap.jpg}
+                onChange={this.onOptionsChanges.jpg}
+              />
+            </div>
+            <div className="collapse-row">
+              <TargetTypeSelect
+                onChange={this.onExtChanges.jpg}
+                sourceExt={SupportedExt.jpg}
+                targetExt={optionsMap.jpg.exportExt || SupportedExt.jpg}
+              />
+            </div>
           </Collapse>
 
           <Collapse title="WebP" initialVisible={true}>
@@ -60,7 +93,7 @@ class OptionsPanel extends React.PureComponent<IProps & IDispatchProps, {}> {
               precision={true}
               ext={SupportedExt.webp}
               options={optionsMap.webp}
-              onChange={this.onChanges.webp}
+              onChange={this.onOptionsChanges.webp}
             />
           </Collapse>
         </div>

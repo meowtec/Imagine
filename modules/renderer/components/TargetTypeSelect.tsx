@@ -32,12 +32,12 @@ class TargetTypeSelect extends React.PureComponent<ITargetTypeSelectProps, {}> {
       !imageMagickInstalled
 
     return (
-      <select style={{width: 62}} value={targetExt} onChange={this.handleChange}>
+      <select style={{width: 72}} value={targetExt} onChange={this.handleChange}>
         <option value={SupportedExt.png} disabled={PNGDisabled}>
-        PNG { PNGDisabled ? ` (${__('imagemagick_required')})` : ''}
+        To PNG { PNGDisabled ? ` (${__('imagemagick_required')})` : ''}
         </option>
-        <option value={SupportedExt.jpg}>JPG</option>
-        <option value={SupportedExt.webp}>WebP</option>
+        <option value={SupportedExt.jpg}>To JPG</option>
+        <option value={SupportedExt.webp}>To WebP</option>
       </select>
     )
   }

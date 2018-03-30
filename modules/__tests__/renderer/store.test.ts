@@ -46,6 +46,7 @@ test('task add', () => {
       image: image1,
       options: {
         color: 128,
+        exportExt: SupportedExt.png,
       },
       status: TaskStatus.PENDING,
     },
@@ -54,6 +55,7 @@ test('task add', () => {
       image: image2,
       options: {
         quality: 80,
+        exportExt: SupportedExt.jpg,
       },
       status: TaskStatus.PENDING,
     },
@@ -72,6 +74,7 @@ test('task delete', () => {
       image: image1,
       options: {
         color: 128,
+        exportExt: SupportedExt.png,
       },
       status: TaskStatus.PENDING,
     },
@@ -83,9 +86,11 @@ test('task update options', () => {
 
   store.dispatch(actions.taskAdd([image1, image2]))
   store.dispatch(actions.taskUpdateOptions(image2.id, {
+    exportExt: SupportedExt.jpg,
     color: 8,
   }))
   store.dispatch(actions.taskUpdateOptions('notexist', {
+    exportExt: SupportedExt.jpg,
     color: 8,
   }))
 
@@ -95,6 +100,7 @@ test('task update options', () => {
       image: image1,
       options: {
         color: 128,
+        exportExt: SupportedExt.png,
       },
       status: TaskStatus.PENDING,
     },
@@ -103,6 +109,7 @@ test('task update options', () => {
       image: image2,
       options: {
         color: 8,
+        exportExt: SupportedExt.jpg,
       },
       status: TaskStatus.PENDING,
     },
@@ -122,6 +129,7 @@ test('task start', () => {
       image: image1,
       options: {
         color: 128,
+        exportExt: SupportedExt.png,
       },
       status: TaskStatus.PENDING,
     },
@@ -130,6 +138,7 @@ test('task start', () => {
       image: image2,
       options: {
         quality: 80,
+        exportExt: SupportedExt.jpg,
       },
       status: TaskStatus.PROCESSING,
     },
@@ -155,6 +164,7 @@ test('task success', () => {
       image: image1,
       options: {
         color: 128,
+        exportExt: SupportedExt.png,
       },
       status: TaskStatus.PENDING,
     },
@@ -163,6 +173,7 @@ test('task success', () => {
       image: image2,
       options: {
         quality: 80,
+        exportExt: SupportedExt.jpg,
       },
       status: TaskStatus.DONE,
       optimized: {
@@ -189,6 +200,7 @@ test('task fail', () => {
       image: image1,
       options: {
         color: 128,
+        exportExt: SupportedExt.png,
       },
       status: TaskStatus.PENDING,
     },
@@ -197,6 +209,7 @@ test('task fail', () => {
       image: image2,
       options: {
         quality: 80,
+        exportExt: SupportedExt.jpg,
       },
       status: TaskStatus.FAIL,
     },
@@ -222,6 +235,7 @@ test('set globalOptions', () => {
     ext: SupportedExt.png,
     options: {
       color: 8,
+      exportExt: SupportedExt.png,
     },
   }))
 
@@ -229,20 +243,24 @@ test('set globalOptions', () => {
     ext: SupportedExt.jpg,
     options: {
       quality: 60,
+      exportExt: SupportedExt.jpg,
     },
   }))
 
   expect(store.getState().globals.defaultOptions).toEqual({
     png: {
       color: 8,
+      exportExt: SupportedExt.png,
     },
 
     jpg: {
       quality: 60,
+      exportExt: SupportedExt.jpg,
     },
 
     webp: {
       quality: 80,
+      exportExt: SupportedExt.webp,
     },
   })
 
@@ -254,6 +272,7 @@ test('set globalOptions', () => {
       image: image1,
       options: {
         color: 8,
+        exportExt: SupportedExt.png,
       },
       status: TaskStatus.PENDING,
     },
@@ -262,6 +281,7 @@ test('set globalOptions', () => {
       image: image2,
       options: {
         quality: 60,
+        exportExt: SupportedExt.jpg,
       },
       status: TaskStatus.PENDING,
     },

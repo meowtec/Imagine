@@ -77,7 +77,7 @@ class TaskView extends PureComponent<ITaskViewProps, {}> {
     const { image, optimized, options } = task
     const destImage = task.optimized || task.image
     const isProcessing = task.status === TaskStatus.PROCESSING
-    const { exportExt = image.ext } = task
+    const exportExt = options.exportExt || image.ext
 
     return (
       <div className={classnames('task-view', '-' + task.status)}>

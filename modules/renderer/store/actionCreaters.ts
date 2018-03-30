@@ -29,10 +29,21 @@ export default {
     (items: IImageFile[]) => {
     const { defaultOptions } = store!.getState().globals
 
-    return items.map(item => ({
-      image: item,
-      options: defaultOptions[item.ext] || newOptimizeOptions(item.ext),
-    }))
+    return items.map(item => {
+      const exportExt = (
+        defaultOptions[item.ext] &&
+        defaultOptions[item.ext].exportExt ||
+        item.ext
+      )
+
+      return {
+        image: item,
+        options: {
+          ...(defaultOptions[exportExt] || newOptimizeOptions(exportExt)),
+          exportExt,
+        },
+      }
+    })
   }),
 
   taskDelete: createAction<string[]>(ACTIONS.TASK_DELETE),
@@ -49,16 +60,14 @@ export default {
 
   taskUpdateExport: createAction<{
     id: string
-    ext: SupportedExt
     options: IOptimizeOptions
   }, string, SupportedExt>(
-    ACTIONS.TASK_UPDATE_EXPORT,
+    ACTIONS.TASK_UPDATE_OPTIONS,
     (id, ext) => {
       const { defaultOptions } = store!.getState().globals
 
       return {
         id,
-        ext,
         options: defaultOptions[ext] || newOptimizeOptions(ext),
       }
     }
@@ -71,17 +80,17 @@ export default {
 
   taskOptimizeFail: createAction<string>(ACTIONS.TASK_OPTIMIZE_FAIL),
 
-  taskDetail: createAction<string | null>(ACTIONS.TASK_DETAIL),
+  taskDetail: createAction<string | null>(ACTIONS.TASK_SELECTED_ID_UPDATE),
 
-  appUpdateInfo: createAction<IUpdateInfo>(ACTIONS.APP_CAN_UPDATE),
+  appUpdateInfo: createAction<IUpdateInfo>(ACTIONS.APP_UPDATABLE),
 
-  optionsVisible: createAction<boolean>(ACTIONS.OPTIONS_VISIBLE),
+  optionsVisible: createAction<boolean>(ACTIONS.OPTIONS_VISIBLE_UPDATE),
 
-  defaultOptions: createAction<IDefaultOptionsPayload>(ACTIONS.DEFAULT_OPTIONS),
+  defaultOptions: createAction<IDefaultOptionsPayload>(ACTIONS.DEFAULT_OPTIONS_UPDATE),
 
   optionsApply: createAction(ACTIONS.OPTIONS_APPLY, () =>
     store!.getState().globals.defaultOptions
   ),
 
-  imageMagickInstalled: createAction<boolean>(ACTIONS.IMAGEMAGICK_CHECKED),
+  imageMagickInstalled: createAction<boolean>(ACTIONS.IMAGEMAGICK_CHECKED_UPDATE),
 }
