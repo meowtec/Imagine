@@ -1,5 +1,5 @@
 import { Store } from 'redux'
-import { IState, newOptimizeOptions } from './reducer'
+import { IState, createOptimizeOptions } from './reducer'
 import { createAction, Action } from 'redux-actions'
 import {
   ACTIONS,
@@ -15,36 +15,8 @@ import {
   SupportedExt,
 } from '../../common/constants'
 
-let store: Store<IState> | undefined
-
-export function setStore(_store: Store<IState>) {
-  store = _store
-}
-
 export default {
-  $store: null as number | null,
-
-  taskAdd: createAction<ITaskAddPayloadItem[], IImageFile[]>(
-    ACTIONS.TASK_ADD,
-    (items: IImageFile[]) => {
-    const { defaultOptions } = store!.getState().globals
-
-    return items.map(item => {
-      const exportExt = (
-        defaultOptions[item.ext] &&
-        defaultOptions[item.ext].exportExt ||
-        item.ext
-      )
-
-      return {
-        image: item,
-        options: {
-          ...(defaultOptions[exportExt] || newOptimizeOptions(exportExt)),
-          exportExt,
-        },
-      }
-    })
-  }),
+  taskAdd: createAction<IImageFile[]>(ACTIONS.TASK_ADD),
 
   taskDelete: createAction<string[]>(ACTIONS.TASK_DELETE),
 
@@ -55,25 +27,15 @@ export default {
     options: IOptimizeOptions
   }, string, IOptimizeOptions>(
     ACTIONS.TASK_UPDATE_OPTIONS,
-    (id, options) => ({ id, options })
+    (id, options) => ({ id, options }),
   ),
 
   taskUpdateExport: createAction<{
     id: string
-    options: IOptimizeOptions
+    exportExt: SupportedExt
   }, string, SupportedExt>(
-    ACTIONS.TASK_UPDATE_OPTIONS,
-    (id, exportExt) => {
-      const { defaultOptions } = store!.getState().globals
-
-      return {
-        id,
-        options: {
-          ...(defaultOptions[exportExt] || newOptimizeOptions(exportExt)),
-          exportExt,
-        },
-      }
-    }
+    ACTIONS.TASK_UPDATE_EXPORT,
+    (id, exportExt) => ({ id, exportExt }),
   ),
 
   taskOptimizeStart: createAction<string>(ACTIONS.TASK_OPTIMIZE_START),
@@ -91,9 +53,7 @@ export default {
 
   defaultOptions: createAction<IDefaultOptionsPayload>(ACTIONS.DEFAULT_OPTIONS_UPDATE),
 
-  optionsApply: createAction(ACTIONS.OPTIONS_APPLY, () =>
-    store!.getState().globals.defaultOptions
-  ),
+  optionsApply: createAction(ACTIONS.OPTIONS_APPLY),
 
   imageMagickInstalled: createAction<boolean>(ACTIONS.IMAGEMAGICK_CHECKED_UPDATE),
 }

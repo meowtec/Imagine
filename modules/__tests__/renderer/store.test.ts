@@ -2,7 +2,7 @@ import '../_tools/before-test'
 
 import * as path from 'path'
 import { createStore } from '../../renderer/store/store'
-import actions, { setStore } from '../../renderer/store/actionCreaters'
+import actions from '../../renderer/store/actionCreaters'
 import controller from '../../backend/controller'
 import {
   IImageFile,

@@ -1,5 +1,4 @@
 import { createStore as _createStore } from 'redux'
-import { setStore } from './actionCreaters'
 import reducer, { IState } from './reducer'
 
 export function createStore() {
@@ -9,9 +8,6 @@ export function createStore() {
     reducer,
     __REDUX_DEVTOOLS_EXTENSION__ && __REDUX_DEVTOOLS_EXTENSION__()
   )
-
-  // actionCreaters will visit store directly
-  setStore(store)
 
   return store
 }

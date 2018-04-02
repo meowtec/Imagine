@@ -49,3 +49,7 @@ test('size', () => {
   expect(_.size(1024000)).toEqual([0.98, 'MB'])
   expect(_.size(1048576)).toEqual([1, 'MB'])
 })
+
+test('unpick', () => {
+  expect(_.unpick({x: 3, y: 4}, ['y'])).toEqual({x: 3})
+})
