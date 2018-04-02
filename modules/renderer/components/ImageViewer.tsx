@@ -1,6 +1,5 @@
-import * as React from 'react'
-import { PureComponent, SyntheticEvent } from 'react'
-import * as classnames from 'classnames'
+import React, { PureComponent, SyntheticEvent } from 'react'
+import classnames from 'classnames'
 import { consumWheelEvent, eventOffset } from '../utils/dom-event'
 import { coop } from '../../common/utils'
 import RadioGroup from './RadioGroup'

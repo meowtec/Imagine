@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, { PureComponent } from 'react'
 import { ITaskItem } from '../../common/constants'
 import * as _ from '../../common/utils'
 

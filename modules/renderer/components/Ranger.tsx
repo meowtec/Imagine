@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, { PureComponent, ChangeEvent } from 'react'
 import { range } from 'lodash'
 import * as _ from '../../common/utils'
 
@@ -17,14 +17,14 @@ interface IRangerProps {
 
 const pass = (x: any) => x
 
-export default class Ranger extends React.PureComponent<IRangerProps, any> {
+export default class Ranger extends PureComponent<IRangerProps, any> {
   fixValue(value: number) {
     const { max, min } = this.props
 
     return ~~_.coop2(min, max, value)
   }
 
-  handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const input: HTMLInputElement = e.target
     const { value } = input
     const { transformOutput } = this.props
@@ -32,7 +32,7 @@ export default class Ranger extends React.PureComponent<IRangerProps, any> {
     this.props.onChange(this.fixValue(transformOutput!(Number(value))))
   }
 
-  handleNumberInputChange  = (e: React.ChangeEvent<HTMLInputElement>) => {
+  handleNumberInputChange  = (e: ChangeEvent<HTMLInputElement>) => {
     this.props.onChange(this.fixValue(~~e.target.value))
   }
 

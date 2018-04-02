@@ -1,10 +1,5 @@
-import * as React from 'react'
-import {
-  PureComponent,
-  MouseEvent as MouseEvent,
-  ChangeEvent as ChangeEvent,
-} from 'react'
-import * as classnames from 'classnames'
+import React, { PureComponent, MouseEvent } from 'react'
+import classnames from 'classnames'
 import Popper from '../components/Popper'
 import Select from './Select'
 import Icon from './Icon'

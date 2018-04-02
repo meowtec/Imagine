@@ -1,8 +1,8 @@
-import * as React from 'react'
-import * as ReactDOM from 'react-dom'
-import * as CSSTransition from 'react-transition-group/CSSTransition'
-import * as TransitionGroup from 'react-transition-group/TransitionGroup'
-import * as classnames from 'classnames'
+import React, { PureComponent } from 'react'
+import ReactDOM from 'react-dom'
+import CSSTransition from 'react-transition-group/CSSTransition'
+import TransitionGroup from 'react-transition-group/TransitionGroup'
+import classnames from 'classnames'
 import Icon from './Icon'
 import { sleep } from '../../common/utils'
 
@@ -14,7 +14,7 @@ interface IMessagerProps {
   onClick?(): void
 }
 
-export default class Messager extends React.PureComponent<IMessagerProps, {}> {
+export default class Messager extends PureComponent<IMessagerProps, {}> {
   render() {
     const { type = 'info', message } = this.props
     let icon = type
@@ -34,7 +34,7 @@ interface IMessagerManagerState {
   key: number
 }
 
-class MessagerManager extends React.PureComponent<{}, IMessagerManagerState> {
+class MessagerManager extends PureComponent<{}, IMessagerManagerState> {
   closeTimer: any
 
   constructor(props: {}) {

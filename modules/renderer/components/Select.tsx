@@ -1,18 +1,18 @@
-import * as React from 'react'
-import * as classnames from 'classnames'
+import React, { Component, DetailedHTMLProps, SelectHTMLAttributes } from 'react'
+import classnames from 'classnames'
 import Icon from './Icon'
 import { unpick } from '../../common/utils'
 
 import './Select.less'
 
-type ReactSelectProps = React.DetailedHTMLProps<React.SelectHTMLAttributes<HTMLSelectElement>, HTMLSelectElement>
+type ReactSelectProps = DetailedHTMLProps<SelectHTMLAttributes<HTMLSelectElement>, HTMLSelectElement>
 
 interface ISelectProps extends ReactSelectProps {
   className?: string
   iconName?: string
 }
 
-export default class Select extends React.Component<ISelectProps, {}> {
+export default class Select extends Component<ISelectProps, {}> {
   render() {
     const { props } = this
     const selectProps = unpick(this.props, [

@@ -1,6 +1,6 @@
-import * as React from 'react'
-import * as ReactDOM from 'react-dom'
-import * as classnames from 'classnames'
+import React, { PureComponent, DragEvent } from 'react'
+import ReactDOM from 'react-dom'
+import classnames from 'classnames'
 import { hot } from 'react-hot-loader'
 import { Provider } from 'react-redux'
 import { IState } from './store/reducer'
@@ -15,7 +15,7 @@ import * as apis from './apis'
 import './components/Icon'
 import './App.less'
 
-class App extends React.PureComponent<{}, {}> {
+class App extends PureComponent<{}, {}> {
   state = {
     onion: 0,
   }
@@ -32,7 +32,7 @@ class App extends React.PureComponent<{}, {}> {
     })
   }
 
-  handleDragDrop = (e: React.DragEvent<HTMLDivElement>) => {
+  handleDragDrop = (e: DragEvent<HTMLDivElement>) => {
     this.setState({
       onion: 0,
     })

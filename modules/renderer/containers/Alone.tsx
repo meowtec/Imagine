@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import ImageOptions from '../components/ImageOptions'
 import ImageViewer from '../components/ImageViewer'
@@ -42,7 +42,7 @@ interface IAloneState {
   imageStage: ImageStage,
 }
 
-class Alone extends React.PureComponent<IAloneProps & IAloneDispatchProps, IAloneState> {
+class Alone extends PureComponent<IAloneProps & IAloneDispatchProps, IAloneState> {
   constructor(props: IAloneProps & IAloneDispatchProps) {
     super(props)
 

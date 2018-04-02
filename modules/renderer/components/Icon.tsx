@@ -1,5 +1,5 @@
-import * as React from 'react'
-import * as classnames from 'classnames'
+import React, { PureComponent, StatelessComponent } from 'react'
+import classnames from 'classnames'
 import './Icon.less'
 
 interface IconProps {
@@ -7,7 +7,7 @@ interface IconProps {
   className?: string
 }
 
-const Icon: React.StatelessComponent<IconProps> = ({ name, className }) => (
+const Icon: StatelessComponent<IconProps> = ({ name, className }) => (
   <svg className={classnames('icon', `icon-${name}`, className)}>
     <use
       xlinkHref={`#icon-${name}`}

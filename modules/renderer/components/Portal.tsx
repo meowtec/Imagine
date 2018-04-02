@@ -1,11 +1,11 @@
-import * as React from 'react'
-import * as ReactDOM from 'react-dom'
+import React, { PureComponent } from 'react'
+import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import store from '../store/store'
 
 const renderSubtreeIntoContainer = ReactDOM.unstable_renderSubtreeIntoContainer
 
-export default class Portal extends React.PureComponent<{}, {}> {
+export default class Portal extends PureComponent<{}, {}> {
   $$root = document.createElement('div')
 
   componentDidMount() {

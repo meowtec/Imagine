@@ -3,7 +3,7 @@ import { Menu, dialog, shell } from 'electron'
 import { EventEmitter } from 'events'
 import controller from './controller'
 import __ from '../locales'
-import * as pkg from '../../package.json'
+import pkg from '../../package.json'
 
 export const about = () => {
   dialog.showMessageBox({

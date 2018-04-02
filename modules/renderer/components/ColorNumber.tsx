@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, { PureComponent } from 'react'
 import { range } from 'lodash'
 import Ranger from './Ranger'
 

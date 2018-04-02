@@ -1,4 +1,4 @@
-import * as pify from 'pify'
+import pify from 'pify'
 import { ImageDiffOptions, getFullResult, ImageDiffFullResult } from 'image-diff'
 
 type FullDiff = (options: ImageDiffOptions) => Promise<ImageDiffFullResult>

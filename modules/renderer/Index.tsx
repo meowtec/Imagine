@@ -1,6 +1,6 @@
 import { ipcRenderer } from 'electron'
-import * as React from 'react'
-import * as ReactDOM from 'react-dom'
+import React, { PureComponent } from 'react'
+import ReactDOM from 'react-dom'
 import store from './store/store'
 import App from './App'
 import { IpcChannel } from '../common/constants'

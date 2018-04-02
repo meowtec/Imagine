@@ -1,6 +1,6 @@
 import * as os from 'os'
-import * as React from 'react'
-import * as classnames from 'classnames'
+import React, { PureComponent, ChangeEvent } from 'react'
+import classnames from 'classnames'
 import { connect } from 'react-redux'
 import { IState } from '../store/reducer'
 import { SupportedExt } from '../../common/constants'
@@ -17,8 +17,8 @@ interface ITargetTypeSelectProps {
   onChange: (ext: SupportedExt) => void
 }
 
-class TargetTypeSelect extends React.PureComponent<ITargetTypeSelectProps, {}> {
-  handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+class TargetTypeSelect extends PureComponent<ITargetTypeSelectProps, {}> {
+  handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
     this.props.onChange(e.target.value as SupportedExt)
   }
 

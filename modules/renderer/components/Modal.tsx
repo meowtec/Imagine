@@ -1,7 +1,7 @@
-import * as React from 'react'
-import * as CSSTransition from 'react-transition-group/CSSTransition'
-import * as TransitionGroup from 'react-transition-group/TransitionGroup'
-import * as classnames from 'classnames'
+import React, { PureComponent } from 'react'
+import CSSTransition from 'react-transition-group/CSSTransition'
+import TransitionGroup from 'react-transition-group/TransitionGroup'
+import classnames from 'classnames'
 import Portal from './Portal'
 import Icon from './Icon'
 
@@ -13,7 +13,7 @@ interface IModalProps {
   onClose?(): void
 }
 
-export default class Modal extends React.PureComponent<IModalProps, {}> {
+export default class Modal extends PureComponent<IModalProps, {}> {
   render() {
     return (
       <Portal>

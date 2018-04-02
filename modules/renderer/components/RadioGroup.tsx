@@ -1,5 +1,5 @@
-import * as React from 'react'
-import * as classnames from 'classnames'
+import React, { PureComponent, ReactNode } from 'react'
+import classnames from 'classnames'
 
 import './RadioGroup.less'
 
@@ -7,12 +7,12 @@ interface IRadioGroupProps {
   value: any
   data: any[]
   onChange(value: any): void
-  renderItem?(value: any): React.ReactNode
+  renderItem?(value: any): ReactNode
   itemValue?(value: any): any
   className?: string
 }
 
-export default class RadioGroup extends React.PureComponent<IRadioGroupProps, {}> {
+export default class RadioGroup extends PureComponent<IRadioGroupProps, {}> {
   handleClick = (value: any) => {
     this.props.onChange(value)
   }

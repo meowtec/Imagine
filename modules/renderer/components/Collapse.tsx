@@ -1,5 +1,5 @@
-import * as React from 'react'
-import * as classnames from 'classnames'
+import React, { PureComponent } from 'react'
+import classnames from 'classnames'
 import './Collapse.less'
 
 interface ICollapseProps {
@@ -11,7 +11,7 @@ interface ICollapseState {
   visible: boolean
 }
 
-export default class Collapse extends React.PureComponent<ICollapseProps, ICollapseState> {
+export default class Collapse extends PureComponent<ICollapseProps, ICollapseState> {
   constructor(props: ICollapseProps) {
     super(props)
 

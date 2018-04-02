@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { SupportedExt, IOptimizeOptions } from '../../common/constants'
 import Icon from '../components/Icon'
@@ -25,7 +25,7 @@ interface IOwnProps {
   onApplyClick?(): void
 }
 
-class OptionsPanel extends React.PureComponent<IProps & IDispatchProps, {}> {
+class OptionsPanel extends PureComponent<IProps & IDispatchProps, {}> {
   onOptionsChanges = {
     png: this.props.onOptionsChange.bind(null, SupportedExt.png),
     jpg: this.props.onOptionsChange.bind(null, SupportedExt.jpg),

@@ -1,7 +1,7 @@
 import { shell } from 'electron'
-import * as React from 'react'
+import React, { PureComponent, MouseEvent } from 'react'
 import { connect, Dispatch } from 'react-redux'
-import * as classnames from 'classnames'
+import classnames from 'classnames'
 import Icon from '../components/Icon'
 import Popper from '../components/Popper'
 import OptionsPanel from './OptionsPanel'
@@ -11,7 +11,7 @@ import store from '../store/store'
 import { IpcChannel, SaveType, IUpdateInfo } from '../../common/constants'
 import * as apis from '../apis'
 import __ from '../../locales'
-import * as pkg from '../../../package.json'
+import pkg from '../../../package.json'
 
 import './ActionBar.less'
 
@@ -26,8 +26,8 @@ interface IActionBarProps {
   onOptionsVisibleToggle(visible: boolean): void
 }
 
-class ActionBar extends React.PureComponent<IActionBarProps, {}> {
-  handleSaveClick(e: React.MouseEvent<HTMLElement>, type: SaveType) {
+class ActionBar extends PureComponent<IActionBarProps, {}> {
+  handleSaveClick(e: MouseEvent<HTMLElement>, type: SaveType) {
     e.preventDefault()
     this.props.onSave(type)
   }

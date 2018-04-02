@@ -1,13 +1,13 @@
-import * as React from 'react'
-import * as ReactDOM from 'react-dom'
-import * as classnames from 'classnames'
+import React, { PureComponent, ReactInstance, cloneElement, Children, ReactElement } from 'react'
+import ReactDOM from 'react-dom'
+import classnames from 'classnames'
 import Popperjs from 'popper.js'
 import Portal from './Portal'
 
 import './Popper.less'
 
 interface IPopperProps {
-  popper: React.ReactElement<any>
+  popper: ReactElement<any>
   placement?: string
   hoverMode?: boolean
   visible?: boolean
@@ -18,9 +18,7 @@ interface IPopperState {
   visible: boolean
 }
 
-type ReactInstance = React.ReactInstance
-
-export default class Popper extends React.PureComponent<IPopperProps, IPopperState> {
+export default class Popper extends PureComponent<IPopperProps, IPopperState> {
   popperElement?: HTMLDivElement
   referenceElement?: HTMLElement | ReactInstance
   popper?: Popperjs
@@ -108,7 +106,7 @@ export default class Popper extends React.PureComponent<IPopperProps, IPopperSta
           </div>
         </Portal>
         {
-          React.cloneElement(React.Children.only(this.props.children), {
+          cloneElement(Children.only(this.props.children), {
             ref: this.$refs.referenceElement,
           })
         }

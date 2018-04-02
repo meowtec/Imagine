@@ -1,7 +1,6 @@
-import * as React from 'react'
-import { PureComponent } from 'react'
-import * as CSSTransition from 'react-transition-group/CSSTransition'
-import * as TransitionGroup from 'react-transition-group/TransitionGroup'
+import React, { PureComponent } from 'react'
+import CSSTransition from 'react-transition-group/CSSTransition'
+import TransitionGroup from 'react-transition-group/TransitionGroup'
 import {
   ITaskItem,
   IOptimizeOptions,

@@ -5,7 +5,7 @@ import { SaveType } from '../common/constants'
 import * as menuActions from './menu-actions'
 import { isDev } from './dev'
 import __ from '../locales'
-import * as pkg from '../../package.json'
+import pkg from '../../package.json'
 
 class ManuManager extends EventEmitter {
   taskCount = 0

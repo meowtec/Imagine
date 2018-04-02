@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, { PureComponent } from 'react'
 import { shallowCompare } from '../../common/utils'
 import { SupportedExt, IOptimizeOptions } from '../../common/constants'
 import ColorNumber from './ColorNumber'
@@ -14,7 +14,7 @@ interface ImageOptionsProps {
   onChange(options: IOptimizeOptions): void
 }
 
-export default class ImageOptions extends React.PureComponent<ImageOptionsProps, {}> {
+export default class ImageOptions extends PureComponent<ImageOptionsProps, {}> {
   handleColorChange = (color: number) => {
     this.props.onChange({
       ...this.props.options,
