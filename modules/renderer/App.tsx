@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-import * as classnanes from 'classnames'
+import * as classnames from 'classnames'
 import { hot } from 'react-hot-loader'
 import { Provider } from 'react-redux'
 import { IState } from './store/reducer'
@@ -50,7 +50,7 @@ class App extends React.PureComponent<{}, {}> {
     return (
       <Provider store={store}>
         <div
-          className={classnanes('layout', {
+          className={classnames('layout', {
             '-drag': !!this.state.onion,
           })}
           onDragOver={prevent}
