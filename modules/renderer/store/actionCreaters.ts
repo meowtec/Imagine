@@ -63,12 +63,15 @@ export default {
     options: IOptimizeOptions
   }, string, SupportedExt>(
     ACTIONS.TASK_UPDATE_OPTIONS,
-    (id, ext) => {
+    (id, exportExt) => {
       const { defaultOptions } = store!.getState().globals
 
       return {
         id,
-        options: defaultOptions[ext] || newOptimizeOptions(ext),
+        options: {
+          ...(defaultOptions[exportExt] || newOptimizeOptions(exportExt)),
+          exportExt,
+        },
       }
     }
   ),
