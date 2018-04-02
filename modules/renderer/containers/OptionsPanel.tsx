@@ -53,6 +53,14 @@ class OptionsPanel extends React.PureComponent<IProps & IDispatchProps, {}> {
       <div className="options">
         <div className="options-body">
           <Collapse title="PNG" initialVisible={true}>
+            <div className="collapse-row target-ext-select-row">
+              <TargetTypeSelect
+                className="target-ext-select"
+                onChange={this.onExtChanges.png}
+                sourceExt={SupportedExt.png}
+                targetExt={optionsMap.png.exportExt || SupportedExt.png}
+              />
+            </div>
             <div className="collapse-row">
               <ImageOptions
                 precision={true}
@@ -61,16 +69,17 @@ class OptionsPanel extends React.PureComponent<IProps & IDispatchProps, {}> {
                 onChange={this.onOptionsChanges.png}
               />
             </div>
-            <div className="collapse-row">
-              <TargetTypeSelect
-                onChange={this.onExtChanges.png}
-                sourceExt={SupportedExt.png}
-                targetExt={optionsMap.png.exportExt || SupportedExt.png}
-              />
-            </div>
           </Collapse>
 
           <Collapse title="JPEG" initialVisible={true}>
+            <div className="collapse-row target-ext-select-row">
+              <TargetTypeSelect
+                className="target-ext-select"
+                onChange={this.onExtChanges.jpg}
+                sourceExt={SupportedExt.jpg}
+                targetExt={optionsMap.jpg.exportExt || SupportedExt.jpg}
+              />
+            </div>
             <div className="collapse-row">
               <ImageOptions
                 precision={true}
@@ -79,22 +88,17 @@ class OptionsPanel extends React.PureComponent<IProps & IDispatchProps, {}> {
                 onChange={this.onOptionsChanges.jpg}
               />
             </div>
-            <div className="collapse-row">
-              <TargetTypeSelect
-                onChange={this.onExtChanges.jpg}
-                sourceExt={SupportedExt.jpg}
-                targetExt={optionsMap.jpg.exportExt || SupportedExt.jpg}
-              />
-            </div>
           </Collapse>
 
           <Collapse title="WebP" initialVisible={true}>
-            <ImageOptions
-              precision={true}
-              ext={SupportedExt.webp}
-              options={optionsMap.webp}
-              onChange={this.onOptionsChanges.webp}
-            />
+            <div className="collapse-row">
+              <ImageOptions
+                precision={true}
+                ext={SupportedExt.webp}
+                options={optionsMap.webp}
+                onChange={this.onOptionsChanges.webp}
+              />
+            </div>
           </Collapse>
         </div>
         <footer className="clearfix">

@@ -64,3 +64,15 @@ export const size = (bytes: number): [number, Unit] => {
 
   return [number, unit]
 }
+
+export const unpick = <T, K extends keyof T>(obj: T, keys: K[]) => {
+  const newObj: Partial<T> = {}
+
+  for (const key in obj) {
+    if (obj.hasOwnProperty(key) && keys.indexOf(key as any) === -1) {
+      newObj[key] = obj[key]
+    }
+  }
+
+  return newObj
+}
