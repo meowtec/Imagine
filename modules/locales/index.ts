@@ -7,6 +7,7 @@ import es_ES from './es-ES'
 import fr_FR from './fr-FR'
 import ar_SA from './ar-SA'
 import it_IT from './it-IT'
+import de_DE from './de-DE'
 
 const texts = {
   'zh-CN': zh_CN,
@@ -16,6 +17,7 @@ const texts = {
   'fr-FR': fr_FR,
   'ar-SA': ar_SA,
   'it-IT': it_IT,
+  'de-DE': de_DE,
 }
 
 let gettext: Gettext
@@ -30,6 +32,7 @@ export const setup = () => {
     fr: 'fr-FR',
     ar: 'ar-SA',
     it: 'it-IT',
+    de: 'de-DE',
   }, 'en-US', locale)
 }
 
