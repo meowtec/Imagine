@@ -4,7 +4,7 @@ import classnames from 'classnames'
 import { connect } from 'react-redux'
 import { IState } from '../store/reducer'
 import { SupportedExt } from '../../common/constants'
-import Select from '../components/select'
+import Select from '../components/Select'
 import __ from '../../locales'
 
 import './TargetTypeSelect.less'
