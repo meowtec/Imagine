@@ -154,6 +154,7 @@ export default handleActions<IState, any>({
 
     return updateTaskItem(state, id, {
       options: getInitialTaskOptions(exportExt, defaultOptions),
+      status: TaskStatus.PENDING,
     })
   },
 
