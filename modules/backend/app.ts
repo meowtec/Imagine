@@ -61,8 +61,10 @@ class App {
   }
 
   createWindow() {
+    const baseWidth = 800
+
     const win = new BrowserWindow({
-      width: os.platform() === 'darwin' ? 800 : 834,
+      width: baseWidth + (os.platform() === 'darwin' ? 15 : 34),
       height: 600,
       minWidth: 540,
       // titleBarStyle: 'hidden',
