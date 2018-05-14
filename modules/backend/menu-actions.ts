@@ -1,7 +1,7 @@
 import * as os from 'os'
 import { Menu, dialog, shell } from 'electron'
 import { EventEmitter } from 'events'
-import controller from './controller'
+import app from './app'
 import __ from '../locales'
 import pkg from '../../package.json'
 
@@ -40,6 +40,6 @@ export const open = () => {
     }],
     properties: properties as any,
   }, filePaths => {
-    controller.receiveFiles(filePaths)
+    app.receiveFiles(filePaths)
   })
 }

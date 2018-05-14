@@ -1,6 +1,6 @@
 import { EventEmitter } from 'events'
 import { Menu } from 'electron'
-import controller from './controller'
+import app from './app'
 import { SaveType } from '../common/constants'
 import * as menuActions from './menu-actions'
 import { isDev } from './dev'

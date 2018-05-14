@@ -1,6 +1,6 @@
 import { app, BrowserWindow } from 'electron'
 import { url } from './backend/dev'
-import controller from './backend/controller'
+import imagine from './backend/app'
 import updater from './backend/updater'
 import { cleanTmpdir } from './common/file-utils'
 import { setup as setupLocales } from './locales/'
@@ -13,15 +13,15 @@ log.transports.file.level = 'info'
 app.on('ready', (launchInfo) => {
   log.info('app launch', process.argv)
 
-  controller.receiveFiles(process.argv.slice(1))
+  imagine.receiveFiles(process.argv.slice(1))
 
   setupLocales()
 
-  controller.start()
+  imagine.start()
 
   updater.checkForUpdates()
 })
 
 app.on('open-file', (e, filePath) => {
-  controller.receiveFiles([filePath])
+  imagine.receiveFiles([filePath])
 })

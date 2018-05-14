@@ -21,7 +21,7 @@ import * as menuActions from './menu-actions'
 import { detectImageMagick } from './imagemagick'
 import __ from '../locales'
 
-class Controller {
+class App {
   private windows: number[] = []
   private menu = menuManager
 
@@ -171,4 +171,4 @@ class Controller {
   }
 }
 
-export default new Controller()
+export default new App()
