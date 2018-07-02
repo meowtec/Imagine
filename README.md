@@ -41,7 +41,7 @@ chmod a+x Imagine-x.y.z-x86_64.AppImage # make executable
  - Cross platform
  - GUI
  - Batch optimization
- - i18n (English, 简体中文, Nederlands, Español, Français, Italiano)
+ - i18n (English, 简体中文, Nederlands, Español, Français, Italiano, Deutsch)
 
 ## 'ImageMagick required'
 
