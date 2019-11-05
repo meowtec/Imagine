@@ -15,7 +15,7 @@
     "build": "rimraf lib htdocs dist && tsc && cross-env NODE_ENV=production webpack --mode=production --config es/webpack.config.js",
     "start": "npm run build && electron .",
     "pack": "npm run build && electron-builder --dir",
-    "release": "npm run build electron-builder --win --ia32",
+    "release": "npm run build && electron-builder -ml && electron-builder --win --ia32",
     "test": "tsc && npm run lint && jest"
   },
   "author": "meowtec<bertonzh@gmail.com>",
