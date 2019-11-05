@@ -19,20 +19,15 @@ interface IPopperState {
 }
 
 export default class Popper extends PureComponent<IPopperProps, IPopperState> {
-  popperElement?: HTMLDivElement
-  referenceElement?: HTMLElement | ReactInstance
   popper?: Popperjs
   private enterTimer = -1
   private leaveTimer = -1
 
-  $refs = {
-    popperElement: (el: HTMLDivElement | null) => {
-      this.popperElement = el || undefined
-    },
+  refPopper = React.createRef<HTMLDivElement>()
+  refReference = React.createRef<HTMLElement | ReactInstance>()
 
-    referenceElement: (el: HTMLElement | ReactInstance) => {
-      this.referenceElement = el
-    },
+  static defaultProps = {
+    placement: 'bottom',
   }
 
   state = {
@@ -40,9 +35,11 @@ export default class Popper extends PureComponent<IPopperProps, IPopperState> {
   }
 
   componentDidMount() {
-    const referenceElement = ReactDOM.findDOMNode(this.referenceElement!)
+    const referenceElement = ReactDOM.findDOMNode(this.refReference.current)
 
-    this.popper = new Popperjs(referenceElement, this.popperElement!, {
+    if (!(referenceElement instanceof HTMLElement)) return
+
+    this.popper = new Popperjs(referenceElement, this.refPopper.current!, {
       placement: this.props.placement as any,
       modifiers: {
         arrow: {
@@ -81,14 +78,12 @@ export default class Popper extends PureComponent<IPopperProps, IPopperState> {
     }, 200)
   }
 
-  static defaultProps = {
-    placement: 'bottom',
-  }
-
   render() {
     const visible = this.props.hoverMode
       ? this.state.visible
       : this.props.visible
+
+    const child = Children.only(this.props.children)
 
     return (
       <>
@@ -97,7 +92,7 @@ export default class Popper extends PureComponent<IPopperProps, IPopperState> {
             className={classnames('popper', this.props.className, {
               '-hidden': !visible,
             })}
-            ref={this.$refs.popperElement}
+            ref={this.refPopper}
             onMouseOver={this.onmouseover}
             onMouseLeave={this.onmouseleave}
           >
@@ -106,8 +101,8 @@ export default class Popper extends PureComponent<IPopperProps, IPopperState> {
           </div>
         </Portal>
         {
-          cloneElement(Children.only(this.props.children), {
-            ref: this.$refs.referenceElement,
+          cloneElement(child as ReactElement, {
+            ref: this.refReference,
           })
         }
       </>

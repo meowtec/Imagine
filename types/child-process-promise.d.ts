@@ -8,13 +8,13 @@ declare module 'child-process-promise' {
     childProcess: ChildProcess
   }
 
-  export declare function spawn(
+  export function spawn(
     command: string,
     args?: string[],
     options?: SpawnOptions & {capture?: string[]}
   ): ChildProcessPromise
 
-  export declare function exec(
+  export function exec(
     command: string,
     options?: SpawnOptions & {capture?: string[]}
   ): ChildProcessPromise

@@ -1,11 +1,8 @@
 import * as os from 'os'
-import { BrowserWindow, ipcMain, dialog, app, shell } from 'electron'
-import * as path from 'path'
-import * as fs from 'fs-extra'
+import Electron, { BrowserWindow, ipcMain, dialog, app, shell } from 'electron'
+import { log } from 'electron-log'
 import {
-  SupportedExt,
   IImageFile,
-  IOptimizeOptions,
   IOptimizeRequest,
   IpcChannel,
   SaveType,
@@ -23,6 +20,7 @@ import __ from '../locales'
 
 class App {
   private windows: number[] = []
+
   private menu = menuManager
 
   ready = new Promise((resolve) => {
@@ -30,23 +28,25 @@ class App {
   })
 
   start() {
-    const shouldQuit = app.makeSingleInstance(this.onOtherInstance)
-    if (shouldQuit) {
-      app.quit()
-      return
-    } else {
-      this.createWindow()
-    }
-    this.menu.render()
-    this.listenIpc()
-    this.listenMenu()
+    const gotTheLock = app.requestSingleInstanceLock()
 
-    app.on('window-all-closed', () => {
+    if (!gotTheLock) {
       app.quit()
-    })
+    } else {
+      app.on('window-all-closed', () => {
+        app.quit()
+      })
+
+      app.on('second-instance', this.onOtherInstance)
+
+      this.createWindow()
+      this.menu.render()
+      this.listenIpc()
+      this.listenMenu()
+    }
   }
 
-  onOtherInstance = (argv: string[]) => {
+  onOtherInstance = (event: Electron.Event, argv: string[]) => {
     const win = this.getMainWindow()
     win && win.focus()
 
@@ -69,13 +69,19 @@ class App {
       minWidth: 540,
       // titleBarStyle: 'hidden',
       webPreferences: {
+        nodeIntegration: true,
         webSecurity: false,
       },
     })
 
     const { id } = win
 
-    win.loadURL(url)
+    log(url)
+    win.loadURL(url).then(() => {
+      log('url loaded:', url)
+    }, (err) => {
+      log('url failed:', url, err)
+    })
 
     win.on('closed', () => {
       const index = this.windows.indexOf(id)
@@ -112,36 +118,40 @@ class App {
     })
   }
 
-  handleIpcFileSave = (event: Electron.IpcMessageEvent, images: IImageFile[], type: SaveType) => {
+  handleIpcFileSave = async (event: Electron.IpcMainEvent, images: IImageFile[], type: SaveType) => {
     const saveToDir = async (dirname?: string) => {
       await saveFiles(images, type, dirname)
       event.sender.send(IpcChannel.SAVED)
     }
 
+    const mainWindow = this.getMainWindow()!
+
     if (type === SaveType.NEW_DIR) {
-      dialog.showOpenDialog({
+      const { filePaths } = await dialog.showOpenDialog(mainWindow, {
         title: 'Save files',
         properties: ['openDirectory', 'createDirectory'],
-      }, async filePaths => {
-        if (!filePaths || !filePaths.length) return
-        const dirpath = filePaths[0]
-        await saveToDir(dirpath)
-        shell.openItem(dirpath)
       })
+
+      if (!filePaths || !filePaths.length) return
+      const dirpath = filePaths[0]
+      await saveToDir(dirpath)
+      shell.openItem(dirpath)
     } else if (type === SaveType.SAVE_AS) {
       const image = images[0]
 
-      dialog.showSaveDialog({
+      const { filePath } = await dialog.showSaveDialog(mainWindow, {
         title: 'Save files',
         defaultPath: fu.reext(image.originalName, image.ext),
         filters: [{
           name: 'Images',
           extensions: [image.ext],
         }],
-      }, async filePath => {
+      })
+
+      if (filePath) {
         await saveFile(images[0], filePath)
         event.sender.send(IpcChannel.SAVED)
-      })
+      }
     } else {
       saveToDir()
     }

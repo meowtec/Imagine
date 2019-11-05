@@ -116,8 +116,8 @@ class OptionsPanel extends PureComponent<IProps & IDispatchProps, {}> {
   }
 }
 
-export default connect<IProps, IDispatchProps, IOwnProps>(
-  (state: IState) => ({
+export default connect<IProps, IDispatchProps, IOwnProps, IState>(
+  state => ({
     optionsMap: state.globals.defaultOptions,
   }),
 

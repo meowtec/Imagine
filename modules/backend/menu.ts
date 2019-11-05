@@ -1,13 +1,12 @@
 import { EventEmitter } from 'events'
 import { Menu } from 'electron'
-import app from './app'
 import { SaveType } from '../common/constants'
 import * as menuActions from './menu-actions'
 import { isDev } from './dev'
 import __ from '../locales'
 import pkg from '../../package.json'
 
-class ManuManager extends EventEmitter {
+class MenuManager extends EventEmitter {
   taskCount = 0
   aloneMode = false
 
@@ -81,18 +80,17 @@ class ManuManager extends EventEmitter {
         label: 'Debug',
         submenu: [
           {role: 'reload'},
-          {role: 'forcereload' as 'reload'},
-          {role: 'toggledevtools'},
-
+          {role: 'forceReload'},
+          {role: 'toggleDevTools'},
           {role: 'undo'},
           {role: 'redo'},
           {type: 'separator'},
           {role: 'cut'},
           {role: 'copy'},
           {role: 'paste'},
-          {role: 'pasteandmatchstyle'},
+          {role: 'pasteAndMatchStyle'},
           {role: 'delete'},
-          {role: 'selectall'},
+          {role: 'selectAll'},
         ],
       })
     }
@@ -103,4 +101,5 @@ class ManuManager extends EventEmitter {
   }
 }
 
-export default new ManuManager()
+
+export default new MenuManager()

@@ -11,22 +11,25 @@ import {
 } from '../../common/constants'
 import * as apis from '../apis'
 
-export default connect<ITaskListProps, ITaskListDispatchProps, {}>((state: IState) => ({
-  tasks: state.tasks,
-}), dispatch => ({
-  onRemove(task: ITaskItem) {
-    dispatch(actions.taskDelete([task.id]))
-  },
-  onOptionsChange(id: string, options: IOptimizeOptions) {
-    dispatch(actions.taskUpdateOptions(id, options))
-  },
-  onExportChange(id: string, ext: SupportedExt) {
-    dispatch(actions.taskUpdateExport(id, ext))
-  },
-  onClick(task: ITaskItem) {
-    dispatch(actions.taskDetail(task.id))
-  },
-  onSave(task: ITaskItem, type: SaveType) {
-    task.optimized && apis.fileSave([task.optimized], type)
-  },
-}))(TaskList)
+export default connect<ITaskListProps, ITaskListDispatchProps, {}, IState>(
+  state => ({
+    tasks: state.tasks,
+  }),
+  dispatch => ({
+    onRemove(task: ITaskItem) {
+      dispatch(actions.taskDelete([task.id]))
+    },
+    onOptionsChange(id: string, options: IOptimizeOptions) {
+      dispatch(actions.taskUpdateOptions(id, options))
+    },
+    onExportChange(id: string, ext: SupportedExt) {
+      dispatch(actions.taskUpdateExport(id, ext))
+    },
+    onClick(task: ITaskItem) {
+      dispatch(actions.taskDetail(task.id))
+    },
+    onSave(task: ITaskItem, type: SaveType) {
+      task.optimized && apis.fileSave([task.optimized], type)
+    },
+  }),
+)(TaskList)

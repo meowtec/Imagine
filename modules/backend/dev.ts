@@ -17,16 +17,9 @@ if (!isDev) {
   const webpack = require('webpack')
   const WebpackDevServer = require('webpack-dev-server')
   const { REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS, default: installExtension } = require('electron-devtools-installer')
-  const config = require('../../webpack.config.js')
+  const config = require('../webpack.config.js')
 
-  config.entry.app = [
-    'react-hot-loader/patch',
-    `webpack-dev-server/client?http://localhost:${port}/`,
-    'webpack/hot/only-dev-server',
-    config.entry.app,
-  ]
-
-  const compiler: any = webpack(config)
+  const compiler = webpack(config.default(process.env, { mode: 'development' }))
   const server = new WebpackDevServer(compiler, {
     publicPath: '/htdocs',
     hot: true,

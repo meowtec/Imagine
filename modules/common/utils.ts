@@ -6,7 +6,7 @@ export const coop2 = (min: number, max: number, num: number) => Math.min(max, Ma
 
 export const randomId = () => Math.random().toString(36).slice(2)
 
-export const shallowCompare = <T>(a: T, b: T, keys?: Array<keyof T>) => {
+export const shallowCompare = <T>(a: T, b: T, keys?: (keyof T)[]) => {
   if (a === b || (a == null && b == null)) {
     return true
   }
@@ -23,7 +23,7 @@ export const shallowCompare = <T>(a: T, b: T, keys?: Array<keyof T>) => {
       return false
     }
 
-    keys = akeys as Array<keyof T>
+    keys = akeys as (keyof T)[]
   }
 
   for (const key of keys) {
@@ -65,7 +65,7 @@ export const size = (bytes: number): [number, Unit] => {
   return [number, unit]
 }
 
-export const unpick = <T, K extends keyof T>(obj: T, keys: K[]) => {
+export const unpick = <T extends {}, K extends keyof T>(obj: T, keys: K[]) => {
   const newObj: Partial<T> = {}
 
   for (const key in obj) {
@@ -75,4 +75,10 @@ export const unpick = <T, K extends keyof T>(obj: T, keys: K[]) => {
   }
 
   return newObj
+}
+
+export const cleanupArray = <T>(
+  array: (T | null | undefined)[],
+) => {
+  return array.filter(x => x != null) as T[]
 }

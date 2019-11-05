@@ -1,7 +1,10 @@
 # os: osx
 language: node_js
 node_js:
-  - "8"
+  - "10"
+
+env:
+  - ELECRON_SKIP_BINARY_DOWNOAD=1
 
 before_install:
 

@@ -5,21 +5,21 @@ import app from './app'
 import __ from '../locales'
 import pkg from '../../package.json'
 
-export const about = () => {
-  dialog.showMessageBox({
+export const about = async () => {
+  const { response } = await dialog.showMessageBox({
     type: 'info',
     title: __('about', pkg.name),
     message: `Imagine v${pkg.version}`,
     detail: `Created by Meowtec\n${pkg.homepage}`,
     buttons: [__('ok'), __('visit')],
-  }, response => {
-    if (response === 1) {
-      shell.openExternal(pkg.homepage)
-    }
   })
+
+  if (response === 1) {
+    shell.openExternal(pkg.homepage)
+  }
 }
 
-export const open = () => {
+export const open = async () => {
   const properties = [
     'openFile',
     'multiSelections',
@@ -29,7 +29,7 @@ export const open = () => {
     properties.push('openDirectory')
   }
 
-  dialog.showOpenDialog({
+  const { filePaths } = await dialog.showOpenDialog({
     title: __('choose_images'),
     filters: [{
       name: 'Images',
@@ -39,7 +39,7 @@ export const open = () => {
       ],
     }],
     properties: properties as any,
-  }, filePaths => {
-    app.receiveFiles(filePaths)
   })
+
+  app.receiveFiles(filePaths)
 }

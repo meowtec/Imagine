@@ -1,5 +1,5 @@
 declare module 'image-diff' {
-  declare namespace imageDiff {
+  namespace imageDiff {
     interface ImageDiffOptions {
       actualImage: string
       expectedImage?: string
@@ -18,6 +18,6 @@ declare module 'image-diff' {
     }
   }
 
-  declare const imageDiff: imageDiff.ImageDiffStatic
+  const imageDiff: imageDiff.ImageDiffStatic
   export = imageDiff
 }

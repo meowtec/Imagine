@@ -245,4 +245,4 @@ export default handleActions<IState, any>({
     },
     ...savedOptions,
   },
-})
+}) as Reducer<IState, any>

@@ -26,12 +26,12 @@ test('fileMD5', async () => {
 })
 
 test('imageType png', async () => {
-  const { ext } = await imageType(relPath('../_files/600_600.png'))
+  const { ext } = (await imageType(relPath('../_files/600_600.png')))!
   expect(ext).toBe('png')
 })
 
 test('imageType jpeg', async () => {
-  const { ext } = await imageType(relPath('../_files/fox.jpg'))
+  const { ext } = (await imageType(relPath('../_files/fox.jpg')))!
   expect(ext).toBe('jpg')
 })
 

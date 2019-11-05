@@ -1,24 +1,26 @@
 import { shell } from 'electron'
 import React, { PureComponent, MouseEvent } from 'react'
-import { connect, Dispatch } from 'react-redux'
+import { connect } from 'react-redux'
 import classnames from 'classnames'
 import Icon from '../components/Icon'
 import Popper from '../components/Popper'
 import OptionsPanel from './OptionsPanel'
 import actions from '../store/actionCreaters'
 import { IState } from '../store/reducer'
-import store from '../store/store'
-import { IpcChannel, SaveType, IUpdateInfo } from '../../common/constants'
+import { SaveType, IUpdateInfo } from '../../common/constants'
 import * as apis from '../apis'
 import __ from '../../locales'
 import pkg from '../../../package.json'
 
 import './ActionBar.less'
 
-interface IActionBarProps {
+interface IActionBarStateProps {
   count: number
-  updateInfo: IUpdateInfo
+  updateInfo: IUpdateInfo | undefined
   optionsVisible: boolean
+}
+
+interface IActionBarDispatchProps {
   onRemoveAll(): void
   onSave(type: SaveType): void
   onAdd(): void
@@ -26,7 +28,7 @@ interface IActionBarProps {
   onOptionsVisibleToggle(visible: boolean): void
 }
 
-class ActionBar extends PureComponent<IActionBarProps, {}> {
+class ActionBar extends PureComponent<IActionBarStateProps & IActionBarDispatchProps> {
   handleSaveClick(e: MouseEvent<HTMLElement>, type: SaveType) {
     e.preventDefault()
     this.props.onSave(type)
@@ -106,28 +108,30 @@ class ActionBar extends PureComponent<IActionBarProps, {}> {
   }
 }
 
-export default connect((state: IState) => ({
-  count: state.tasks.length,
-  updateInfo: state.globals.updateInfo,
-  optionsVisible: state.globals.optionsVisible,
-}), (dispatch) => ({
-  onRemoveAll() {
-    dispatch(actions.taskClear())
-  },
+export default connect<IActionBarStateProps, IActionBarDispatchProps, {}, IState>(
+  state => ({
+    count: state.tasks.length,
+    updateInfo: state.globals.updateInfo,
+    optionsVisible: state.globals.optionsVisible,
+  }), (dispatch) => ({
+    onRemoveAll() {
+      dispatch(actions.taskClear())
+    },
 
-  onOptionsVisibleToggle(visible: boolean) {
-    dispatch(actions.optionsVisible(visible))
-  },
+    onOptionsVisibleToggle(visible: boolean) {
+      dispatch(actions.optionsVisible(visible))
+    },
 
-  onAdd() {
-    apis.fileSelect()
-  },
+    onAdd() {
+      apis.fileSelect()
+    },
 
-  onSave(type: SaveType) {
-    apis.fileSaveAll(type)
-  },
+    onSave(type: SaveType) {
+      apis.fileSaveAll(type)
+    },
 
-  onUpdateClick() {
-    shell.openExternal(pkg.homepage + '/releases')
-  },
-}))(ActionBar)
+    onUpdateClick() {
+      shell.openExternal(pkg.homepage + '/releases')
+    },
+  }),
+)(ActionBar)

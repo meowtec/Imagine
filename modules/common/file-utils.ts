@@ -48,7 +48,7 @@ export const saveFilesTmp = (files: string[]) => {
     const type = await imageType(file)
     const ext = type && type.ext
 
-    if (!isSupportedExt(ext)) return
+    if (!ext || !isSupportedExt(ext)) return
 
     const id = md5(file) + await fileMD5(file)
     const size = await getSize(file)
