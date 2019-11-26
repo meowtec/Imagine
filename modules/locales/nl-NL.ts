@@ -5,7 +5,7 @@ export default {
   add: 'Toevoegen',
   save: 'Opslaan',
   save_cover: 'Opslaan en overschrijven',
-  save_new: 'Automatisch opslaan onder nieuwe naam',
+  save_new: 'Automatisch opslaan onder een nieuwe naam',
   save_dir: 'Exporteren naar',
   save_as: 'Opslaan als',
   save_success: 'Succesvol opgeslagen',
@@ -18,7 +18,7 @@ export default {
   ok: 'Oké',
   before_optimized: 'vóór',
   after_optimized: 'na',
-  new_version: 'Nieuwe versie beschikbaar', // TODO: shorter
-  apply_now: 'Apply now', // TODO: translate
-  imagemagick_required: 'ImageMagick required', // TODO: translate
+  new_version: 'Nieuwe versie beschikbaar!', // TODO: shorter || Note: In Dutch, this can't be shorter :(
+  apply_now: 'Meld je nu aan!', // TODO: translate
+  imagemagick_required: 'ImageMagick is verplicht', // TODO: translate
 }
