@@ -82,7 +82,7 @@
     "electron-updater": "^4.2.0",
     "file-type": "^12.4.0",
     "fs-extra": "^8.1.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "pify": "^4.0.1",
     "raw-body": "^2.4.1",
     "read-chunk": "^3.2.0",
