@@ -108,7 +108,8 @@
       ]
     },
     "nsis": {
-      "perMachine": true
+      "perMachine": true,
+      "allowElevation": false
     },
     "fileAssociations": [
       {
