@@ -135,7 +135,7 @@ class App {
       if (!filePaths || !filePaths.length) return
       const dirpath = filePaths[0]
       await saveToDir(dirpath)
-      shell.openItem(dirpath)
+      shell.openPath(dirpath)
     } else if (type === SaveType.SAVE_AS) {
       const image = images[0]
 
