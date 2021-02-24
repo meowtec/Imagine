@@ -1,5 +1,8 @@
+import * as path from 'path'
 import * as os from 'os'
-import Electron, { BrowserWindow, ipcMain, dialog, app, shell } from 'electron'
+import Electron, {
+  BrowserWindow, ipcMain, dialog, app, shell,
+} from 'electron'
 import { log } from 'electron-log'
 import {
   IImageFile,
@@ -9,19 +12,25 @@ import {
   IBackendState,
 } from '../common/constants'
 import * as fu from '../common/file-utils'
-import { url } from './dev'
 import { listenIpc } from '../ipc-bridge/backend'
 import optimize from './optimize'
 import { saveFiles, saveFile } from './save'
-import menuManager from './menu'
-import * as menuActions from './menu-actions'
+import Menu from './menu'
 import { detectImageMagick } from './imagemagick'
 import __ from '../locales'
+import { isDev } from '../common/env'
+
+if (isDev) {
+  // eslint-disable-next-line global-require
+  require('./dev')
+}
+
+const url = `file://${path.resolve('index.html')}`
 
 class App {
   private windows: number[] = []
 
-  private menu = menuManager
+  private menu = new Menu()
 
   ready = new Promise((resolve) => {
     ipcMain.once(IpcChannel.READY, resolve)
@@ -48,7 +57,7 @@ class App {
 
   onOtherInstance = (event: Electron.Event, argv: string[]) => {
     const win = this.getMainWindow()
-    win && win.focus()
+    win?.focus()
 
     this.receiveFiles(argv.slice(1))
   }
@@ -58,6 +67,8 @@ class App {
     if (id != null) {
       return BrowserWindow.fromId(id)
     }
+
+    return null
   }
 
   createWindow() {
@@ -90,7 +101,7 @@ class App {
       }
     })
 
-    win.webContents.on('will-navigate', e => {
+    win.webContents.on('will-navigate', (e) => {
       e.preventDefault()
     })
 
@@ -103,19 +114,21 @@ class App {
 
   async receiveFiles(filePaths: string[]) {
     const files = await fu.flattenFiles(filePaths)
-    const dests = (await fu.saveFilesTmp(files)).filter(x => x)
+    const dests = (await fu.saveFilesTmp(files)).filter((x) => x)
 
     await this.ready
 
     const win = this.getMainWindow()
-    win && win.webContents.send(IpcChannel.FILE_SELECTED, dests)
+    win?.webContents.send(IpcChannel.FILE_SELECTED, dests)
   }
 
   listenMenu() {
     this.menu.on('save', (type: SaveType) => {
       const win = this.getMainWindow()
-      win && win.webContents.send(IpcChannel.SAVE, type)
+      win?.webContents.send(IpcChannel.SAVE, type)
     })
+
+    this.menu.on('open-files', (files: string[]) => this.receiveFiles(files))
   }
 
   handleIpcFileSave = async (event: Electron.IpcMainEvent, images: IImageFile[], type: SaveType) => {
@@ -158,14 +171,12 @@ class App {
   }
 
   listenIpc() {
-    listenIpc<IOptimizeRequest, IImageFile>(IpcChannel.OPTIMIZE, ({image, exportExt, options}) =>
-      optimize(image, options)
-    )
+    listenIpc<IOptimizeRequest, IImageFile>(IpcChannel.OPTIMIZE, ({ image, exportExt, options }) => optimize(image, options))
 
     listenIpc<void, boolean>(IpcChannel.DETECT_IMAGEMAGICK, detectImageMagick)
 
     ipcMain.on(IpcChannel.FILE_SELECT, () => {
-      menuActions.open()
+      this.menu.open()
     })
 
     ipcMain.on(IpcChannel.FILE_ADD, (event: any, files: string[]) => {

@@ -1,5 +1,5 @@
-import store from './store'
 import { createAction, Action } from 'redux-actions'
+import store from './store'
 import {
   IImageFile,
   IOptimizeOptions,

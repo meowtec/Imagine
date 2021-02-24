@@ -30,15 +30,13 @@ class OptionsPanel extends PureComponent<IProps & IDispatchProps, {}> {
     png: this.props.onOptionsChange.bind(null, SupportedExt.png),
     jpg: this.props.onOptionsChange.bind(null, SupportedExt.jpg),
     webp: this.props.onOptionsChange.bind(null, SupportedExt.webp),
-  } as {[ext: string]: (options: IOptimizeOptions) => void}
+  } as { [ext: string]: (options: IOptimizeOptions) => void }
 
   onExtChanges = (() => {
-    const createExtChangeHandler = (ext: SupportedExt) =>
-      (exportExt: SupportedExt) =>
-        this.props.onOptionsChange(ext, {
-          ...this.props.optionsMap[ext],
-          exportExt,
-        })
+    const createExtChangeHandler = (ext: SupportedExt) => (exportExt: SupportedExt) => this.props.onOptionsChange(ext, {
+      ...this.props.optionsMap[ext],
+      exportExt,
+    })
 
     return {
       png: createExtChangeHandler(SupportedExt.png),
@@ -52,7 +50,7 @@ class OptionsPanel extends PureComponent<IProps & IDispatchProps, {}> {
     return (
       <div className="options">
         <div className="options-body">
-          <Collapse title="PNG" initialVisible={true}>
+          <Collapse title="PNG" initialVisible>
             <div className="collapse-row target-ext-select-row">
               <TargetTypeSelect
                 className="target-ext-select"
@@ -63,7 +61,7 @@ class OptionsPanel extends PureComponent<IProps & IDispatchProps, {}> {
             </div>
             <div className="collapse-row">
               <ImageOptions
-                precision={true}
+                precision
                 ext={SupportedExt.png}
                 options={optionsMap.png}
                 onChange={this.onOptionsChanges.png}
@@ -71,7 +69,7 @@ class OptionsPanel extends PureComponent<IProps & IDispatchProps, {}> {
             </div>
           </Collapse>
 
-          <Collapse title="JPEG" initialVisible={true}>
+          <Collapse title="JPEG" initialVisible>
             <div className="collapse-row target-ext-select-row">
               <TargetTypeSelect
                 className="target-ext-select"
@@ -82,7 +80,7 @@ class OptionsPanel extends PureComponent<IProps & IDispatchProps, {}> {
             </div>
             <div className="collapse-row">
               <ImageOptions
-                precision={true}
+                precision
                 ext={SupportedExt.jpg}
                 options={optionsMap.jpg}
                 onChange={this.onOptionsChanges.jpg}
@@ -90,10 +88,10 @@ class OptionsPanel extends PureComponent<IProps & IDispatchProps, {}> {
             </div>
           </Collapse>
 
-          <Collapse title="WebP" initialVisible={true}>
+          <Collapse title="WebP" initialVisible>
             <div className="collapse-row">
               <ImageOptions
-                precision={true}
+                precision
                 ext={SupportedExt.webp}
                 options={optionsMap.webp}
                 onChange={this.onOptionsChanges.webp}
@@ -117,7 +115,7 @@ class OptionsPanel extends PureComponent<IProps & IDispatchProps, {}> {
 }
 
 export default connect<IProps, IDispatchProps, IOwnProps, IState>(
-  state => ({
+  (state) => ({
     optionsMap: state.globals.defaultOptions,
   }),
 
@@ -137,5 +135,5 @@ export default connect<IProps, IDispatchProps, IOwnProps, IState>(
     onClose() {
       dispatch(actions.optionsVisible(false))
     },
-  })
+  }),
 )(OptionsPanel)

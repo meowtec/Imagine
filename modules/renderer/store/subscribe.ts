@@ -4,7 +4,7 @@ import { IState } from './reducer'
 import { shallowCompare } from '../../common/utils'
 import { IpcChannel, IBackendState } from '../../common/constants'
 
-export default function(store: Store<IState>) {
+export default function (store: Store<IState>) {
   let backendState: IBackendState
 
   /**

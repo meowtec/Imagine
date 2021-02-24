@@ -30,7 +30,8 @@ export default class Collapse extends PureComponent<ICollapseProps, ICollapseSta
     return (
       <div className={classnames('collapse', {
         '-hide': !this.state.visible,
-      })}>
+      })}
+      >
         <h3 className="collapse-title" onClick={this.handleClick}>
           {this.props.title}
         </h3>

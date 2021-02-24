@@ -4,7 +4,7 @@ import classnames from 'classnames'
 import { connect } from 'react-redux'
 import { IState } from '../store/reducer'
 import { SupportedExt } from '../../common/constants'
-import Select from '../components/Select'
+import Select from './Select'
 import __ from '../../locales'
 
 import './TargetTypeSelect.less'
@@ -23,16 +23,17 @@ class TargetTypeSelect extends PureComponent<ITargetTypeSelectProps, {}> {
   }
 
   render() {
-    const { className, sourceExt, targetExt, imageMagickInstalled } = this.props
+    const {
+      className, sourceExt, targetExt, imageMagickInstalled,
+    } = this.props
 
     /**
      * on the Mac, pngquant can read JPEG, so we don't need ImageMagick
      * on other systems, ImageMagick should be installed independently
      */
-    const PNGDisabled =
-      os.platform() !== 'darwin' &&
-      sourceExt === SupportedExt.jpg &&
-      !imageMagickInstalled
+    const PNGDisabled = os.platform() !== 'darwin'
+      && sourceExt === SupportedExt.jpg
+      && !imageMagickInstalled
 
     return (
       <Select
@@ -41,7 +42,9 @@ class TargetTypeSelect extends PureComponent<ITargetTypeSelectProps, {}> {
         onChange={this.handleChange}
       >
         <option value={SupportedExt.png} disabled={PNGDisabled}>
-        To PNG { PNGDisabled ? ` (${__('imagemagick_required')})` : ''}
+          To PNG
+          {' '}
+          { PNGDisabled ? ` (${__('imagemagick_required')})` : ''}
         </option>
         <option value={SupportedExt.jpg}>To JPG</option>
         <option value={SupportedExt.webp}>To WebP</option>

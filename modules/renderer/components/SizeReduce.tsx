@@ -26,12 +26,11 @@ export default function SizeReduce({ task }: { task: ITaskItem }) {
         </span>
       </div>
     )
-  } else {
-    return (
-      <div className="size-reduce">
-        <span className="size-number">{beforeSize[0]}</span>
-        <span className="size-unit">{beforeSize[1]}</span>
-      </div>
-    )
   }
+  return (
+    <div className="size-reduce">
+      <span className="size-number">{beforeSize[0]}</span>
+      <span className="size-unit">{beforeSize[1]}</span>
+    </div>
+  )
 }

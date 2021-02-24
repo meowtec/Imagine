@@ -53,20 +53,21 @@ class ActionBar extends PureComponent<IActionBarStateProps & IActionBarDispatchP
         </button>
 
         <Popper
-          hoverMode={true}
+          hoverMode
           popper={(
             <div className="popper-menu">
-              <a href="#" onClick={e => this.handleSaveClick(e, SaveType.OVER)}>
+              <a href="#" onClick={(e) => this.handleSaveClick(e, SaveType.OVER)}>
                 {__('save_cover')}
               </a>
-              <a href="#" onClick={e => this.handleSaveClick(e, SaveType.NEW_NAME)}>
+              <a href="#" onClick={(e) => this.handleSaveClick(e, SaveType.NEW_NAME)}>
                 {__('save_new')}
               </a>
-              <a href="#" onClick={e => this.handleSaveClick(e, SaveType.NEW_DIR)}>
+              <a href="#" onClick={(e) => this.handleSaveClick(e, SaveType.NEW_DIR)}>
                 {__('save_dir')}
               </a>
             </div>
-          )}>
+          )}
+        >
           <button className="tooltip-hover" disabled={!count}>
             <Icon name="down" />
             <span className="ellipsis">{__('save')}</span>
@@ -81,7 +82,7 @@ class ActionBar extends PureComponent<IActionBarStateProps & IActionBarDispatchP
         {
           updateInfo ? (
             <button onClick={this.props.onUpdateClick} className="has-update">
-              <Icon name="up"/>
+              <Icon name="up" />
               <span className="ellipsis">{__('new_version')}</span>
             </button>
           ) : null
@@ -94,12 +95,14 @@ class ActionBar extends PureComponent<IActionBarStateProps & IActionBarDispatchP
           visible={this.props.optionsVisible}
           popper={(
             <OptionsPanel onApplyClick={this.onOptionsHide} />
-          )}>
+          )}
+        >
           <button
             className={classnames({
               '-active': this.props.optionsVisible,
             })}
-            onClick={this.onOptionsVisibleClick}>
+            onClick={this.onOptionsVisibleClick}
+          >
             <Icon name="tune" />
           </button>
         </Popper>
@@ -109,7 +112,7 @@ class ActionBar extends PureComponent<IActionBarStateProps & IActionBarDispatchP
 }
 
 export default connect<IActionBarStateProps, IActionBarDispatchProps, {}, IState>(
-  state => ({
+  (state) => ({
     count: state.tasks.length,
     updateInfo: state.globals.updateInfo,
     optionsVisible: state.globals.optionsVisible,
@@ -131,7 +134,7 @@ export default connect<IActionBarStateProps, IActionBarDispatchProps, {}, IState
     },
 
     onUpdateClick() {
-      shell.openExternal(pkg.homepage + '/releases')
+      shell.openExternal(`${pkg.homepage}/releases`)
     },
   }),
 )(ActionBar)

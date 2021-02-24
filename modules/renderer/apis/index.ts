@@ -1,11 +1,11 @@
-import store from '../store/store'
 import { ipcRenderer } from 'electron'
+import store from '../store/store'
 import {
   IpcChannel,
   IImageFile,
   SaveType,
   IOptimizeRequest,
-  ITaskItem
+  ITaskItem,
 } from '../../common/constants'
 import { requestCreater } from '../../ipc-bridge/renderer'
 import { cleanupArray } from '../../common/utils'
@@ -19,7 +19,7 @@ export const fileSave = (images: IImageFile[], type: SaveType) => ipcRenderer.se
 export const fileSaveAll = (type: SaveType) => {
   const images = cleanupArray(
     store.getState().tasks
-      .map((task: ITaskItem) => task.optimized)
+      .map((task: ITaskItem) => task.optimized),
   )
   if (!images.length) return
 

@@ -1,7 +1,6 @@
 import React, { PureComponent, DragEvent } from 'react'
 import ReactDOM from 'react-dom'
 import classnames from 'classnames'
-import { hot } from 'react-hot-loader'
 import { Provider } from 'react-redux'
 import { IState } from './store/reducer'
 import Modal from './components/Modal'
@@ -38,10 +37,8 @@ class App extends PureComponent<{}, {}> {
     })
 
     const files = Array.from(e.dataTransfer.files)
-      .filter(file => {
-        return !file.type || /png|jpeg/.test(file.type)
-      })
-      .map(file => file.path)
+      .filter((file) => !file.type || /png|jpeg/.test(file.type))
+      .map((file) => file.path)
 
     apis.fileAdd(files)
   }
@@ -67,4 +64,4 @@ class App extends PureComponent<{}, {}> {
   }
 }
 
-export default hot(module)(App)
+export default App

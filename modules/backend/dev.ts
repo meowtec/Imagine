@@ -1,39 +1,23 @@
-/* tslint:disable no-var-requires */
-
-import * as path from 'path'
 import { app } from 'electron'
+import WebpackDevServer from 'webpack-dev-server'
+import webpack from 'webpack'
+import installExtension, { REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS } from 'electron-devtools-installer'
+import config from '../webpack.config'
 
 const port = 9999
-const { NODE_ENV } = process.env
 
-let url: string
+const compiler = webpack(config)
+const server = new WebpackDevServer(compiler, {
+  publicPath: '/htdocs',
+  hot: true,
+  port,
+  sockPort: port,
+})
 
-const isDev = NODE_ENV === 'development'
+server.listen(port)
 
-if (!isDev) {
-  url = 'file://' + path.resolve(__dirname, '../../htdocs/app.html')
-} else {
-  // start dev server
-  const webpack = require('webpack')
-  const WebpackDevServer = require('webpack-dev-server')
-  const { REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS, default: installExtension } = require('electron-devtools-installer')
-  const config = require('../webpack.config.js')
-
-  const compiler = webpack(config.default(process.env, { mode: 'development' }))
-  const server = new WebpackDevServer(compiler, {
-    publicPath: '/htdocs',
-    hot: true,
-  })
-
-  server.listen(port)
-
-  app.on('ready', () => {
-    // install extentions
-    installExtension(REACT_DEVELOPER_TOOLS)
-    installExtension(REDUX_DEVTOOLS)
-  })
-
-  url = 'http://localhost:9999/htdocs/app.html'
-}
-
-export { isDev, url }
+app.on('ready', () => {
+  // install extentions
+  installExtension(REACT_DEVELOPER_TOOLS)
+  installExtension(REDUX_DEVTOOLS)
+})

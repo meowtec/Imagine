@@ -2,17 +2,15 @@ import * as os from 'os'
 import * as fs from 'fs-extra'
 import * as path from 'path'
 import * as crypto from 'crypto'
-import fileType from 'file-type'
-import readChunk from 'read-chunk'
+import FileType from 'file-type'
 import rawBody from 'raw-body'
-import { IImageFile, IOptimizeOptions, SupportedExt } from '../common/constants'
 import log from 'electron-log'
+import { IImageFile, IOptimizeOptions, SupportedExt } from './constants'
+import { isDev } from './env'
 
 export const tmpdir = path.resolve(os.tmpdir(), 'imageOptimizer')
 
-export const isSupportedExt = (type: string): type is SupportedExt => {
-  return type in SupportedExt
-}
+export const isSupportedExt = (type: string): type is SupportedExt => type in SupportedExt
 
 export const cleanTmpdir = () => fs.emptyDirSync(tmpdir)
 
@@ -23,7 +21,7 @@ export function md5(text: string) {
 }
 
 export function getSize(filePath: string) {
-  return fs.stat(filePath).then(stats => stats.size)
+  return fs.stat(filePath).then((stats) => stats.size)
 }
 
 export async function fileMD5(filePath: string) {
@@ -36,38 +34,38 @@ export async function fileMD5(filePath: string) {
 
 export async function imageType(file: string | Buffer) {
   if (typeof file === 'string') {
-    file = await readChunk(file, 0, 12)
+    return FileType.fromStream(fs.createReadStream(file))
   }
-  return fileType(file)
+  return FileType.fromBuffer(file)
 }
 
-export const getFilePath = (image: Partial<IImageFile>) => path.resolve(tmpdir, image.id + '.' + image.ext)
+export const getFilePath = (image: Partial<IImageFile>) => path.resolve(tmpdir, `${image.id}.${image.ext}`)
 
-export const saveFilesTmp = (files: string[]) => {
-  return Promise.all(files.map(async file => {
-    const type = await imageType(file)
-    const ext = type && type.ext
+export const getFileUrl = (filePath: string) => `file://${filePath}`
 
-    if (!ext || !isSupportedExt(ext)) return
+export const saveFilesTmp = (files: string[]) => Promise.all(files.map(async (file) => {
+  const type = await imageType(file)
+  const ext = type && type.ext
 
-    const id = md5(file) + await fileMD5(file)
-    const size = await getSize(file)
+  if (!ext || !isSupportedExt(ext)) return
 
-    const descriptor: Partial<IImageFile> = {
-      size,
-      id,
-      ext,
-      originalName: file,
-    }
+  const id = md5(file) + await fileMD5(file)
+  const size = await getSize(file)
 
-    const dest = getFilePath(descriptor)
-    descriptor.url = 'file://' + dest
+  const descriptor: Partial<IImageFile> = {
+    size,
+    id,
+    ext,
+    originalName: file,
+  }
 
-    await fs.copy(file, dest)
+  const dest = getFilePath(descriptor)
+  descriptor.url = getFileUrl(dest)
 
-    return descriptor as IImageFile
-  }))
-}
+  await fs.copy(file, dest)
+
+  return descriptor as IImageFile
+}))
 
 /**
  * get a unoccupied file path by an orignial path.
@@ -97,11 +95,10 @@ export const flattenFiles = async (filePaths: string[]) => {
         list.push(filePath)
       } else if (stat.isDirectory()) {
         const dirFileNames = await fs.readdir(filePath)
-        const dirFiles = dirFileNames.map(name => path.resolve(filePath, name))
+        const dirFiles = dirFileNames.map((name) => path.resolve(filePath, name))
         const dirFlatFiles = await flattenFiles(dirFiles)
         list = list.concat(dirFlatFiles)
       }
-
     } catch (e) {
       log.error(`Failed to access file ${filePath}`)
     }
@@ -115,19 +112,16 @@ export const flattenFiles = async (filePaths: string[]) => {
  * @param filename - 'path/to/image.png'
  * @param ext - jpg
  */
-export const reext = (filename: string, ext: SupportedExt) => {
-  return filename.replace(/(?:\.(\w+))?$/i, ($0, $1: string) => {
-    $1 = $1.toLowerCase()
+export const reext = (filename: string, ext: SupportedExt) => filename.replace(/(?:\.(\w+))?$/i, ($0, $1: string) => {
+  $1 = $1.toLowerCase()
 
-    // make sure `x.PNG` not be transformed to `x.png`
-    if ($1 === ext) {
-      return $0
-    }
+  // make sure `x.PNG` not be transformed to `x.png`
+  if ($1 === ext) {
+    return $0
+  }
 
-    if ($1 in SupportedExt) {
-      return '.' + ext
-    } else {
-      return $0 + '.' + ext
-    }
-  })
-}
+  if ($1 in SupportedExt) {
+    return `.${ext}`
+  }
+  return `${$0}.${ext}`
+})

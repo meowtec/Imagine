@@ -27,10 +27,10 @@ test('locale fallback', () => {
     },
   }
 
-  expect(createLocales(localesTexts, {zh: 'zh-CN'}, 'en-US', 'zh-TW')('taxi')).toBe('計程車')
-  expect(createLocales(localesTexts, {zh: 'zh-CN'}, 'en-US', 'zh-TW')('car')).toBe('汽车')
-  expect(createLocales(localesTexts, {zh: 'zh-CN'}, 'en-US', 'zh-TW')('apple')).toBe('Apple')
-  expect(createLocales(localesTexts, {zh: 'zh-CN'}, 'en-US', 'jp-JP')('taxi')).toBe('Taxi')
+  expect(createLocales(localesTexts, { zh: 'zh-CN' }, 'en-US', 'zh-TW')('taxi')).toBe('計程車')
+  expect(createLocales(localesTexts, { zh: 'zh-CN' }, 'en-US', 'zh-TW')('car')).toBe('汽车')
+  expect(createLocales(localesTexts, { zh: 'zh-CN' }, 'en-US', 'zh-TW')('apple')).toBe('Apple')
+  expect(createLocales(localesTexts, { zh: 'zh-CN' }, 'en-US', 'jp-JP')('taxi')).toBe('Taxi')
 })
 
 test('locale args', () => {
@@ -41,6 +41,6 @@ test('locale args', () => {
   }
 
   expect(
-    createLocales(localesTexts, {}, 'zh-CN', 'zh-CN')('equal', '四', '十')
+    createLocales(localesTexts, {}, 'zh-CN', 'zh-CN')('equal', '四', '十'),
   ).toBe('四是四，十是十')
 })

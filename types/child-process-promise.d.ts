@@ -11,11 +11,11 @@ declare module 'child-process-promise' {
   export function spawn(
     command: string,
     args?: string[],
-    options?: SpawnOptions & {capture?: string[]}
+    options?: SpawnOptions & { capture?: string[] }
   ): ChildProcessPromise
 
   export function exec(
     command: string,
-    options?: SpawnOptions & {capture?: string[]}
+    options?: SpawnOptions & { capture?: string[] }
   ): ChildProcessPromise
 }

@@ -21,12 +21,10 @@ export const detectImageMagick = async () => {
   }
 }
 
-export const convert = (input: string, output: string) =>
-  spawn('magick',
-    [ input, output ],
-    {
-      capture: [ 'stdout', 'stderr' ],
-    }
-  ).catch(e => {
-    throw new Error(e.message + '\n' + e.stderr)
-  })
+export const convert = (input: string, output: string) => spawn('magick',
+  [input, output],
+  {
+    capture: ['stdout', 'stderr'],
+  }).catch((e) => {
+  throw new Error(`${e.message}\n${e.stderr}`)
+})

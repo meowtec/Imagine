@@ -82,15 +82,16 @@ class Alone extends PureComponent<IAloneProps & IAloneDispatchProps, IAloneState
 
   renderControllers() {
     const task = this.props.task!
-    const { image, optimized, options, status } = task
+    const {
+      image, optimized, options, status,
+    } = task
     const exportExt = options.exportExt || image.ext
 
     return (
       <div>
         { status === TaskStatus.PROCESSING || status === TaskStatus.PENDING
           ? <Icon className="-spin" name="color" />
-          : null
-        }
+          : null}
         <SizeReduce task={task} />
         <div className="paper alone-options">
           <TargetTypeSelect
@@ -101,7 +102,7 @@ class Alone extends PureComponent<IAloneProps & IAloneDispatchProps, IAloneState
           <ImageOptions
             ext={exportExt}
             options={options}
-            precision={true}
+            precision
             onChange={this.handleOptionsChange}
           />
         </div>
@@ -142,9 +143,9 @@ class Alone extends PureComponent<IAloneProps & IAloneDispatchProps, IAloneState
 }
 
 export default connect<IAloneProps, IAloneDispatchProps, {}, IState>(
-  state => ({
+  (state) => ({
     task: getActiveTask(state),
-  }), dispatch => ({
+  }), (dispatch) => ({
     onClose() {
       dispatch(actions.taskDetail(null))
     },

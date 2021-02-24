@@ -12,10 +12,10 @@ import {
 import * as apis from '../apis'
 
 export default connect<ITaskListProps, ITaskListDispatchProps, {}, IState>(
-  state => ({
+  (state) => ({
     tasks: state.tasks,
   }),
-  dispatch => ({
+  (dispatch) => ({
     onRemove(task: ITaskItem) {
       dispatch(actions.taskDelete([task.id]))
     },

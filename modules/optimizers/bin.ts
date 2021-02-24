@@ -2,7 +2,7 @@ import log from 'electron-log'
 import * as path from 'path'
 import * as os from 'os'
 
-const platformAlias: {[key: string]: string} = {
+const platformAlias: { [key: string]: string } = {
   darwin: 'mac',
   win32: 'win',
 }
@@ -18,7 +18,7 @@ export const basePath = path.resolve(
 
 const getBin = (name: string) => {
   if (platform === 'win32') {
-    name = name + '.exe'
+    name += '.exe'
   }
 
   return path.resolve(

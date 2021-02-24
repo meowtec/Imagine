@@ -15,7 +15,9 @@ export function consumWheelEvent(wheelEvent: WheelEvent<any>): IWheelData {
     y: 0,
   }
 
-  const { deltaX, deltaY, deltaZ, ctrlKey } = wheelEvent
+  const {
+    deltaX, deltaY, deltaZ, ctrlKey,
+  } = wheelEvent
 
   if ((deltaY === 100 || deltaY === -100) && !deltaX) {
     // mouse

@@ -4,14 +4,17 @@ import * as fs from 'fs-extra'
 import log from 'electron-log'
 import { IImageFile, IOptimizeOptions, SupportedExt } from '../common/constants'
 import * as fu from '../common/file-utils'
-import { pngquant, mozjpeg, cwebp, IOptimizeMethod } from '../optimizers/'
+import {
+  pngquant, mozjpeg, cwebp, IOptimizeMethod,
+} from '../optimizers'
 import { convert } from './imagemagick'
+import { getFileUrl } from '../common/file-utils'
 
 const platform = os.platform()
 
 const optimize = async (
   image: IImageFile,
-  options: IOptimizeOptions
+  options: IOptimizeOptions,
 ): Promise<IImageFile> => {
   let sourcePath = fu.getFilePath(image)
   const optimizedId = fu.md5(image.id + JSON.stringify(options))
@@ -27,12 +30,12 @@ const optimize = async (
 
   log.info('optimize', `convert [${image.ext}]${sourcePath} to [${exportExt}]${destPath}`)
 
-  dest.url = 'file://' + destPath
+  dest.url = getFileUrl(destPath)
 
   try {
     dest.size = await fu.getSize(destPath)
   } catch (err) {
-    log.info('optimize', `miss cache (desk)`, )
+    log.info('optimize', 'miss cache (desk)')
 
     /**
      * pngquant on linux / windows does not support JPEG to PNG.
@@ -41,7 +44,7 @@ const optimize = async (
     if (platform !== 'darwin' && image.ext === 'jpg' && exportExt === 'png') {
       log.info(
         'optimize',
-        'should use ImageMagick for converting JPEG to PNG'
+        'should use ImageMagick for converting JPEG to PNG',
       )
 
       const intermediate = sourcePath.replace(/\.jpg$/, '.1.png')
@@ -49,14 +52,14 @@ const optimize = async (
       try {
         await fs.access(intermediate)
       } catch (err) {
-        log.info('optimize', `miss cache (ImageMagick)`, )
+        log.info('optimize', 'miss cache (ImageMagick)')
         await convert(sourcePath, intermediate)
       }
 
       sourcePath = intermediate
     }
 
-    const factory: {[ext: string]: IOptimizeMethod} = {
+    const factory: { [ext: string]: IOptimizeMethod } = {
       [SupportedExt.png]: pngquant,
       [SupportedExt.jpg]: mozjpeg,
       [SupportedExt.webp]: cwebp,

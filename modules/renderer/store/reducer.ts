@@ -64,8 +64,8 @@ export const createOptimizeOptions = (ext: SupportedExt) => {
 const savedOptions = storage.getOptions()
 
 function updateTaskItem(state: IState, id: string, partial: Partial<ITaskItem>): IState {
-  return updateTaskList(state, tasks => {
-    const index = tasks.findIndex(task => task.id === id)
+  return updateTaskList(state, (tasks) => {
+    const index = tasks.findIndex((task) => task.id === id)
     if (index === -1) return tasks
     return [
       ...tasks.slice(0, index),
@@ -93,7 +93,7 @@ function updateGlobals(state: IState, updater: (globals: IGlobals) => IGlobals):
 }
 
 function updateGlobalsPartial(state: IState, updater: Partial<IGlobals>): IState {
-  return updateGlobals(state, globals => ({
+  return updateGlobals(state, (globals) => ({
     ...globals,
     ...updater,
   }))
@@ -110,29 +110,29 @@ export default handleActions<IState, any>({
   [ACTIONS.TASK_ADD](state, action: Action<IImageFile[]>) {
     const { defaultOptions } = state.globals
 
-    return updateTaskList(state, tasks => [
+    return updateTaskList(state, (tasks) => [
       ...tasks,
       ...action.payload!
-        .filter(image => !tasks.some(task => task.id === image.id))
-        .map<ITaskItem>(image => {
-          const exportExt = (
-            defaultOptions[image.ext] &&
-            defaultOptions[image.ext].exportExt ||
-            image.ext
-          )
+        .filter((image) => !tasks.some((task) => task.id === image.id))
+        .map<ITaskItem>((image) => {
+        const exportExt = (
+          defaultOptions[image.ext]
+            && defaultOptions[image.ext].exportExt
+            || image.ext
+        )
 
-          return {
-            id: image.id,
-            image,
-            options: getInitialTaskOptions(exportExt, defaultOptions),
-            status: TaskStatus.PENDING,
-          }
-        }),
+        return {
+          id: image.id,
+          image,
+          options: getInitialTaskOptions(exportExt, defaultOptions),
+          status: TaskStatus.PENDING,
+        }
+      }),
     ])
   },
 
   [ACTIONS.TASK_DELETE](state, action: Action<string[]>) {
-    return updateTaskList(state, tasks => tasks.filter(task => !action.payload!.some(id => id === task.id)))
+    return updateTaskList(state, (tasks) => tasks.filter((task) => !action.payload!.some((id) => id === task.id)))
   },
 
   [ACTIONS.TASK_CLEAR](state, action: Action<void>) {
@@ -183,7 +183,7 @@ export default handleActions<IState, any>({
   [ACTIONS.OPTIONS_APPLY](state) {
     const { defaultOptions } = state.globals
 
-    return updateTaskList(state, list => list.map(item => {
+    return updateTaskList(state, (list) => list.map((item) => {
       const exportExt = defaultOptions[item.image.ext].exportExt!
       return {
         ...item,
@@ -221,7 +221,7 @@ export default handleActions<IState, any>({
     /**
      * save to localStorage
      */
-    storage.saveOptions({defaultOptions})
+    storage.saveOptions({ defaultOptions })
 
     return updateGlobalsPartial(state, {
       defaultOptions,

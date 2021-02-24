@@ -8,5 +8,5 @@ export const getActiveId = (state: IState) => state.globals.activeId
 export const getActiveTask = createSelector(
   getTasks,
   getActiveId,
-  (tasks, id) => tasks.find(task => task.id === id),
+  (tasks, id) => tasks.find((task) => task.id === id),
 )

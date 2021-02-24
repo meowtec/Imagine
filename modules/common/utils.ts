@@ -1,4 +1,4 @@
-export const noop = () => {/* noop */}
+export const noop = () => { /* noop */ }
 
 export const coop = (min: number, max: number) => (num: number) => Math.min(max, Math.max(min, num))
 
@@ -12,7 +12,7 @@ export const shallowCompare = <T>(a: T, b: T, keys?: (keyof T)[]) => {
   }
 
   if (typeof a !== 'object' || !a || typeof b !== 'object' || !b) {
-      return false
+    return false
   }
 
   if (!keys) {
@@ -35,7 +35,7 @@ export const shallowCompare = <T>(a: T, b: T, keys?: (keyof T)[]) => {
   return true
 }
 
-export const sleep = (ms: number) => new Promise(resolve => {
+export const sleep = (ms: number) => new Promise((resolve) => {
   setTimeout(resolve, ms)
 })
 
@@ -79,6 +79,4 @@ export const unpick = <T extends {}, K extends keyof T>(obj: T, keys: K[]) => {
 
 export const cleanupArray = <T>(
   array: (T | null | undefined)[],
-) => {
-  return array.filter(x => x != null) as T[]
-}
+) => array.filter((x) => x != null) as T[]

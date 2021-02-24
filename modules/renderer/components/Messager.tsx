@@ -89,7 +89,7 @@ export const showMessage = (options: string | IMessagerProps & {
     const div = document.createElement('div')
     document.body.appendChild(div)
     ReactDOM.render((
-      <MessagerManager ref={mm => {messagerManager = mm!}} />
+      <MessagerManager ref={(mm) => { messagerManager = mm! }} />
     ), div)
     hasGroupInstance = true
   }

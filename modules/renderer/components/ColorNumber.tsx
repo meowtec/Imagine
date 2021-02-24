@@ -11,7 +11,7 @@ interface ICorlorNumberProps {
 
 const transformInput = (value: number) => Math.log2(value)
 
-const transformOutput =  (value: number) => Math.pow(2, value)
+const transformOutput = (value: number) => Math.pow(2, value)
 
 export default function CorlorNumber(props: ICorlorNumberProps) {
   return (
@@ -19,7 +19,7 @@ export default function CorlorNumber(props: ICorlorNumberProps) {
       min={2}
       max={256}
       value={props.value}
-      nativeStep = {props.nativeStep}
+      nativeStep={props.nativeStep}
       onChange={props.onChange}
       transformInput={transformInput}
       transformOutput={transformOutput}

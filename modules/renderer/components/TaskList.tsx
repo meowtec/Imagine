@@ -31,7 +31,7 @@ export default class TaskList extends PureComponent<ITaskListProps & ITaskListDi
         <TransitionGroup
           className="task-list"
         >
-          {this.props.tasks.map(task => (
+          {this.props.tasks.map((task) => (
             <CSSTransition classNames="task" timeout={200} key={task.id}>
               <Item
                 onRemove={this.props.onRemove}

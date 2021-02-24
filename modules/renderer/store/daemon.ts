@@ -1,13 +1,14 @@
 import { Store } from 'redux'
-import { optimize } from '../apis/'
-import { TaskStatus } from '../../common/constants'
-import actions from '../store/actionCreaters'
-import { IState } from './reducer'
 import { debounce } from 'lodash'
 import log from 'electron-log'
+import { optimize } from '../apis'
+import { TaskStatus } from '../../common/constants'
+import actions from './actionCreaters'
+import { IState } from './reducer'
 
 export default class Daemon {
   private running = false
+
   private store?: Store<IState>
 
   trigger = debounce(() => {
@@ -22,7 +23,7 @@ export default class Daemon {
 
   private pickPendingTask() {
     const state = this.store!.getState()
-    return state.tasks.find(task => task.status === TaskStatus.PENDING)
+    return state.tasks.find((task) => task.status === TaskStatus.PENDING)
   }
 
   private async start() {

@@ -1,4 +1,6 @@
-import React, { PureComponent, ReactInstance, cloneElement, Children, ReactElement } from 'react'
+import React, {
+  PureComponent, ReactInstance, cloneElement, Children, ReactElement,
+} from 'react'
 import ReactDOM from 'react-dom'
 import classnames from 'classnames'
 import Popperjs from 'popper.js'
@@ -20,10 +22,13 @@ interface IPopperState {
 
 export default class Popper extends PureComponent<IPopperProps, IPopperState> {
   popper?: Popperjs
+
   private enterTimer = -1
+
   private leaveTimer = -1
 
   refPopper = React.createRef<HTMLDivElement>()
+
   refReference = React.createRef<HTMLElement | ReactInstance>()
 
   static defaultProps = {
@@ -96,7 +101,7 @@ export default class Popper extends PureComponent<IPopperProps, IPopperState> {
             onMouseOver={this.onmouseover}
             onMouseLeave={this.onmouseleave}
           >
-            <div className="arrow"></div>
+            <div className="arrow" />
             {this.props.popper}
           </div>
         </Portal>

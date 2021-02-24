@@ -28,13 +28,9 @@ const ZOOM_MAX = 16
 
 const zoomCoop = coop(ZOOM_MIN, ZOOM_MAX)
 
-const roundZoom = (zoom: number) => {
-  return Math.pow(2, Math.round(Math.log2(zoom)))
-}
+const roundZoom = (zoom: number) => Math.pow(2, Math.round(Math.log2(zoom)))
 
-const floorZoom = (zoom: number) => {
-  return Math.pow(2, Math.floor(Math.log2(zoom)))
-}
+const floorZoom = (zoom: number) => Math.pow(2, Math.floor(Math.log2(zoom)))
 
 const materials = [
   'gradient',
@@ -47,11 +43,14 @@ const materials = [
 ]
 
 export default class ImageViewer extends PureComponent<ImageViewerProps, ImageViewerState> {
-
   private image?: HTMLImageElement
+
   private backdrop?: HTMLDivElement
+
   private prevScreenX = 0
+
   private prevScreenY = 0
+
   private dragging = false
 
   constructor(props: ImageViewerProps) {
@@ -214,7 +213,7 @@ export default class ImageViewer extends PureComponent<ImageViewerProps, ImageVi
   }
 
   renderMaterialItem(material: string) {
-    return <div className={classnames('material-cube', '-' + material)} />
+    return <div className={classnames('material-cube', `-${material}`)} />
   }
 
   renderContent() {
@@ -236,15 +235,14 @@ export default class ImageViewer extends PureComponent<ImageViewerProps, ImageVi
           src={this.props.src}
           onLoad={this.handleImageLoad}
           onError={this.handleImageError}
-          ref={el => {this.image = el!}}
+          ref={(el) => { this.image = el! }}
           style={{
             transform: `translate(${x}px, ${y}px) scale(${zoom})`,
           }}
         />
       )
-    } else {
-      this.image = undefined
     }
+    this.image = undefined
 
     return null
   }
@@ -262,9 +260,9 @@ export default class ImageViewer extends PureComponent<ImageViewerProps, ImageVi
       <div
         className="backdrop"
         onWheel={this.handleWheel}
-        ref={el => {this.backdrop = el!}}
+        ref={(el) => { this.backdrop = el! }}
       >
-        <div className={classnames('material-wall', '-' + material)}></div>
+        <div className={classnames('material-wall', `-${material}`)} />
         <div
           className="image-wrapper"
           onMouseDown={this.handleMouseDown}

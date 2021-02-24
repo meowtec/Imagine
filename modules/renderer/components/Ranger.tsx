@@ -32,12 +32,14 @@ export default class Ranger extends PureComponent<IRangerProps, any> {
     this.props.onChange(this.fixValue(transformOutput!(Number(value))))
   }
 
-  handleNumberInputChange  = (e: ChangeEvent<HTMLInputElement>) => {
+  handleNumberInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     this.props.onChange(this.fixValue(~~e.target.value))
   }
 
   render() {
-    const { min, max, value, transformInput, transformOutput, nativeStep } = this.props
+    const {
+      min, max, value, transformInput, transformOutput, nativeStep,
+    } = this.props
     const nativeValue = transformInput!(value)
 
     return (

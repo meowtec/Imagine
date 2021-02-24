@@ -17,9 +17,8 @@ export default function createLocales(
   locales: ILocalesTexts,
   macroMap: IMacroMap,
   defaultLang: string,
-  locale: string
+  locale: string,
 ) {
-
   const macroCode = macrolang(locale)
   const defaultMacro = macroMap && macroMap[macroCode]
 

@@ -1,3 +1,5 @@
+/* eslint-disable global-require */
+/* eslint-disable import/no-dynamic-require */
 import React, { PureComponent, StatelessComponent } from 'react'
 import classnames from 'classnames'
 import './Icon.less'
@@ -20,7 +22,4 @@ export default Icon
 /**
  * require all symbols/*.svg
  */
-;
-(require as any).context('../images/symbols/', false).keys().map((file: string) => {
-  return require('../images/symbols/' + file.slice(2))
-})
+;(require as any).context('../images/symbols/', false).keys().map((file: string) => require(`../images/symbols/${file.slice(2)}`))

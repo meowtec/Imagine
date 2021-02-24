@@ -3,12 +3,10 @@ import log from 'electron-log'
 import * as bins from './bin'
 import { IOptimizeOptions, SupportedExt } from '../common/constants'
 
-const createEnv = () => {
-  return {
-    ...process.env,
-    LD_LIBRARY_PATH: bins.basePath,
-  } as NodeJS.ProcessEnv
-}
+const createEnv = () => ({
+  ...process.env,
+  LD_LIBRARY_PATH: bins.basePath,
+} as NodeJS.ProcessEnv)
 
 export type IOptimizeMethod = (
   input: string,
@@ -34,10 +32,10 @@ export const mozjpeg: IOptimizeMethod = (
   log.info('spawn', bins.mozjpeg, spawnArgs)
 
   return spawn(bins.mozjpeg, spawnArgs, {
-    capture: [ 'stdout', 'stderr' ],
+    capture: ['stdout', 'stderr'],
     env: createEnv(),
-  }).catch(e => {
-    throw new Error(e.message + '\n' + e.stderr)
+  }).catch((e) => {
+    throw new Error(`${e.message}\n${e.stderr}`)
   })
 }
 
@@ -58,10 +56,10 @@ export const pngquant: IOptimizeMethod = (
   log.info('spawn', bins.pngquant, spawnArgs)
 
   return spawn(bins.pngquant, spawnArgs, {
-    capture: [ 'stdout', 'stderr' ],
+    capture: ['stdout', 'stderr'],
     env: createEnv(),
-  }).catch(e => {
-    throw new Error(e.message + '\n' + e.stderr)
+  }).catch((e) => {
+    throw new Error(`${e.message}\n${e.stderr}`)
   })
 }
 
@@ -83,9 +81,9 @@ export const cwebp: IOptimizeMethod = (
   log.info('spawn', bins.cwebp, spawnArgs)
 
   return spawn(bins.cwebp, spawnArgs, {
-    capture: [ 'stdout', 'stderr' ],
+    capture: ['stdout', 'stderr'],
     env: createEnv(),
-  }).catch(e => {
-    throw new Error(e.message + '\n' + e.stderr)
+  }).catch((e) => {
+    throw new Error(`${e.message}\n${e.stderr}`)
   })
 }

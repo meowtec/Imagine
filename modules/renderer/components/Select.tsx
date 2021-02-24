@@ -23,7 +23,7 @@ export default class Select extends Component<ISelectProps, {}> {
 
     return (
       <div
-        style={ props.style }
+        style={props.style}
         className={classnames('select', props.className)}
       >
         <select {...selectProps}>

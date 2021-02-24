@@ -4,7 +4,9 @@ import actions from '../store/actionCreaters'
 import { getActiveTask } from '../store/selectors'
 import store from '../store/store'
 import { shallowCompare } from '../../common/utils'
-import { IpcChannel, IImageFile, SaveType, ITaskItem, IUpdateInfo } from '../../common/constants'
+import {
+  IpcChannel, IImageFile, SaveType, ITaskItem, IUpdateInfo,
+} from '../../common/constants'
 import { showMessage } from '../components/Messager'
 import * as apis from '../apis'
 import __ from '../../locales'
@@ -39,7 +41,7 @@ export default function listenIpc() {
     store.dispatch(actions.appUpdateInfo(data))
   })
 
-  apis.detectImageMagick().then(installed => {
+  apis.detectImageMagick().then((installed) => {
     store.dispatch(actions.imageMagickInstalled(installed))
   })
 }

@@ -1,6 +1,6 @@
 import { Store } from 'redux'
-import { IState, createOptimizeOptions } from './reducer'
 import { createAction, Action } from 'redux-actions'
+import { IState, createOptimizeOptions } from './reducer'
 import {
   ACTIONS,
   ITaskAddPayloadItem,
@@ -40,8 +40,7 @@ export default {
 
   taskOptimizeStart: createAction<string>(ACTIONS.TASK_OPTIMIZE_START),
 
-  taskOptimizeSuccess: createAction<{ id: string, optimized: IImageFile }, string, IImageFile>
-    (ACTIONS.TASK_OPTIMIZE_SUCCESS, (id, optimized) => ({ id, optimized })),
+  taskOptimizeSuccess: createAction<{ id: string, optimized: IImageFile }, string, IImageFile>(ACTIONS.TASK_OPTIMIZE_SUCCESS, (id, optimized) => ({ id, optimized })),
 
   taskOptimizeFail: createAction<string>(ACTIONS.TASK_OPTIMIZE_FAIL),
 

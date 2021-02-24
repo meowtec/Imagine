@@ -11,7 +11,7 @@ interface IQualityProps {
 
 const transformInput = (value: number) => value / 10
 
-const transformOutput =  (value: number) => value * 10
+const transformOutput = (value: number) => value * 10
 
 export default function Quality(props: IQualityProps) {
   return (
@@ -19,7 +19,7 @@ export default function Quality(props: IQualityProps) {
       min={10}
       max={100}
       value={props.value}
-      nativeStep = {props.nativeStep}
+      nativeStep={props.nativeStep}
       onChange={props.onChange}
       transformInput={transformInput}
       transformOutput={transformOutput}

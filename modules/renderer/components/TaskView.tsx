@@ -1,6 +1,6 @@
 import React, { PureComponent, MouseEvent } from 'react'
 import classnames from 'classnames'
-import Popper from '../components/Popper'
+import Popper from './Popper'
 import Select from './Select'
 import Icon from './Icon'
 import ImageOptions from './ImageOptions'
@@ -75,12 +75,12 @@ class TaskView extends PureComponent<ITaskViewProps, {}> {
     const exportExt = options.exportExt || image.ext
 
     return (
-      <div className={classnames('task-view', '-' + task.status)}>
+      <div className={classnames('task-view', `-${task.status}`)}>
         <div className="image-view" onClick={this.handleClick}>
-          <img src={destImage.url} alt="task-cover"/>
+          <img src={destImage.url} alt="task-cover" />
           <div className="image-view-menu">
             <Popper
-              hoverMode={true}
+              hoverMode
               popper={<div className="popper-body">{task.status}</div>}
             >
               <span className="traffic">
@@ -102,23 +102,24 @@ class TaskView extends PureComponent<ITaskViewProps, {}> {
             }
 
             <Popper
-              hoverMode={true}
+              hoverMode
               popper={(
                 <div className="popper-menu">
                   <a
                     href="#"
-                    onClick={e => this.handleSave(e, SaveType.OVER)}
+                    onClick={(e) => this.handleSave(e, SaveType.OVER)}
                   >
                     {__('save')}
                   </a>
                   <a
                     href="#"
-                    onClick={e => this.handleSave(e, SaveType.SAVE_AS)}
+                    onClick={(e) => this.handleSave(e, SaveType.SAVE_AS)}
                   >
                     {__('save_as')}
                   </a>
                 </div>
-              )}>
+              )}
+            >
               <a href="#" onClick={this.stopEvent}>
                 <Icon name="down" />
               </a>

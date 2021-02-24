@@ -4,7 +4,5 @@ import { IImageFile, IOptimizeOptions, IOptimizeRequest } from '../../../common/
 export const optimize = async ({ image, options }: IOptimizeRequest) => {
   await sleep(100)
 
-  return Object.assign({}, image, {
-    color: options.color,
-  })
+  return { ...image, color: options.color }
 }

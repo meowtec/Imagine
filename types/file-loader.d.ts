@@ -1,9 +1,9 @@
-declare module "file-loader!*" {
+declare module 'file-loader!*' {
   const value: string
   export = value
 }
 
-declare module "*.json" {
+declare module '*.json' {
   const value: any
   export = value
 }

@@ -25,7 +25,7 @@ export default class Modal extends PureComponent<IModalProps, {}> {
               <CSSTransition classNames="modal" timeout={500}>
                 <div className="modal">
                   <button className="close" onClick={this.props.onClose}>
-                    <Icon name="close"/>
+                    <Icon name="close" />
                   </button>
                   {this.props.children}
                 </div>

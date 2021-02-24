@@ -27,13 +27,13 @@ export default class RadioGroup extends PureComponent<IRadioGroupProps, {}> {
             const value = itemValue!(item)
 
             return (
-                <div
-                  key={value}
-                  className={classnames('radio-item', {
-                    '-checked': value === this.props.value,
-                  })}
-                  onClick={() => this.handleClick(value)}
-                >
+              <div
+                key={value}
+                className={classnames('radio-item', {
+                  '-checked': value === this.props.value,
+                })}
+                onClick={() => this.handleClick(value)}
+              >
                 {renderItem!(item)}
               </div>
             )

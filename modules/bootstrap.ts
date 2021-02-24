@@ -1,10 +1,9 @@
 import { app, BrowserWindow } from 'electron'
-import { url } from './backend/dev'
+import log from 'electron-log'
 import imagine from './backend/app'
 import updater from './backend/updater'
 import { cleanTmpdir } from './common/file-utils'
-import { setup as setupLocales } from './locales/'
-import log from 'electron-log'
+import { setup as setupLocales } from './locales'
 
 cleanTmpdir()
 
