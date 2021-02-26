@@ -1,6 +1,6 @@
 dist
 lib
 es
-htdocs
+dist
 node_modules
 npm-debug*

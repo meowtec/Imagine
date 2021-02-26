@@ -27,7 +27,7 @@ const config: Configuration = {
   entry: entries,
 
   output: {
-    path: rel('../htdocs'),
+    path: rel('../dist'),
     filename: '[name].js',
   },
 

@@ -9,8 +9,8 @@
 <script>
 (() => {
   const url = process.env.NODE_ENV === 'development'
-    ? 'http://localhost:9999/htdocs/app.js'
-    : 'htdocs/app.js'
+    ? 'http://localhost:9999/dist/app.js'
+    : 'dist/app.js'
   const script = `<script src="${url}"><\/script>`
   document.write(script)
 })()

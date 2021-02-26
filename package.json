@@ -8,12 +8,12 @@
     "type": "git",
     "url": "git+https://github.com/meowtec/Imagine.git"
   },
-  "main": "./es/bootstrap.js",
+  "main": "./lib/bootstrap.js",
   "scripts": {
     "lint": "tsc --noEmit && eslint --ext .js,.jsx,.ts,.tsx modules",
     "tscw": "tsc -w",
     "dev": "tsc && cross-env NODE_ENV=development electron .",
-    "build": "rimraf lib htdocs dist && tsc && cross-env NODE_ENV=production webpack --mode=production --config es/webpack.config.js",
+    "build": "rimraf lib dist dist && tsc && cross-env NODE_ENV=production webpack --mode=production --config lib/webpack.config.js",
     "start": "npm run build && electron .",
     "pack": "npm run build && electron-builder --dir",
     "release": "npm run build && electron-builder --publish always",
@@ -93,8 +93,8 @@
   },
   "build": {
     "files": [
-      "es",
-      "htdocs",
+      "lib",
+      "dist",
       "bin/${os}/**/*"
     ],
     "asarUnpack": [

@@ -4,7 +4,7 @@ matrix:
       osx_image: xcode10.2
       language: node_js
       node_js: "12"
-      # if: branch = master
+      if: branch = master
       env:
         - ELECTRON_CACHE=$HOME/.cache/electron
         - ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder

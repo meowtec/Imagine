@@ -7,7 +7,7 @@ echo "TRAVIS_OS_NAME: $TRAVIS_OS_NAME"
 npm ci
 npm run lint && npm run build
 
-if [ "$TRAVIS_BRANCH" != "_master" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
+if [ "$TRAVIS_BRANCH" == "master" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
   if [ "$TRAVIS_OS_NAME" == "linux" ]; then
     echo "run docker"
     docker run --rm \

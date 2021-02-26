@@ -8,7 +8,7 @@ const port = 9999
 
 const compiler = webpack(config)
 const server = new WebpackDevServer(compiler, {
-  publicPath: '/htdocs',
+  publicPath: '/dist',
   hot: true,
   port,
   sockPort: port,
