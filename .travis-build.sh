@@ -5,7 +5,10 @@ echo "TRAVIS_PULL_REQUEST: $TRAVIS_PULL_REQUEST"
 echo "TRAVIS_OS_NAME: $TRAVIS_OS_NAME"
 
 npm ci
-npm run lint && npm run build
+
+if [ "$TRAVIS_OS_NAME" == "linux" ]; then
+  npm run lint && npm run build
+fi
 
 if [ "$TRAVIS_BRANCH" == "master" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
   if [ "$TRAVIS_OS_NAME" == "linux" ]; then
