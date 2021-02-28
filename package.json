@@ -131,7 +131,7 @@
     "win": {
       "target": [
         "nsis",
-        "zip"
+        "portable"
       ]
     }
   }
