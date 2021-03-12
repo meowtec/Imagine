@@ -4,6 +4,10 @@ export enum SupportedExt {
   webp = 'webp',
 }
 
+export const SupportedExtAlias: Record<string, SupportedExt> = {
+  jpeg: SupportedExt.jpg,
+}
+
 export const enum TaskStatus {
   PENDING = 'PENDING',
   PROCESSING = 'PROCESSING',

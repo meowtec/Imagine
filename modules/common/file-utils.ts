@@ -5,7 +5,7 @@ import * as crypto from 'crypto'
 import FileType from 'file-type'
 import rawBody from 'raw-body'
 import log from 'electron-log'
-import { IImageFile, IOptimizeOptions, SupportedExt } from './constants'
+import { IImageFile, IOptimizeOptions, SupportedExt, SupportedExtAlias } from './constants'
 import { isDev } from './env'
 
 export const tmpdir = path.resolve(os.tmpdir(), 'imageOptimizer')
@@ -116,7 +116,7 @@ export const reext = (filename: string, ext: SupportedExt) => filename.replace(/
   $1 = $1.toLowerCase()
 
   // make sure `x.PNG` not be transformed to `x.png`
-  if ($1 === ext) {
+  if ($1 === ext || SupportedExtAlias[$1] === ext) {
     return $0
   }
 
