@@ -17,6 +17,8 @@ export default {
 
   taskClear: createAction(ACTIONS.TASK_CLEAR),
 
+  taskClearIncreased: createAction(ACTIONS.TASK_CLEAR_INCREASED),
+
   taskUpdateOptions: createAction<{
     id: string
     options: IOptimizeOptions

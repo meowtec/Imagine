@@ -13,6 +13,7 @@
   }
 
   > button {
+    position: relative;
     background: none;
     border: 0;
     outline: none;
@@ -49,6 +50,22 @@
       width: 20px;
       margin: 2px 0;
       color: #666;
+    }
+
+    .dot {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      border-radius: 8px;
+      background: #fa0;
+      right: 5px;
+      top: 15px;
+    }
+
+    .expand {
+      position: absolute;
+      right: 0;
+      bottom: 4px;
     }
 
     span {

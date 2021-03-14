@@ -10,6 +10,7 @@ export default {
   save_as: '另存为',
   save_success: '保存成功',
   clear: '清空',
+  clear_increased: '清空增大的文件',
   choose_images: '选择图片文件',
   drag_files: '从本地文件夹拖动图片到这里',
   colors: '色彩',

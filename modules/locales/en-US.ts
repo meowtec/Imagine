@@ -10,6 +10,7 @@ export default {
   save_as: 'Save as',
   save_success: 'Save successfully',
   clear: 'Clear all',
+  clear_increased: 'Clear increased files',
   choose_images: 'Choose images',
   drag_files: 'Drag pictures here from the local folder',
   colors: 'Colors',
