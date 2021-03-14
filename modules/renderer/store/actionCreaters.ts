@@ -1,16 +1,11 @@
-import { Store } from 'redux'
-import { createAction, Action } from 'redux-actions'
-import { IState, createOptimizeOptions } from './reducer'
+import { createAction } from 'redux-actions'
 import {
   ACTIONS,
-  ITaskAddPayloadItem,
   IDefaultOptionsPayload,
 } from './actions'
 import {
   IImageFile,
   IOptimizeOptions,
-  ITaskItem,
-  TaskStatus,
   IUpdateInfo,
   SupportedExt,
 } from '../../common/constants'
@@ -53,6 +48,4 @@ export default {
   defaultOptions: createAction<IDefaultOptionsPayload>(ACTIONS.DEFAULT_OPTIONS_UPDATE),
 
   optionsApply: createAction(ACTIONS.OPTIONS_APPLY),
-
-  imageMagickInstalled: createAction<boolean>(ACTIONS.IMAGEMAGICK_CHECKED_UPDATE),
 }

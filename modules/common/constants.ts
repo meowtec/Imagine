@@ -25,7 +25,6 @@ export const enum IpcChannel {
   SYNC = 'SYNC',
   APP_UPDATE = 'APP_UPDATE',
   READY = 'READY',
-  DETECT_IMAGEMAGICK = 'DETECT_IMAGEMAGICK',
 }
 
 export const enum SaveType {

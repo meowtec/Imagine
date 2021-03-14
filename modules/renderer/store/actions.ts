@@ -1,11 +1,6 @@
-import { createAction, Action } from 'redux-actions'
-import store from './store'
 import {
   IImageFile,
   IOptimizeOptions,
-  ITaskItem,
-  TaskStatus,
-  IUpdateInfo,
   SupportedExt,
 } from '../../common/constants'
 
@@ -33,5 +28,4 @@ export const enum ACTIONS {
   OPTIONS_VISIBLE_UPDATE = 'OPTIONS_VISIBLE_UPDATE',
   DEFAULT_OPTIONS_UPDATE = 'DEFAULT_OPTIONS_UPDATE',
   OPTIONS_APPLY = 'OPTIONS_APPLY',
-  IMAGEMAGICK_CHECKED_UPDATE = 'IMAGEMAGICK_CHECKED_UPDATE',
 }

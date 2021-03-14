@@ -16,8 +16,6 @@ import { listenIpc } from '../ipc-bridge/backend'
 import optimize from './optimize'
 import { saveFiles, saveFile } from './save'
 import Menu from './menu'
-import { detectImageMagick } from './imagemagick'
-import __ from '../locales'
 import { isDev } from '../common/env'
 
 if (isDev) {
@@ -172,8 +170,6 @@ class App {
 
   listenIpc() {
     listenIpc<IOptimizeRequest, IImageFile>(IpcChannel.OPTIMIZE, ({ image, exportExt, options }) => optimize(image, options))
-
-    listenIpc<void, boolean>(IpcChannel.DETECT_IMAGEMAGICK, detectImageMagick)
 
     ipcMain.on(IpcChannel.FILE_SELECT, () => {
       this.menu.open()

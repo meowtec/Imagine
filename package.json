@@ -55,7 +55,6 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "eslint-plugin-unicorn": "^24.0.0",
     "jest": "^26.6.3",
-    "jimp": "^0.16.1",
     "less": "^4.1.1",
     "less-loader": "^8.0.0",
     "pixelmatch": "^5.2.1",
@@ -87,6 +86,7 @@
     "electron-updater": "^4.3.5",
     "file-type": "^16.2.0",
     "fs-extra": "^9.1.0",
+    "jimp": "^0.16.1",
     "lodash": "^4.17.21",
     "raw-body": "^2.4.1",
     "tslib": "^2.1.0"

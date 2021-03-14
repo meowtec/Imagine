@@ -27,5 +27,3 @@ export const fileSaveAll = (type: SaveType) => {
 }
 
 export const optimize = requestCreater<IOptimizeRequest, IImageFile>(IpcChannel.OPTIMIZE)
-
-export const detectImageMagick = requestCreater<void, boolean>(IpcChannel.DETECT_IMAGEMAGICK)

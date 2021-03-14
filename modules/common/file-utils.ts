@@ -5,16 +5,13 @@ import * as crypto from 'crypto'
 import FileType from 'file-type'
 import rawBody from 'raw-body'
 import log from 'electron-log'
-import { IImageFile, IOptimizeOptions, SupportedExt, SupportedExtAlias } from './constants'
-import { isDev } from './env'
+import { IImageFile, SupportedExt, SupportedExtAlias } from './constants'
 
 export const tmpdir = path.resolve(os.tmpdir(), 'imageOptimizer')
 
 export const isSupportedExt = (type: string): type is SupportedExt => type in SupportedExt
 
 export const cleanTmpdir = () => fs.emptyDirSync(tmpdir)
-
-const takeSubHash = (hash: string) => hash.replace(/[/+=]/g, '').slice(0, 32)
 
 export function md5(text: string) {
   return crypto.createHash('md5').update(text).digest('hex')

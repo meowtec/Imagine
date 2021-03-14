@@ -43,23 +43,10 @@ chmod a+x Imagine-x.y.z-x86_64.AppImage # make executable
  - Batch optimization
  - i18n (English, 简体中文, Nederlands, Español, Français, Italiano, Deutsch)
 
-## 'ImageMagick required'
-
-Since version 0.3.0, you can choose the format that you want to convert to. For example, if you pick a PNG file, you can convert it to JPEG and compress it with MozJPEG optimizer.
-
-But there is an exception: pngquant on windows can't read JPEG files, so if you want to convert JPEG to PNG, you should install ImageMagick firstly, and add it to your PATH environment variable.
-
-Imagine use this command below to check if ImageMagick installed, so make sure it work.
-
-```bash
-magick -version
-```
-
 ## Build and Contribute
 
 ```bash
 git clone https://github.com/meowtec/Imagine.git
-# node 8 is recommended
 npm install
 npm run dev
 ```

@@ -20,5 +20,4 @@ export default {
   after_optimized: 'بعد',
   new_version: 'تحديث',
   apply_now: 'تطبيق التغييرات',
-  imagemagick_required: 'ImageMagick مطلوب',
 }

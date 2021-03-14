@@ -1,4 +1,4 @@
-import { Reducer, combineReducers } from 'redux'
+import { Reducer } from 'redux'
 import { handleActions, Action } from 'redux-actions'
 import * as storage from './storage'
 import {
@@ -11,7 +11,6 @@ import {
 } from '../../common/constants'
 import {
   ACTIONS,
-  ITaskAddPayloadItem,
   IDefaultOptionsPayload,
 } from './actions'
 
@@ -28,7 +27,6 @@ export interface IDefaultOptions {
 interface IGlobals {
   activeId?: string
   updateInfo?: IUpdateInfo
-  imageMagickInstalled: boolean
   optionsVisible: boolean
   defaultOptions: IDefaultOptions
 }
@@ -227,17 +225,10 @@ export default handleActions<IState, any>({
       defaultOptions,
     })
   },
-
-  [ACTIONS.IMAGEMAGICK_CHECKED_UPDATE](state, action: Action<boolean>) {
-    return updateGlobalsPartial(state, {
-      imageMagickInstalled: action.payload!,
-    })
-  },
 }, {
   tasks: [],
   globals: {
     optionsVisible: false,
-    imageMagickInstalled: false,
     defaultOptions: {
       png: createOptimizeOptions(SupportedExt.png),
       jpg: createOptimizeOptions(SupportedExt.jpg),

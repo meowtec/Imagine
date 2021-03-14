@@ -1,9 +1,7 @@
 import { ipcRenderer } from 'electron'
-import { Store } from 'redux'
 import actions from '../store/actionCreaters'
 import { getActiveTask } from '../store/selectors'
 import store from '../store/store'
-import { shallowCompare } from '../../common/utils'
 import {
   IpcChannel, IImageFile, SaveType, ITaskItem, IUpdateInfo,
 } from '../../common/constants'
@@ -39,9 +37,5 @@ export default function listenIpc() {
 
   ipcRenderer.on(IpcChannel.APP_UPDATE, (event: any, data: IUpdateInfo) => {
     store.dispatch(actions.appUpdateInfo(data))
-  })
-
-  apis.detectImageMagick().then((installed) => {
-    store.dispatch(actions.imageMagickInstalled(installed))
   })
 }
