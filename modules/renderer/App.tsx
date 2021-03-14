@@ -57,8 +57,8 @@ class App extends PureComponent<{}, {}> {
         >
           <ActionBar />
           <List />
-          <Alone />
         </div>
+        <Alone />
       </Provider>
     )
   }

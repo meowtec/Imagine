@@ -9,16 +9,17 @@
   }
 }
 
-.task-list {
-  display: flex;
-  flex-wrap: wrap;
-  padding: 10px;
-  margin-top: 60px;
+.task-list-container {
+  position: relative;
+  flex: 1;
+  height: 0;
+}
 
-  .task-view {
-    flex-basis: 240px;
-    margin: 10px;
-  }
+.task-list > div {
+  position: relative;
+  top: 10px;
+  left: 10px;
+  padding-bottom: 10px;
 }
 
 .task-empty {
@@ -33,27 +34,4 @@
     animation: task-empty ease .2s;
     display: inline-block;
   }
-}
-
-.task-enter {
-  opacity: 0.01;
-  transform: scale(1.05);
-}
-
-.task-enter.task-enter-active {
-  opacity: 1;
-  transform: scale(1);
-  transition: .3s;
-  transition-property: opacity, transform;
-}
-
-.task-exit {
-  opacity: 1;
-}
-
-.task-exit.task-exit-active {
-  opacity: 0.01;
-  transform: scale(1.05);
-  transition: .1s;
-  transition-property: opacity, transform;
 }

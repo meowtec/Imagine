@@ -33,6 +33,7 @@
     "@types/react-dom": "^17.0.1",
     "@types/react-redux": "^7.1.16",
     "@types/react-transition-group": "^4.4.1",
+    "@types/react-window": "^1.8.2",
     "@types/redux-actions": "^2.6.1",
     "@types/semver": "^7.3.4",
     "@types/uuid": "^8.3.0",
@@ -64,6 +65,8 @@
     "react-redux": "^7.2.2",
     "react-refresh": "^0.9.0",
     "react-transition-group": "^4.4.1",
+    "react-use": "^17.2.1",
+    "react-window": "^1.8.6",
     "redux": "^4.0.5",
     "redux-actions": "^2.6.5",
     "reselect": "^4.0.0",
@@ -93,6 +96,7 @@
   },
   "build": {
     "files": [
+      "index.html",
       "lib",
       "dist/web",
       "bin/${os}/**/*"

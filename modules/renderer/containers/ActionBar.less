@@ -1,14 +1,12 @@
 .action-bar {
-  position: fixed;
+  flex-shrink: 0;
   display: flex;
   height: 60px;
-  top: 0;
-  left: 0;
-  right: 0;
   padding-left: 10px;
   background: #fff;
   box-shadow: 0 0 4px rgba(0, 0, 0, .2);
-  z-index: 100;
+  position: relative;
+  z-index: 1;
 
   > .blank {
     flex: 1;
