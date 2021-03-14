@@ -2,23 +2,22 @@ import '../_tools/before-test'
 
 import * as path from 'path'
 import { createStore } from '../../renderer/store/store'
-import Daemon from '../../renderer/store/daemon'
+import JobRunner from '../../renderer/store/job-runner'
 import actions from '../../renderer/store/actionCreaters'
-import app from '../../backend/app'
 import { saveFilesTmp } from '../../common/file-utils'
 import { sleep } from '../../common/utils'
 import {
-  IImageFile, IOptimizeOptions, ITaskItem, TaskStatus,
+  IImageFile, TaskStatus,
 } from '../../common/constants'
 
 jest.mock('../../renderer/apis/')
 
-test('optimize daemon', async () => {
+test('optimize JobRunner', async () => {
   const images = await saveFilesTmp(
     ['600_600.png', 'qr.png'].map((x) => path.resolve(__dirname, '../_files', x)),
   )
   const store = createStore()
-  new Daemon().watch(store)
+  new JobRunner().watch(store)
   let state
 
   store.dispatch(actions.taskAdd(images as IImageFile[]))
