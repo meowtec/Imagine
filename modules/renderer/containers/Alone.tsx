@@ -8,15 +8,15 @@ import SizeReduce from '../components/SizeReduce'
 import RadioGroup from '../components/RadioGroup'
 import TargetTypeSelect from '../components/TargetTypeSelect'
 import actions from '../store/actionCreaters'
-import { IState } from '../store/reducer'
 import { getActiveTask } from '../store/selectors'
 import {
   ITaskItem,
   IOptimizeOptions,
   TaskStatus,
   IImageFile,
+  IState,
   SupportedExt,
-} from '../../common/constants'
+} from '../../common/types'
 import __ from '../../locales'
 
 import './Alone.less'
@@ -51,22 +51,26 @@ class Alone extends PureComponent<IAloneProps & IAloneDispatchProps, IAloneState
     }
   }
 
-  handleOptionsChange = (options: IOptimizeOptions) => {
-    this.props.onOptionsChange(this.props.task!.id, options)
-  }
-
-  handleKeyPress = (e: KeyboardEvent) => {
-    if (e.keyCode === 27) {
-      this.props.onClose()
-    }
-  }
-
   componentDidMount() {
     window.addEventListener('keyup', this.handleKeyPress)
   }
 
   componentWillUnmount() {
     window.removeEventListener('keyup', this.handleKeyPress)
+  }
+
+  handleOptionsChange = (options: IOptimizeOptions) => {
+    const { onOptionsChange, task } = this.props
+    if (task) {
+      onOptionsChange(task.id, options)
+    }
+  }
+
+  handleKeyPress = (e: KeyboardEvent) => {
+    const { onClose } = this.props
+    if (e.keyCode === 27) {
+      onClose()
+    }
   }
 
   handleImageStageChange = (value: ImageStage) => {
@@ -76,14 +80,18 @@ class Alone extends PureComponent<IAloneProps & IAloneDispatchProps, IAloneState
   }
 
   handleExtChange = (ext: SupportedExt) => {
-    const task = this.props.task!
-    this.props.onExportChange(task.id, ext)
+    const { task, onExportChange } = this.props
+    if (task) {
+      onExportChange(task.id, ext)
+    }
   }
 
   renderControllers() {
-    const task = this.props.task!
+    const { imageStage } = this.state
+    const { task } = this.props
+    if (!task) return null
     const {
-      image, optimized, options, status,
+      image, options, status,
     } = task
     const exportExt = options.exportExt || image.ext
 
@@ -109,7 +117,7 @@ class Alone extends PureComponent<IAloneProps & IAloneDispatchProps, IAloneState
         <RadioGroup
           className="original-check -standard"
           data={imageStageList}
-          value={this.state.imageStage}
+          value={imageStage}
           renderItem={__}
           onChange={this.handleImageStageChange}
         />
@@ -118,7 +126,7 @@ class Alone extends PureComponent<IAloneProps & IAloneDispatchProps, IAloneState
   }
 
   render() {
-    const { task } = this.props
+    const { task, onClose } = this.props
     const { imageStage } = this.state
 
     /**
@@ -132,7 +140,7 @@ class Alone extends PureComponent<IAloneProps & IAloneDispatchProps, IAloneState
     }
 
     return (
-      <Modal className="alone-modal" visible={!!task} onClose={this.props.onClose}>
+      <Modal className="alone-modal" visible={!!task} onClose={onClose}>
         <ImageViewer src={image && image.url} />
         {
           task && this.renderControllers()
@@ -142,7 +150,7 @@ class Alone extends PureComponent<IAloneProps & IAloneDispatchProps, IAloneState
   }
 }
 
-export default connect<IAloneProps, IAloneDispatchProps, {}, IState>(
+export default connect<IAloneProps, IAloneDispatchProps, Record<string, never>, IState>(
   (state) => ({
     task: getActiveTask(state),
   }), (dispatch) => ({

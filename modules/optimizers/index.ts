@@ -1,7 +1,7 @@
 import { spawn } from 'child-process-promise'
 import log from 'electron-log'
 import * as bins from './bin'
-import { IOptimizeOptions, SupportedExt } from '../common/constants'
+import { IOptimizeOptions, SupportedExt } from '../common/types'
 
 const createEnv = () => ({
   ...process.env,

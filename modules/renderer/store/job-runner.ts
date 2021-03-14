@@ -3,9 +3,8 @@ import { Store } from 'redux'
 import { debounce } from 'lodash'
 import log from 'electron-log'
 import { optimize } from '../apis'
-import { TaskStatus } from '../../common/constants'
+import { TaskStatus, IState } from '../../common/types'
 import actions from './actionCreaters'
-import { IState } from './reducer'
 
 const maxRunningNum = os.cpus().length - 1
 

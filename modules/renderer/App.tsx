@@ -1,9 +1,6 @@
 import React, { PureComponent, DragEvent } from 'react'
-import ReactDOM from 'react-dom'
 import classnames from 'classnames'
 import { Provider } from 'react-redux'
-import { IState } from './store/reducer'
-import Modal from './components/Modal'
 import List from './containers/List'
 import ActionBar from './containers/ActionBar'
 import Alone from './containers/Alone'
@@ -14,21 +11,25 @@ import * as apis from './apis'
 import './components/Icon'
 import './App.less'
 
-class App extends PureComponent<{}, {}> {
-  state = {
-    onion: 0,
+class App extends PureComponent<Record<string, never>, { onion: number }> {
+  constructor(props: Record<string, never>) {
+    super(props)
+
+    this.state = {
+      onion: 0,
+    }
   }
 
   handleDragEnter = () => {
-    this.setState({
-      onion: this.state.onion + 1,
-    })
+    this.setState((state) => ({
+      onion: state.onion + 1,
+    }))
   }
 
   handleDragLeave = () => {
-    this.setState({
-      onion: this.state.onion - 1,
-    })
+    this.setState((state) => ({
+      onion: state.onion - 1,
+    }))
   }
 
   handleDragDrop = (e: DragEvent<HTMLDivElement>) => {
@@ -44,11 +45,13 @@ class App extends PureComponent<{}, {}> {
   }
 
   render() {
+    const { onion } = this.state
+
     return (
       <Provider store={store}>
         <div
           className={classnames('layout', {
-            '-drag': !!this.state.onion,
+            '-drag': !!onion,
           })}
           onDragOver={prevent}
           onDragEnter={this.handleDragEnter}

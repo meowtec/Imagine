@@ -3,7 +3,7 @@ import { useMeasure } from 'react-use'
 import { FixedSizeGrid, GridChildComponentProps, GridItemKeySelector } from 'react-window'
 import {
   ITaskItem,
-} from '../../common/constants'
+} from '../../common/types'
 import Item from '../containers/Task'
 import __ from '../../locales'
 

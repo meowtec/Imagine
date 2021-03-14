@@ -4,7 +4,7 @@ import { getActiveTask } from '../store/selectors'
 import store from '../store/store'
 import {
   IpcChannel, IImageFile, SaveType, ITaskItem, IUpdateInfo,
-} from '../../common/constants'
+} from '../../common/types'
 import { showMessage } from '../components/Messager'
 import * as apis from '../apis'
 import __ from '../../locales'

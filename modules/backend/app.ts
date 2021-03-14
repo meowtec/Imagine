@@ -10,7 +10,7 @@ import {
   IpcChannel,
   SaveType,
   IBackendState,
-} from '../common/constants'
+} from '../common/types'
 import * as fu from '../common/file-utils'
 import { listenIpc } from '../ipc-bridge/backend'
 import optimize from './optimize'

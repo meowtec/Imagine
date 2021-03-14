@@ -8,7 +8,7 @@ import { saveFilesTmp } from '../../common/file-utils'
 import { sleep } from '../../common/utils'
 import {
   IImageFile, TaskStatus,
-} from '../../common/constants'
+} from '../../common/types'
 
 jest.mock('../../renderer/apis/')
 

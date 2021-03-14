@@ -6,7 +6,7 @@ import {
   SaveType,
   IOptimizeRequest,
   ITaskItem,
-} from '../../common/constants'
+} from '../../common/types'
 import { requestCreater } from '../../ipc-bridge/renderer'
 import { cleanupArray } from '../../common/utils'
 

@@ -5,7 +5,7 @@ import * as crypto from 'crypto'
 import FileType from 'file-type'
 import rawBody from 'raw-body'
 import log from 'electron-log'
-import { IImageFile, SupportedExt, SupportedExtAlias } from './constants'
+import { IImageFile, SupportedExt, SupportedExtAlias } from './types'
 
 export const tmpdir = path.resolve(os.tmpdir(), 'imageOptimizer')
 

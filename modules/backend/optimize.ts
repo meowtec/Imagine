@@ -1,7 +1,7 @@
 import * as os from 'os'
 import * as fs from 'fs-extra'
 import log from 'electron-log'
-import { IImageFile, IOptimizeOptions, SupportedExt } from '../common/constants'
+import { IImageFile, IOptimizeOptions, SupportedExt } from '../common/types'
 import * as fu from '../common/file-utils'
 import {
   pngquant, mozjpeg, cwebp, IOptimizeMethod,

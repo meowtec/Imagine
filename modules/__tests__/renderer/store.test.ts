@@ -10,7 +10,7 @@ import {
   ITaskItem,
   TaskStatus,
   SupportedExt,
-} from '../../common/constants'
+} from '../../common/types'
 
 const image1: IImageFile = {
   id: '01',

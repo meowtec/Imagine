@@ -1,6 +1,6 @@
 import { ipcMain } from 'electron'
 import log from 'electron-log'
-import { IElectronResponse, IpcChannel } from '../common/constants'
+import { IElectronResponse, IpcChannel } from '../common/types'
 
 /**
  * make cross process method call easier.

@@ -2,7 +2,7 @@ import * as path from 'path'
 import * as fs from 'fs-extra'
 import { noop } from '../common/utils'
 import * as fu from '../common/file-utils'
-import { SaveType, IImageFile } from '../common/constants'
+import { SaveType, IImageFile } from '../common/types'
 
 export async function saveFiles(images: IImageFile[], type: SaveType, dirname?: string) {
   if (type === SaveType.NEW_DIR && !dirname) return

@@ -2,7 +2,7 @@ import {
   IImageFile,
   IOptimizeOptions,
   SupportedExt,
-} from '../../common/constants'
+} from '../../common/types'
 
 export interface ITaskAddPayloadItem {
   image: IImageFile

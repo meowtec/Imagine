@@ -3,12 +3,12 @@ import actions from '../store/actionCreaters'
 import {
   ITaskItem,
   IOptimizeOptions,
+  IState,
   SaveType,
   SupportedExt,
-} from '../../common/constants'
+} from '../../common/types'
 import * as apis from '../apis'
 import TaskView, { ITaskProps, ITaskDispatchProps, ITaskOwnProps } from '../components/TaskView'
-import { IState } from '../store/reducer'
 
 export default connect<ITaskProps, ITaskDispatchProps, ITaskOwnProps, IState>(
   (state, ownProps) => ({

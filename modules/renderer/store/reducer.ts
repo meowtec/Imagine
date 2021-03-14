@@ -8,33 +8,17 @@ import {
   TaskStatus,
   IUpdateInfo,
   SupportedExt,
-} from '../../common/constants'
+  IState,
+  IGlobals,
+  IDefaultOptions,
+} from '../../common/types'
 import {
   ACTIONS,
   IDefaultOptionsPayload,
 } from './actions'
+import { isTaskSizeIncreased } from '../../common/task'
 
 type Tasks = ITaskItem[]
-
-export interface IDefaultOptions {
-  // TODO: if possible, change `string` to `SupportedExt`
-  [key: string]: IOptimizeOptions
-  jpg: IOptimizeOptions
-  png: IOptimizeOptions
-  webp: IOptimizeOptions
-}
-
-interface IGlobals {
-  activeId?: string
-  updateInfo?: IUpdateInfo
-  optionsVisible: boolean
-  defaultOptions: IDefaultOptions
-}
-
-export interface IState {
-  tasks: ITaskItem[]
-  globals: IGlobals
-}
 
 export const createOptimizeOptions = (ext: SupportedExt) => {
   const optimizeOptions: IOptimizeOptions = {
@@ -54,12 +38,21 @@ export const createOptimizeOptions = (ext: SupportedExt) => {
         color: 128,
       })
       break
+
+    default:
   }
 
   return optimizeOptions
 }
 
 const savedOptions = storage.getOptions()
+
+function updateTaskList(state: IState, updater: (task: Tasks) => Tasks): IState {
+  return {
+    ...state,
+    tasks: updater(state.tasks),
+  }
+}
 
 function updateTaskItem(state: IState, id: string, partial: Partial<ITaskItem>): IState {
   return updateTaskList(state, (tasks) => {
@@ -74,13 +67,6 @@ function updateTaskItem(state: IState, id: string, partial: Partial<ITaskItem>):
       ...tasks.slice(index + 1),
     ]
   })
-}
-
-function updateTaskList(state: IState, updater: (task: Tasks) => Tasks): IState {
-  return {
-    ...state,
-    tasks: updater(state.tasks),
-  }
 }
 
 function updateGlobals(state: IState, updater: (globals: IGlobals) => IGlobals): IState {
@@ -110,13 +96,14 @@ export default handleActions<IState, any>({
 
     return updateTaskList(state, (tasks) => [
       ...tasks,
-      ...action.payload!
+      ...action.payload
         .filter((image) => !tasks.some((task) => task.id === image.id))
         .map<ITaskItem>((image) => {
         const exportExt = (
-          defaultOptions[image.ext]
+          (
+            defaultOptions[image.ext]
             && defaultOptions[image.ext].exportExt
-            || image.ext
+          ) || image.ext
         )
 
         return {
@@ -130,15 +117,19 @@ export default handleActions<IState, any>({
   },
 
   [ACTIONS.TASK_DELETE](state, action: Action<string[]>) {
-    return updateTaskList(state, (tasks) => tasks.filter((task) => !action.payload!.some((id) => id === task.id)))
+    return updateTaskList(state, (tasks) => tasks.filter((task) => !action.payload.some((id) => id === task.id)))
   },
 
-  [ACTIONS.TASK_CLEAR](state, action: Action<void>) {
+  [ACTIONS.TASK_CLEAR](state) {
     return updateTaskList(state, () => [])
   },
 
+  [ACTIONS.TASK_CLEAR_INCREASED](state) {
+    return updateTaskList(state, (tasks) => tasks.filter((task) => !isTaskSizeIncreased(task)))
+  },
+
   [ACTIONS.TASK_UPDATE_OPTIONS](state, action: Action<{ id: string, options: IOptimizeOptions }>) {
-    const { id, options } = action.payload!
+    const { id, options } = action.payload
 
     return updateTaskItem(state, id, {
       options,
@@ -147,7 +138,7 @@ export default handleActions<IState, any>({
   },
 
   [ACTIONS.TASK_UPDATE_EXPORT](state, action: Action<{ id: string, exportExt: SupportedExt }>) {
-    const { id, exportExt } = action.payload!
+    const { id, exportExt } = action.payload
     const { defaultOptions } = state.globals
 
     return updateTaskItem(state, id, {
@@ -157,14 +148,14 @@ export default handleActions<IState, any>({
   },
 
   [ACTIONS.TASK_OPTIMIZE_START](state, action: Action<string>) {
-    const id = action.payload!
+    const id = action.payload
     return updateTaskItem(state, id, {
       status: TaskStatus.PROCESSING,
     })
   },
 
   [ACTIONS.TASK_OPTIMIZE_SUCCESS](state, action: Action<{ id: string, optimized: IImageFile }>) {
-    const { id, optimized } = action.payload!
+    const { id, optimized } = action.payload
     return updateTaskItem(state, id, {
       optimized,
       status: TaskStatus.DONE,
@@ -172,7 +163,7 @@ export default handleActions<IState, any>({
   },
 
   [ACTIONS.TASK_OPTIMIZE_FAIL](state, action: Action<string>) {
-    const id = action.payload!
+    const id = action.payload
     return updateTaskItem(state, id, {
       status: TaskStatus.FAIL,
     })
@@ -182,10 +173,10 @@ export default handleActions<IState, any>({
     const { defaultOptions } = state.globals
 
     return updateTaskList(state, (list) => list.map((item) => {
-      const exportExt = defaultOptions[item.image.ext].exportExt!
+      const { exportExt } = defaultOptions[item.image.ext]
       return {
         ...item,
-        options: getInitialTaskOptions(exportExt, defaultOptions),
+        options: getInitialTaskOptions(exportExt ?? item.image.ext, defaultOptions),
         status: TaskStatus.PENDING,
       }
     }))
@@ -205,12 +196,12 @@ export default handleActions<IState, any>({
 
   [ACTIONS.OPTIONS_VISIBLE_UPDATE](state, action: Action<boolean>) {
     return updateGlobalsPartial(state, {
-      optionsVisible: action.payload!,
+      optionsVisible: action.payload,
     })
   },
 
   [ACTIONS.DEFAULT_OPTIONS_UPDATE](state, action: Action<IDefaultOptionsPayload>) {
-    const { ext, options } = action.payload!
+    const { ext, options } = action.payload
     const defaultOptions = {
       ...state.globals.defaultOptions,
       [ext]: options,

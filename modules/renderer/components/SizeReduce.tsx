@@ -1,6 +1,6 @@
 import classNames from 'classnames'
 import React from 'react'
-import { ITaskItem } from '../../common/constants'
+import { ITaskItem } from '../../common/types'
 import * as _ from '../../common/utils'
 
 export default function SizeReduce({ task }: { task: ITaskItem }) {

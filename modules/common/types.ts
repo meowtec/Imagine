@@ -91,3 +91,21 @@ export interface IUpdateInfo {
   stagingPercentage: number
   version: string
 }
+
+export interface IDefaultOptions {
+  jpg: IOptimizeOptions
+  png: IOptimizeOptions
+  webp: IOptimizeOptions
+}
+
+export interface IGlobals {
+  activeId?: string
+  updateInfo?: IUpdateInfo
+  optionsVisible: boolean
+  defaultOptions: IDefaultOptions
+}
+
+export interface IState {
+  tasks: ITaskItem[]
+  globals: IGlobals
+}

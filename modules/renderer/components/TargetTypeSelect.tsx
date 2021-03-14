@@ -1,6 +1,6 @@
 import React, { PureComponent, ChangeEvent } from 'react'
 import classnames from 'classnames'
-import { SupportedExt } from '../../common/constants'
+import { SupportedExt } from '../../common/types'
 import Select from './Select'
 
 import './TargetTypeSelect.less'

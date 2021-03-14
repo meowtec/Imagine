@@ -8,7 +8,7 @@ import {
   IOptimizeOptions,
   IUpdateInfo,
   SupportedExt,
-} from '../../common/constants'
+} from '../../common/types'
 
 export default {
   taskAdd: createAction<IImageFile[]>(ACTIONS.TASK_ADD),

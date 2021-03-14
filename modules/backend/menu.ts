@@ -1,7 +1,7 @@
 import * as os from 'os'
 import { EventEmitter } from 'events'
 import { dialog, Menu, shell } from 'electron'
-import { SaveType } from '../common/constants'
+import { SaveType } from '../common/types'
 import { isDev } from '../common/env'
 import __ from '../locales'
 import pkg from '../../package.json'

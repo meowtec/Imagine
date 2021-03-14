@@ -11,7 +11,7 @@ import {
   IOptimizeOptions,
   SaveType,
   SupportedExt,
-} from '../../common/constants'
+} from '../../common/types'
 import * as _ from '../../common/utils'
 import __ from '../../locales'
 

@@ -3,7 +3,7 @@
  */
 
 import log from 'electron-log'
-import { IDefaultOptions } from './reducer'
+import { IDefaultOptions } from '../../common/types'
 
 interface IStorageContent {
   defaultOptions: IDefaultOptions,
@@ -14,12 +14,13 @@ const key = 'options-v3'
 const hasLocalStorage = !(typeof localStorage === 'undefined')
 
 export const getOptions = () => {
-  if (!hasLocalStorage) return
+  if (!hasLocalStorage) return null
 
   try {
-    return JSON.parse(localStorage.getItem(key)!) as IStorageContent
+    return JSON.parse(localStorage.getItem(key) ?? '') as IStorageContent
   } catch (e) {
     log.error(`Failed to get options from localStorage, ${e}`)
+    return null
   }
 }
 
