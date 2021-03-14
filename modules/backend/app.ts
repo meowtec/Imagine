@@ -23,7 +23,7 @@ if (isDev) {
   require('./dev')
 }
 
-const url = `file://${path.resolve('index.html')}`
+const url = `file://${path.resolve(app.getAppPath(), 'index.html')}`
 
 class App {
   private windows: number[] = []
