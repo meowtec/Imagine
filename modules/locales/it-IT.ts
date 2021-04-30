@@ -20,5 +20,4 @@ export default {
   after_optimized: 'Dopo',
   new_version: 'Aggiorna',
   apply_now: 'Applica',
-  imagemagick_required: 'ImageMagick richiesto',
 }

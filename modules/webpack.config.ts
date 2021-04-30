@@ -4,30 +4,20 @@ import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin'
 
 const rel = (filename: string) => path.resolve(__dirname, filename)
 
-const NODE_ENV = process.env.NODE_ENV as 'development' | 'production'
-const isDev = NODE_ENV === 'development'
-
-const addHotEntry = (entry: string | string[]) => {
-  if (isDev) {
-    return [
-      'webpack-dev-server/client?http://localhost:9999/',
-      'webpack/hot/only-dev-server',
-    ].concat(entry)
-  }
-  return entry
-}
+const IMAGINE_ENV = process.env.IMAGINE_ENV as 'development' | 'production'
+const isDev = IMAGINE_ENV === 'development'
 
 const entries: Entry = {
-  app: addHotEntry('./modules/renderer/Index'),
+  app: './modules/renderer/Index',
 }
 
 const config: Configuration = {
-  mode: NODE_ENV,
+  mode: IMAGINE_ENV,
 
   entry: entries,
 
   output: {
-    path: rel('../dist'),
+    path: rel('../dist/web'),
     filename: '[name].js',
   },
 
@@ -65,7 +55,7 @@ const config: Configuration = {
       },
       {
         test: /\.(png|jpg)$/,
-        type: 'asset/resource',
+        type: 'asset/inline',
       },
       {
         test: /\.svg$/,
@@ -85,7 +75,7 @@ const config: Configuration = {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: JSON.stringify(NODE_ENV),
+        IMAGINE_ENV: JSON.stringify(IMAGINE_ENV),
       },
     }),
     new ReactRefreshWebpackPlugin(),

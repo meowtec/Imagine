@@ -1,18 +1,20 @@
+import os from 'os'
 import { Store } from 'redux'
 import { debounce } from 'lodash'
 import log from 'electron-log'
 import { optimize } from '../apis'
-import { TaskStatus } from '../../common/constants'
+import { TaskStatus, IState } from '../../common/types'
 import actions from './actionCreaters'
-import { IState } from './reducer'
 
-export default class Daemon {
-  private running = false
+const maxRunningNum = os.cpus().length - 1
+
+export default class JobRunner {
+  private runningNum = 0
 
   private store?: Store<IState>
 
   trigger = debounce(() => {
-    if (this.running) return
+    if (this.runningNum >= maxRunningNum) return
     this.start()
   }, 100)
 
@@ -22,13 +24,16 @@ export default class Daemon {
   }
 
   private pickPendingTask() {
-    const state = this.store!.getState()
+    const { store } = this
+    if (!store) return null
+    const state = store.getState()
     return state.tasks.find((task) => task.status === TaskStatus.PENDING)
   }
 
   private async start() {
-    this.running = true
-    const store = this.store!
+    this.runningNum += 1
+    const { store } = this
+    if (!store) return
 
     while (true) {
       const task = this.pickPendingTask()
@@ -45,6 +50,6 @@ export default class Daemon {
       }
     }
 
-    this.running = false
+    this.runningNum -= 1
   }
 }

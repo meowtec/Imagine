@@ -6,7 +6,7 @@ import {
   SaveType,
   IOptimizeRequest,
   ITaskItem,
-} from '../../common/constants'
+} from '../../common/types'
 import { requestCreater } from '../../ipc-bridge/renderer'
 import { cleanupArray } from '../../common/utils'
 
@@ -27,5 +27,3 @@ export const fileSaveAll = (type: SaveType) => {
 }
 
 export const optimize = requestCreater<IOptimizeRequest, IImageFile>(IpcChannel.OPTIMIZE)
-
-export const detectImageMagick = requestCreater<void, boolean>(IpcChannel.DETECT_IMAGEMAGICK)

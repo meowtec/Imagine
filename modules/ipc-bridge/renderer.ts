@@ -1,6 +1,6 @@
 import { ipcRenderer } from 'electron'
 import { randomId } from '../common/utils'
-import { IElectronResponse, IpcChannel } from '../common/constants'
+import { IElectronResponse, IpcChannel } from '../common/types'
 
 /**
  * make cross process method call easier.

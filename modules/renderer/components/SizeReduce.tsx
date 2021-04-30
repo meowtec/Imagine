@@ -1,5 +1,6 @@
-import React, { PureComponent } from 'react'
-import { ITaskItem } from '../../common/constants'
+import classNames from 'classnames'
+import React from 'react'
+import { ITaskItem } from '../../common/types'
 import * as _ from '../../common/utils'
 
 export default function SizeReduce({ task }: { task: ITaskItem }) {
@@ -17,12 +18,10 @@ export default function SizeReduce({ task }: { task: ITaskItem }) {
         <span className="size-sep"> / </span>
         <span className="size-number">{beforeSize[0]}</span>
         <span className="size-unit">{beforeSize[1]}</span>
-        <span className="size-less">
-          <span className="size-q"> (</span>
+        <span className={classNames('size-less', percent > 0 ? '-decreased' : '-increased')}>
           { percent >= 0 ? '-' : '+' }
           <span className="size-number">{ Math.abs(percent) }</span>
           <span className="size-unit">%</span>
-          <span className="size-q">)</span>
         </span>
       </div>
     )

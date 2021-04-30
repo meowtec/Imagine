@@ -1,11 +1,15 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
-import { SupportedExt, IOptimizeOptions } from '../../common/constants'
+import {
+  SupportedExt,
+  IOptimizeOptions,
+  IDefaultOptions,
+  IState,
+} from '../../common/types'
 import Icon from '../components/Icon'
 import Collapse from '../components/Collapse'
 import ImageOptions from '../components/ImageOptions'
 import TargetTypeSelect from '../components/TargetTypeSelect'
-import { IDefaultOptions, IState } from '../store/reducer'
 import actions from '../store/actionCreaters'
 import __ from '../../locales'
 
@@ -25,18 +29,28 @@ interface IOwnProps {
   onApplyClick?(): void
 }
 
-class OptionsPanel extends PureComponent<IProps & IDispatchProps, {}> {
-  onOptionsChanges = {
-    png: this.props.onOptionsChange.bind(null, SupportedExt.png),
-    jpg: this.props.onOptionsChange.bind(null, SupportedExt.jpg),
-    webp: this.props.onOptionsChange.bind(null, SupportedExt.webp),
-  } as { [ext: string]: (options: IOptimizeOptions) => void }
+class OptionsPanel extends PureComponent<IProps & IDispatchProps> {
+  onOptionsChanges = (() => {
+    const createOptionsChangeHandler = (ext: SupportedExt) => (options: IOptimizeOptions) => {
+      const { onOptionsChange } = this.props
+      onOptionsChange(ext, options)
+    }
+
+    return {
+      png: createOptionsChangeHandler(SupportedExt.png),
+      jpg: createOptionsChangeHandler(SupportedExt.jpg),
+      webp: createOptionsChangeHandler(SupportedExt.webp),
+    }
+  })()
 
   onExtChanges = (() => {
-    const createExtChangeHandler = (ext: SupportedExt) => (exportExt: SupportedExt) => this.props.onOptionsChange(ext, {
-      ...this.props.optionsMap[ext],
-      exportExt,
-    })
+    const createExtChangeHandler = (ext: SupportedExt) => (exportExt: SupportedExt) => {
+      const { onOptionsChange, optionsMap } = this.props
+      onOptionsChange(ext, {
+        ...optionsMap[ext],
+        exportExt,
+      })
+    }
 
     return {
       png: createExtChangeHandler(SupportedExt.png),
@@ -45,7 +59,7 @@ class OptionsPanel extends PureComponent<IProps & IDispatchProps, {}> {
   })()
 
   render() {
-    const { optionsMap } = this.props
+    const { optionsMap, onApplyClick, onClose } = this.props
 
     return (
       <div className="options">
@@ -100,12 +114,12 @@ class OptionsPanel extends PureComponent<IProps & IDispatchProps, {}> {
           </Collapse>
         </div>
         <footer className="clearfix">
-          <button onClick={this.props.onApplyClick}>
+          <button type="button" onClick={onApplyClick}>
             <Icon name="doneall" />
             {__('apply_now')}
           </button>
           <div className="blank" />
-          <button onClick={this.props.onClose}>
+          <button type="button" onClick={onClose}>
             <Icon name="close" />
           </button>
         </footer>
@@ -129,7 +143,7 @@ export default connect<IProps, IDispatchProps, IOwnProps, IState>(
 
     onApplyClick() {
       dispatch(actions.optionsApply())
-      ownProps && ownProps.onApplyClick && ownProps.onApplyClick()
+      ownProps.onApplyClick?.()
     },
 
     onClose() {

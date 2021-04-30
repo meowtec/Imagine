@@ -1,13 +1,8 @@
-import { createAction, Action } from 'redux-actions'
-import store from './store'
 import {
   IImageFile,
   IOptimizeOptions,
-  ITaskItem,
-  TaskStatus,
-  IUpdateInfo,
   SupportedExt,
-} from '../../common/constants'
+} from '../../common/types'
 
 export interface ITaskAddPayloadItem {
   image: IImageFile
@@ -23,6 +18,7 @@ export const enum ACTIONS {
   TASK_ADD = 'TASK_ADD',
   TASK_DELETE = 'TASK_DELETE',
   TASK_CLEAR = 'TASK_CLEAR',
+  TASK_CLEAR_INCREASED = 'TASK_CLEAR_INCREASED',
   TASK_UPDATE_OPTIONS = 'TASK_UPDATE_OPTIONS',
   TASK_UPDATE_EXPORT = 'TASK_UPDATE_EXPORT',
   TASK_OPTIMIZE_START = 'TASK_OPTIMIZE_START',
@@ -33,5 +29,4 @@ export const enum ACTIONS {
   OPTIONS_VISIBLE_UPDATE = 'OPTIONS_VISIBLE_UPDATE',
   DEFAULT_OPTIONS_UPDATE = 'DEFAULT_OPTIONS_UPDATE',
   OPTIONS_APPLY = 'OPTIONS_APPLY',
-  IMAGEMAGICK_CHECKED_UPDATE = 'IMAGEMAGICK_CHECKED_UPDATE',
 }

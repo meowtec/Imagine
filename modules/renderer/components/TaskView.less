@@ -8,6 +8,7 @@
   overflow: hidden;
   border-radius: 5px;
   transition: box-shadow .4s;
+  margin: 10px;
 
   &:hover {
     box-shadow: 0 0 10px rgba(0, 0, 0, .2);
@@ -69,6 +70,15 @@
   .size-reduce {
     flex: 1;
     text-align: right;
+
+    .size-less {
+      color: #0c0;
+      margin-left: 10px;
+
+      &.-increased {
+        color: #f60;
+      }
+    }
   }
 
   &.-PENDING {
@@ -117,8 +127,16 @@
   transition: background .4s;
   font-size: 18px;
 
+  button {
+    background: none;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    font-size: inherit;
+  }
+
   > span,
-  > a {
+  > button {
     width: 30px;
     display: flex;
     justify-content: center;

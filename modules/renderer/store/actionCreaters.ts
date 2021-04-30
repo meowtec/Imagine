@@ -1,19 +1,14 @@
-import { Store } from 'redux'
-import { createAction, Action } from 'redux-actions'
-import { IState, createOptimizeOptions } from './reducer'
+import { createAction } from 'redux-actions'
 import {
   ACTIONS,
-  ITaskAddPayloadItem,
   IDefaultOptionsPayload,
 } from './actions'
 import {
   IImageFile,
   IOptimizeOptions,
-  ITaskItem,
-  TaskStatus,
   IUpdateInfo,
   SupportedExt,
-} from '../../common/constants'
+} from '../../common/types'
 
 export default {
   taskAdd: createAction<IImageFile[]>(ACTIONS.TASK_ADD),
@@ -21,6 +16,8 @@ export default {
   taskDelete: createAction<string[]>(ACTIONS.TASK_DELETE),
 
   taskClear: createAction(ACTIONS.TASK_CLEAR),
+
+  taskClearIncreased: createAction(ACTIONS.TASK_CLEAR_INCREASED),
 
   taskUpdateOptions: createAction<{
     id: string
@@ -53,6 +50,4 @@ export default {
   defaultOptions: createAction<IDefaultOptionsPayload>(ACTIONS.DEFAULT_OPTIONS_UPDATE),
 
   optionsApply: createAction(ACTIONS.OPTIONS_APPLY),
-
-  imageMagickInstalled: createAction<boolean>(ACTIONS.IMAGEMAGICK_CHECKED_UPDATE),
 }

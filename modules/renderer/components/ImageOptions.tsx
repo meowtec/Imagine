@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import { shallowCompare } from '../../common/utils'
-import { SupportedExt, IOptimizeOptions } from '../../common/constants'
+import { SupportedExt, IOptimizeOptions } from '../../common/types'
 import ColorNumber from './ColorNumber'
 import Quality from './Quality'
 import __ from '../../locales'

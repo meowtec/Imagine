@@ -4,6 +4,10 @@ export enum SupportedExt {
   webp = 'webp',
 }
 
+export const SupportedExtAlias: Record<string, SupportedExt> = {
+  jpeg: SupportedExt.jpg,
+}
+
 export const enum TaskStatus {
   PENDING = 'PENDING',
   PROCESSING = 'PROCESSING',
@@ -21,7 +25,6 @@ export const enum IpcChannel {
   SYNC = 'SYNC',
   APP_UPDATE = 'APP_UPDATE',
   READY = 'READY',
-  DETECT_IMAGEMAGICK = 'DETECT_IMAGEMAGICK',
 }
 
 export const enum SaveType {
@@ -87,4 +90,22 @@ export interface IUpdateInfo {
   sha512: string
   stagingPercentage: number
   version: string
+}
+
+export interface IDefaultOptions {
+  jpg: IOptimizeOptions
+  png: IOptimizeOptions
+  webp: IOptimizeOptions
+}
+
+export interface IGlobals {
+  activeId?: string
+  updateInfo?: IUpdateInfo
+  optionsVisible: boolean
+  defaultOptions: IDefaultOptions
+}
+
+export interface IState {
+  tasks: ITaskItem[]
+  globals: IGlobals
 }

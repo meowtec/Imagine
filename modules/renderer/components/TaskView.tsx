@@ -1,7 +1,6 @@
 import React, { PureComponent, MouseEvent } from 'react'
 import classnames from 'classnames'
 import Popper from './Popper'
-import Select from './Select'
 import Icon from './Icon'
 import ImageOptions from './ImageOptions'
 import SizeReduce from './SizeReduce'
@@ -12,14 +11,21 @@ import {
   IOptimizeOptions,
   SaveType,
   SupportedExt,
-} from '../../common/constants'
+} from '../../common/types'
 import * as _ from '../../common/utils'
 import __ from '../../locales'
 
 import './TaskView.less'
 
-interface ITaskViewProps {
+export interface ITaskProps {
   task: ITaskItem
+}
+
+export interface ITaskOwnProps {
+  index: number
+}
+
+export interface ITaskDispatchProps {
   onRemove(task: ITaskItem): void
   onClick(task: ITaskItem): void
   onSave(task: ITaskItem, type: SaveType): void
@@ -27,39 +33,45 @@ interface ITaskViewProps {
   onExportChange(id: string, ext: SupportedExt): void
 }
 
-class TaskView extends PureComponent<ITaskViewProps, {}> {
-  handleClear = (e: MouseEvent<HTMLAnchorElement>) => {
+class TaskView extends PureComponent<ITaskProps & ITaskDispatchProps, {}> {
+  handleClear = (e: MouseEvent<HTMLElement>) => {
     this.stopEvent(e)
 
-    this.props.onRemove(this.props.task)
+    const { task, onRemove } = this.props
+    onRemove(task)
   }
 
-  handleClick = (e: MouseEvent<HTMLDivElement>) => {
-    if (this.props.task.status === 'FAIL') return
+  handleClick = () => {
+    const { task, onClick } = this.props
 
-    this.props.onClick(this.props.task)
+    if (task.status === 'FAIL') return
+
+    onClick(task)
   }
 
   handleOptionsChange = (options: IOptimizeOptions) => {
-    this.props.onOptionsChange(this.props.task.id, options)
+    const { task, onOptionsChange } = this.props
+
+    onOptionsChange(task.id, options)
   }
 
   handleExtChange = (ext: SupportedExt) => {
-    const { task } = this.props
-    this.props.onExportChange(task.id, ext)
+    const { task, onExportChange } = this.props
+    onExportChange(task.id, ext)
   }
 
   handleSave = (e: MouseEvent<Element>, type: SaveType) => {
     this.stopEvent(e)
 
-    this.props.onSave(this.props.task, type)
+    const { task, onSave } = this.props
+    onSave(task, type)
   }
 
   handleRefreah = (e: MouseEvent<Element>) => {
     this.stopEvent(e)
 
-    const { task } = this.props
-    this.props.onOptionsChange(task.id, task.options)
+    const { task, onOptionsChange } = this.props
+    onOptionsChange(task.id, task.options)
   }
 
   stopEvent = (e: MouseEvent<Element>) => {
@@ -68,8 +80,8 @@ class TaskView extends PureComponent<ITaskViewProps, {}> {
   }
 
   render() {
-    const { task, onOptionsChange } = this.props
-    const { image, optimized, options } = task
+    const { task } = this.props
+    const { image, options } = task
     const destImage = task.optimized || task.image
     const isProcessing = task.status === TaskStatus.PROCESSING
     const exportExt = options.exportExt || image.ext
@@ -77,7 +89,11 @@ class TaskView extends PureComponent<ITaskViewProps, {}> {
     return (
       <div className={classnames('task-view', `-${task.status}`)}>
         <div className="image-view" onClick={this.handleClick}>
-          <img src={destImage.url} alt="task-cover" />
+          <img
+            src={destImage.url}
+            loading="lazy"
+            alt="task-cover"
+          />
           <div className="image-view-menu">
             <Popper
               hoverMode
@@ -95,9 +111,9 @@ class TaskView extends PureComponent<ITaskViewProps, {}> {
 
             {
               task.status === TaskStatus.FAIL ? (
-                <a href="#" onClick={this.handleRefreah}>
+                <button type="button" onClick={this.handleRefreah}>
                   <Icon name="refresh" />
-                </a>
+                </button>
               ) : null
             }
 
@@ -105,31 +121,31 @@ class TaskView extends PureComponent<ITaskViewProps, {}> {
               hoverMode
               popper={(
                 <div className="popper-menu">
-                  <a
-                    href="#"
+                  <button
+                    type="button"
                     onClick={(e) => this.handleSave(e, SaveType.OVER)}
                   >
                     {__('save')}
-                  </a>
-                  <a
-                    href="#"
+                  </button>
+                  <button
+                    type="button"
                     onClick={(e) => this.handleSave(e, SaveType.SAVE_AS)}
                   >
                     {__('save_as')}
-                  </a>
+                  </button>
                 </div>
               )}
             >
-              <a href="#" onClick={this.stopEvent}>
+              <button type="button" onClick={this.stopEvent}>
                 <Icon name="down" />
-              </a>
+              </button>
             </Popper>
 
             <span className="blank" />
 
-            <a className="close" href="#" onClick={this.handleClear}>
+            <button type="button" className="close" onClick={this.handleClear}>
               <Icon name="clear" />
-            </a>
+            </button>
           </div>
         </div>
         <div className="image-profile">

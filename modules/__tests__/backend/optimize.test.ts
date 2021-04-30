@@ -4,7 +4,7 @@ import * as path from 'path'
 import optimize from '../../backend/optimize'
 import { saveFilesTmp, getFilePath } from '../../common/file-utils'
 import { fullDiff } from '../_tools/image-diff'
-import { IImageFile, SupportedExt } from '../../common/constants'
+import { IImageFile, SupportedExt } from '../../common/types'
 
 const relPath = (file: string) => path.resolve(__dirname, file)
 

@@ -1,6 +1,5 @@
 import { createSelector } from 'reselect'
-import { ITaskItem } from '../../common/constants'
-import { IState } from './reducer'
+import { IState } from '../../common/types'
 
 export const getTasks = (state: IState) => state.tasks
 export const getActiveId = (state: IState) => state.globals.activeId

@@ -1,8 +1,8 @@
 import * as os from 'os'
 import { EventEmitter } from 'events'
 import { dialog, Menu, shell } from 'electron'
-import { SaveType } from '../common/constants'
-import { isDev } from '../common/env'
+import { SaveType } from '../common/types'
+import { IS_DEV } from '../common/env'
 import __ from '../locales'
 import pkg from '../../package.json'
 
@@ -125,7 +125,7 @@ class AppMenu extends EventEmitter {
       },
     ]
 
-    if (isDev) {
+    if (IS_DEV) {
       menuTemplates.push({
         label: 'Debug',
         submenu: [

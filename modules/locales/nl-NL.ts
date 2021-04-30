@@ -20,5 +20,4 @@ export default {
   after_optimized: 'na',
   new_version: 'Nieuwe versie beschikbaar!', // TODO: shorter || Note: In Dutch, this can't be shorter :(
   apply_now: 'Meld je nu aan!', // TODO: translate
-  imagemagick_required: 'ImageMagick is verplicht', // TODO: translate
 }

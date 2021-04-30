@@ -1,20 +1,19 @@
 .action-bar {
-  position: fixed;
+  flex-shrink: 0;
   display: flex;
   height: 60px;
-  top: 0;
-  left: 0;
-  right: 0;
   padding-left: 10px;
   background: #fff;
   box-shadow: 0 0 4px rgba(0, 0, 0, .2);
-  z-index: 100;
+  position: relative;
+  z-index: 1;
 
   > .blank {
     flex: 1;
   }
 
   > button {
+    position: relative;
     background: none;
     border: 0;
     outline: none;
@@ -51,6 +50,22 @@
       width: 20px;
       margin: 2px 0;
       color: #666;
+    }
+
+    .dot {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      border-radius: 8px;
+      background: #fa0;
+      right: 5px;
+      top: 15px;
+    }
+
+    .expand {
+      position: absolute;
+      right: 0;
+      bottom: 4px;
     }
 
     span {

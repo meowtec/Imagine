@@ -10,6 +10,7 @@ export default {
   save_as: '另存为',
   save_success: '保存成功',
   clear: '清空',
+  clear_increased: '清空增大的文件',
   choose_images: '选择图片文件',
   drag_files: '从本地文件夹拖动图片到这里',
   colors: '色彩',
@@ -20,5 +21,4 @@ export default {
   after_optimized: '优化后',
   new_version: '有新版本',
   apply_now: '立即应用',
-  imagemagick_required: '需要安装 ImageMagick',
 }

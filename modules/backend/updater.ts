@@ -4,7 +4,7 @@ import log from 'electron-log'
 import {
   IpcChannel,
   IUpdateInfo,
-} from '../common/constants'
+} from '../common/types'
 import __ from '../locales'
 import app from './app'
 

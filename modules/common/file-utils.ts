@@ -5,16 +5,13 @@ import * as crypto from 'crypto'
 import FileType from 'file-type'
 import rawBody from 'raw-body'
 import log from 'electron-log'
-import { IImageFile, IOptimizeOptions, SupportedExt } from './constants'
-import { isDev } from './env'
+import { IImageFile, SupportedExt, SupportedExtAlias } from './types'
 
 export const tmpdir = path.resolve(os.tmpdir(), 'imageOptimizer')
 
 export const isSupportedExt = (type: string): type is SupportedExt => type in SupportedExt
 
 export const cleanTmpdir = () => fs.emptyDirSync(tmpdir)
-
-const takeSubHash = (hash: string) => hash.replace(/[/+=]/g, '').slice(0, 32)
 
 export function md5(text: string) {
   return crypto.createHash('md5').update(text).digest('hex')
@@ -116,7 +113,7 @@ export const reext = (filename: string, ext: SupportedExt) => filename.replace(/
   $1 = $1.toLowerCase()
 
   // make sure `x.PNG` not be transformed to `x.png`
-  if ($1 === ext) {
+  if ($1 === ext || SupportedExtAlias[$1] === ext) {
     return $0
   }
 
