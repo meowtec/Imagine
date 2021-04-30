@@ -16,9 +16,9 @@ import { listenIpc } from '../ipc-bridge/backend'
 import optimize from './optimize'
 import { saveFiles, saveFile } from './save'
 import Menu from './menu'
-import { isDev } from '../common/env'
+import { IS_DEV } from '../common/env'
 
-if (isDev) {
+if (IS_DEV) {
   // eslint-disable-next-line global-require
   require('./dev')
 }

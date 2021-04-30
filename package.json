@@ -12,8 +12,8 @@
   "scripts": {
     "lint": "tsc --noEmit && eslint --ext .js,.jsx,.ts,.tsx modules",
     "tscw": "tsc -w",
-    "dev": "tsc && cross-env NODE_ENV=development electron .",
-    "build": "rimraf lib dist dist && tsc && cross-env NODE_ENV=production webpack --mode=production --config lib/webpack.config.js",
+    "dev": "tsc && cross-env IMAGINE_ENV=development electron .",
+    "build": "rimraf lib dist dist && tsc && cross-env IMAGINE_ENV=production webpack --mode=production --config lib/webpack.config.js",
     "start": "npm run build && electron .",
     "pack": "npm run build && electron-builder --dir",
     "release": "npm run build && electron-builder --publish always",
