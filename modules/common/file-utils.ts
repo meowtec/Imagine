@@ -59,7 +59,7 @@ export const saveFilesTmp = (files: string[]) => Promise.all(files.map(async (fi
   const dest = getFilePath(descriptor)
   descriptor.url = getFileUrl(dest)
 
-  await fs.copy(file, dest)
+  await fs.copyFile(file, dest)
 
   return descriptor as IImageFile
 }))

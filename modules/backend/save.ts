@@ -25,10 +25,10 @@ export async function saveFiles(images: IImageFile[], type: SaveType, dirname?: 
         break
     }
 
-    await fs.copy(fu.getFilePath(image), savePath).catch(noop)
+    await fs.copyFile(fu.getFilePath(image), savePath).catch(noop)
   }
 }
 
 export async function saveFile(image: IImageFile, filePath: string) {
-  await fs.copy(fu.getFilePath(image), filePath)
+  await fs.copyFile(fu.getFilePath(image), filePath)
 }
