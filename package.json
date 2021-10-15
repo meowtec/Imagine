@@ -23,7 +23,6 @@
   "license": "ISC",
   "devDependencies": {
     "@pmmmwh/react-refresh-webpack-plugin": "^0.4.3",
-    "@types/classnames": "^2.2.11",
     "@types/electron-devtools-installer": "~2.2.0",
     "@types/fs-extra": "^9.0.7",
     "@types/jest": "^26.0.20",
@@ -99,19 +98,56 @@
       "index.html",
       "lib",
       "dist/web",
-      "bin/${os}/**/*"
+      "bin/${platform}/${arch}/**/*"
     ],
     "asarUnpack": [
       "bin"
     ],
     "appId": "com.meowtec.imagine.app",
     "mac": {
-      "category": "public.app-category.graphics-design"
+      "category": "public.app-category.graphics-design",
+      "target": {
+        "target": "dmg",
+        "arch": [
+          "x64",
+          "arm64"
+        ]
+      }
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
     },
     "linux": {
       "category": "Graphics",
       "publish": [
         "github"
+      ],
+      "target": [
+        {
+          "target": "snap",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "appimage",
+          "arch": [
+            "x64"
+          ]
+        }
       ]
     },
     "nsis": {
@@ -131,12 +167,6 @@
         "role": "Editor",
         "ext": "jpeg"
       }
-    ],
-    "win": {
-      "target": [
-        "nsis",
-        "portable"
-      ]
-    }
+    ]
   }
 }

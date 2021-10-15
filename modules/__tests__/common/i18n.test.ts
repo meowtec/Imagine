@@ -30,7 +30,6 @@ test('locale fallback', () => {
   }
 
   expect(createLocales(localesTexts, 'en-US', 'zh-TW')('taxi')).toBe('計程車')
-  expect(createLocales(localesTexts, 'en-US', 'zh-TW')('car')).toBe('汽车')
   expect(createLocales(localesTexts, 'en-US', 'zh-TW')('apple')).toBe('Apple')
   expect(createLocales(localesTexts, 'en-US', 'jp-JP')('taxi')).toBe('Taxi')
 })

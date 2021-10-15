@@ -7,7 +7,7 @@ import rawBody from 'raw-body'
 import log from 'electron-log'
 import { IImageFile, SupportedExt, SupportedExtAlias } from './types'
 
-export const tmpdir = path.resolve(os.tmpdir(), 'imageOptimizer')
+export const tmpdir = path.resolve(os.tmpdir(), 'imagine')
 
 export const isSupportedExt = (type: string): type is SupportedExt => type in SupportedExt
 
@@ -22,7 +22,7 @@ export function getSize(filePath: string) {
 }
 
 export async function fileMD5(filePath: string) {
-  const hash: any = crypto.createHash('md5')
+  const hash = crypto.createHash('md5')
   fs.createReadStream(filePath).pipe(hash)
   return rawBody(hash, {
     encoding: 'hex',

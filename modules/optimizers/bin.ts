@@ -2,30 +2,23 @@ import log from 'electron-log'
 import * as path from 'path'
 import * as os from 'os'
 
-const platformAlias: { [key: string]: string } = {
-  darwin: 'mac',
-  win32: 'win',
-}
-
 const platform = os.platform()
-const targetDir = platformAlias[platform] || platform
+const arch = os.arch()
 
 export const basePath = path.resolve(
-  __dirname,
+  __dirname.replace('app.asar', 'app.asar.unpacked'),
   '../../bin',
-  targetDir,
-).replace('app.asar', 'app.asar.unpacked')
+  platform,
+  // arm64 is limit supported only for macOS
+  platform === 'darwin' && arch === 'arm64'
+    ? 'arm64'
+    : 'x64',
+)
 
-const getBin = (name: string) => {
-  if (platform === 'win32') {
-    name += '.exe'
-  }
-
-  return path.resolve(
-    basePath,
-    name,
-  )
-}
+const getBin = (name: string) => path.resolve(
+  basePath,
+  platform === 'win32' ? `${name}.exe` : name,
+)
 
 export const pngquant = getBin('pngquant')
 export const mozjpeg = getBin('moz-cjpeg')

@@ -38,12 +38,12 @@ const optimize = async (
 
     /**
      * pngquant on linux / windows does not support JPEG to PNG.
-     * in this case, we should use ImageMagick converting JPEG to PNG firstly.
+     * in this case, we should use JIMP converting JPEG to PNG firstly.
      */
     if (platform !== 'darwin' && image.ext === 'jpg' && exportExt === 'png') {
       log.info(
         'optimize',
-        'should use ImageMagick for converting JPEG to PNG',
+        'should use JIMP for converting JPEG to PNG',
       )
 
       const intermediate = sourcePath.replace(/\.jpg$/, '.1.png')
@@ -51,7 +51,7 @@ const optimize = async (
       try {
         await fs.access(intermediate)
       } catch (err) {
-        log.info('optimize', 'miss cache (ImageMagick)')
+        log.info('optimize', 'miss cache (JIMP)')
         await convert(sourcePath, intermediate)
       }
 
