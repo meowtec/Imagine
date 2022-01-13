@@ -10,6 +10,7 @@ export default {
   save_as: 'حفظ كـ',
   save_success: 'تم الحفظ بنجاح',
   clear: 'مسح الكل',
+  clear_increased: 'امسح زيادة الملفات',
   choose_images: 'إختار صور',
   drag_files: 'إسحب وأسقط الصور هنا',
   colors: 'الألوان',

@@ -9,6 +9,8 @@ import ar_SA from './ar-SA'
 import it_IT from './it-IT'
 import de_DE from './de-DE'
 import sv_SE from './sv-SE'
+import hr_HR from './hr-HR'
+import sr_RS from './sr-RS'
 
 const texts = {
   'zh-CN': zh_CN,
@@ -20,6 +22,8 @@ const texts = {
   'it-IT': it_IT,
   'de-DE': de_DE,
   'sv-SE': sv_SE,
+  'hr-HR': hr_HR,
+  'sr-RS': sr_RS,
 }
 
 let gettext: Gettext
@@ -36,6 +40,8 @@ export const setup = () => {
     it: 'it-IT',
     de: 'de-DE',
     sv: 'sv-SE',
+    hr: 'hr-HR',
+    sr: 'sr-RS',
   }, 'en-US', locale)
 }
 

@@ -10,6 +10,7 @@ export default {
   save_as: 'Speichern unter',
   save_success: 'Erfolgreich gespeichert',
   clear: 'Alles löschen',
+  clear_increased: 'Vergrößerte Dateien löschen',
   choose_images: 'Bilder wählen',
   drag_files: 'Bilder aus dem lokalen Ordner hier ablegen',
   colors: 'Farben',

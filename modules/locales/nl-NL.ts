@@ -10,6 +10,7 @@ export default {
   save_as: 'Opslaan als',
   save_success: 'Succesvol opgeslagen',
   clear: 'Alles wissen',
+  clear_increased: 'Verhoogde bestanden wissen',
   choose_images: 'Afbeeldingen kiezen',
   drag_files: 'Sleep afbeeldingen hiernaar toe',
   colors: 'Kleuren',

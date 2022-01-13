@@ -10,6 +10,7 @@ export default {
   save_as: 'Guardar como...',
   save_success: 'Guardado exitoso',
   clear: 'Limpiar todo',
+  clear_increased: 'Limpiar archivos aumentados',
   choose_images: 'Elegir imágenes',
   drag_files: 'Arrastre imágenes aquí desde una carpeta local',
   colors: 'Colores',
