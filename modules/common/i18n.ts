@@ -1,39 +1,39 @@
-interface ILocalesTexts {
+import { toPairs } from 'lodash'
+
+interface ILocaleTextsMap {
   [key: string]: {
     [key: string]: string
   }
 }
 
-interface IMacroMap {
-  [key: string]: string
-}
-
-export type Gettext = (key: string, ...args: any[]) => string
+export type GetText = (key: string, ...args: any[]) => string
 
 // eg: en-US -> en
-const macrolang = (langCode: string) => langCode.split('-')[0]
+const macroLang = (langCode: string) => langCode.split(/-/)[0]
 
 export default function createLocales(
-  locales: ILocalesTexts,
-  macroMap: IMacroMap,
+  localeTextsMap: ILocaleTextsMap,
   defaultLang: string,
-  locale: string,
+  lang: string,
 ) {
-  const macroCode = macrolang(locale)
-  const defaultMacro = macroMap && macroMap[macroCode]
+  const macroCode = macroLang(lang)
 
-  const defaults = locales[defaultLang]
-  const macroTexts = locales[macroCode] || locales[defaultMacro] || defaults
-  const texts = locales[locale] || macroTexts
+  // english
+  const defaultTexts = localeTextsMap[defaultLang]
 
-  if (!defaults) throw new Error('Invalid default language')
+  const texts = (
+    localeTextsMap[lang]
+    || localeTextsMap[macroCode]
+    || toPairs(localeTextsMap).find(([language]) => macroLang(language) === macroCode)?.[1]
+    || defaultTexts
+  )
 
   /**
    * get text by key
    * @param {string} key
    */
   return function get(key: string, ...args: any[]) {
-    let content = texts[key] || macroTexts[key] || defaults[key] || key
+    let content = texts[key] || defaultTexts[key] || key
 
     if (args.length) {
       args.forEach((arg, index) => {
