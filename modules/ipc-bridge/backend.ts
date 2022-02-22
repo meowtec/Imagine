@@ -33,7 +33,7 @@ export const listenIpc = <I, O>(channel: IpcChannel, responser: (input: I) => Pr
       result = await responser(data)
     } catch (err) {
       log.error(err)
-      error = err
+      error = err as Error
     }
 
     event.sender.send(channel, {

@@ -55,6 +55,7 @@ class AppMenu extends EventEmitter {
         name: 'Images',
         extensions: [
           'jpg',
+          'jpeg',
           'png',
         ],
       }],

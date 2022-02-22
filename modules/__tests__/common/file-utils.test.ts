@@ -11,10 +11,13 @@ import {
   unoccupiedFile,
   flattenFiles,
   reext,
+  cleanTmpdir,
 } from '../../common/file-utils'
 import { IImageFile, SupportedExt } from '../../common/types'
 
 const relPath = (file: string) => path.resolve(__dirname, file)
+
+beforeAll(cleanTmpdir)
 
 test('md5', () => {
   expect(md5('123')).toBe('202cb962ac59075b964b07152d234b70')

@@ -6,7 +6,7 @@ import { optimize } from '../apis'
 import { TaskStatus, IState } from '../../common/types'
 import actions from './actionCreaters'
 
-const maxRunningNum = os.cpus().length - 1
+const maxRunningNum = Math.max(os.cpus().length - 1, 1)
 
 export default class JobRunner {
   private runningNum = 0
