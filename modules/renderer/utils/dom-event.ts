@@ -7,7 +7,7 @@ interface IWheelData {
   y: number
 }
 
-export function consumWheelEvent(wheelEvent: WheelEvent<any>): IWheelData {
+export function getWheelFromEvent(wheelEvent: WheelEvent): IWheelData {
   const wheelData: IWheelData = {
     type: 'zoom',
     zoom: 1,
@@ -16,7 +16,7 @@ export function consumWheelEvent(wheelEvent: WheelEvent<any>): IWheelData {
   }
 
   const {
-    deltaX, deltaY, deltaZ, ctrlKey,
+    deltaX, deltaY, ctrlKey,
   } = wheelEvent
 
   if ((deltaY === 100 || deltaY === -100) && !deltaX) {
@@ -26,7 +26,7 @@ export function consumWheelEvent(wheelEvent: WheelEvent<any>): IWheelData {
   } else if (ctrlKey) {
     // trackpad
     wheelData.type = 'zoom'
-    wheelData.zoom = Math.pow(1.02, -deltaY)
+    wheelData.zoom = 1.02 ** -deltaY
   } else {
     wheelData.type = 'move'
     wheelData.x = deltaX
@@ -44,6 +44,6 @@ export function eventOffset(e: MouseEvent, el: HTMLElement) {
   }
 }
 
-export function prevent(e: SyntheticEvent<any>) {
+export function prevent(e: SyntheticEvent) {
   e.preventDefault()
 }

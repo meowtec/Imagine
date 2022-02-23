@@ -6,6 +6,7 @@ import Portal from './Portal'
 import Icon from './Icon'
 
 import './Modal.less'
+import { Empty } from '../../common/types'
 
 interface IModalProps {
   visible: boolean
@@ -13,7 +14,7 @@ interface IModalProps {
   onClose?(): void
 }
 
-export default class Modal extends PureComponent<IModalProps, {}> {
+export default class Modal extends PureComponent<IModalProps, Empty> {
   render() {
     return (
       <Portal>
@@ -24,7 +25,11 @@ export default class Modal extends PureComponent<IModalProps, {}> {
             this.props.visible ? (
               <CSSTransition classNames="modal" timeout={500}>
                 <div className="modal">
-                  <button className="close" onClick={this.props.onClose}>
+                  <button
+                    type="button"
+                    className="close"
+                    onClick={this.props.onClose}
+                  >
                     <Icon name="close" />
                   </button>
                   {this.props.children}

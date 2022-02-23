@@ -40,7 +40,7 @@ class AppMenu extends EventEmitter {
   }
 
   async open() {
-    const properties = [
+    const properties: Electron.OpenDialogOptions['properties'] = [
       'openFile',
       'multiSelections',
     ]
@@ -59,7 +59,7 @@ class AppMenu extends EventEmitter {
           'png',
         ],
       }],
-      properties: properties as any,
+      properties,
     })
 
     this.emit('open-files', filePaths)

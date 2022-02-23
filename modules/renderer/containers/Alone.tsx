@@ -150,18 +150,16 @@ class Alone extends PureComponent<IAloneProps & IAloneDispatchProps, IAloneState
   }
 }
 
-export default connect<IAloneProps, IAloneDispatchProps, Record<string, never>, IState>(
-  (state) => ({
-    task: getActiveTask(state),
-  }), (dispatch) => ({
-    onClose() {
-      dispatch(actions.taskDetail(null))
-    },
-    onOptionsChange(id: string, options: IOptimizeOptions) {
-      dispatch(actions.taskUpdateOptions(id, options))
-    },
-    onExportChange(id: string, ext: SupportedExt) {
-      dispatch(actions.taskUpdateExport(id, ext))
-    },
-  }),
-)(Alone)
+export default connect<IAloneProps, IAloneDispatchProps, Record<string, never>, IState>((state) => ({
+  task: getActiveTask(state),
+}), (dispatch) => ({
+  onClose() {
+    dispatch(actions.taskDetail(null))
+  },
+  onOptionsChange(id: string, options: IOptimizeOptions) {
+    dispatch(actions.taskUpdateOptions(id, options))
+  },
+  onExportChange(id: string, ext: SupportedExt) {
+    dispatch(actions.taskUpdateExport(id, ext))
+  },
+}))(Alone)

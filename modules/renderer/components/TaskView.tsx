@@ -11,8 +11,8 @@ import {
   IOptimizeOptions,
   SaveType,
   SupportedExt,
+  Empty,
 } from '../../common/types'
-import * as _ from '../../common/utils'
 import __ from '../../locales'
 
 import './TaskView.less'
@@ -33,7 +33,7 @@ export interface ITaskDispatchProps {
   onExportChange(id: string, ext: SupportedExt): void
 }
 
-class TaskView extends PureComponent<ITaskProps & ITaskDispatchProps, {}> {
+class TaskView extends PureComponent<ITaskProps & ITaskDispatchProps, Empty> {
   handleClear = (e: MouseEvent<HTMLElement>) => {
     this.stopEvent(e)
 

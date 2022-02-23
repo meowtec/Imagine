@@ -2,9 +2,8 @@ import React, { PureComponent } from 'react'
 import ReactDOM from 'react-dom'
 import CSSTransition from 'react-transition-group/CSSTransition'
 import TransitionGroup from 'react-transition-group/TransitionGroup'
-import classnames from 'classnames'
+import { Empty } from '../../common/types'
 import Icon from './Icon'
-import { sleep } from '../../common/utils'
 
 import './Messager.less'
 
@@ -14,7 +13,7 @@ interface IMessagerProps {
   onClick?(): void
 }
 
-export default class Messager extends PureComponent<IMessagerProps, {}> {
+export default class Messager extends PureComponent<IMessagerProps, Empty> {
   render() {
     const { type = 'info', message } = this.props
     let icon = type
@@ -34,10 +33,10 @@ interface IMessagerManagerState {
   key: number
 }
 
-class MessagerManager extends PureComponent<{}, IMessagerManagerState> {
-  closeTimer: any
+class MessagerManager extends PureComponent<Empty, IMessagerManagerState> {
+  closeTimer = 0
 
-  constructor(props: {}) {
+  constructor(props: Empty) {
     super(props)
 
     this.state = {
@@ -61,17 +60,18 @@ class MessagerManager extends PureComponent<{}, IMessagerManagerState> {
     )
   }
 
+  // eslint-disable-next-line react/no-unused-class-component-methods
   show(options: IMessagerProps & {
     duration?: number
   }) {
-    clearTimeout(this.closeTimer)
+    window.clearTimeout(this.closeTimer)
 
-    this.setState({
+    this.setState((state) => ({
       message: options,
-      key: this.state.key + 1,
-    })
+      key: state.key + 1,
+    }))
 
-    this.closeTimer = setTimeout(() => {
+    this.closeTimer = window.setTimeout(() => {
       this.setState({
         message: null,
       })
@@ -80,7 +80,7 @@ class MessagerManager extends PureComponent<{}, IMessagerManagerState> {
 }
 
 let hasGroupInstance = false
-let messagerManager: MessagerManager
+let messagerManager: MessagerManager | null = null
 
 export const showMessage = (options: string | IMessagerProps & {
   duration?: number
@@ -88,9 +88,11 @@ export const showMessage = (options: string | IMessagerProps & {
   if (!hasGroupInstance) {
     const div = document.createElement('div')
     document.body.appendChild(div)
-    ReactDOM.render((
-      <MessagerManager ref={(mm) => { messagerManager = mm! }} />
-    ), div)
+    ReactDOM.render(
+      (
+        <MessagerManager ref={(mm) => { messagerManager = mm }} />
+      ), div,
+    )
     hasGroupInstance = true
   }
 

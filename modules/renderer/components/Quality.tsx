@@ -1,10 +1,8 @@
-import React, { PureComponent } from 'react'
-import { range } from 'lodash'
+import React from 'react'
 import Ranger from './Ranger'
 
 interface IQualityProps {
   value: number
-  inputReadOnly?: boolean
   nativeStep: number
   onChange(value: number): void
 }

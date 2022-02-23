@@ -6,7 +6,7 @@ interface ILocaleTextsMap {
   }
 }
 
-export type GetText = (key: string, ...args: any[]) => string
+export type GetText = (key: string, ...args: unknown[]) => string
 
 // eg: en-US -> en
 const macroLang = (langCode: string) => langCode.split(/-/)[0]

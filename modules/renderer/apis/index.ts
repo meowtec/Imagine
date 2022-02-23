@@ -1,20 +1,18 @@
-import { ipcRenderer } from 'electron'
 import store from '../store/store'
 import {
   IpcChannel,
   IImageFile,
   SaveType,
-  IOptimizeRequest,
   ITaskItem,
 } from '../../common/types'
-import { requestCreater } from '../../ipc-bridge/renderer'
 import { cleanupArray } from '../../common/utils'
+import { imagineAPI } from '../../bridge/web'
 
-export const fileAdd = (files: string[]) => ipcRenderer.send(IpcChannel.FILE_ADD, files)
+export const fileAdd = (files: string[]) => imagineAPI.ipcSend(IpcChannel.FILE_ADD, files)
 
-export const fileSelect = () => ipcRenderer.send(IpcChannel.FILE_SELECT)
+export const fileSelect = () => imagineAPI.ipcSend(IpcChannel.FILE_SELECT, null)
 
-export const fileSave = (images: IImageFile[], type: SaveType) => ipcRenderer.send(IpcChannel.SAVE, images, type)
+export const fileSave = (images: IImageFile[], type: SaveType) => imagineAPI.ipcSend(IpcChannel.SAVE, { images, type })
 
 export const fileSaveAll = (type: SaveType) => {
   const images = cleanupArray(
@@ -25,5 +23,3 @@ export const fileSaveAll = (type: SaveType) => {
 
   fileSave(images, type)
 }
-
-export const optimize = requestCreater<IOptimizeRequest, IImageFile>(IpcChannel.OPTIMIZE)

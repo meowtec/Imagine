@@ -1,12 +1,10 @@
-import os from 'os'
 import { Store } from 'redux'
 import { debounce } from 'lodash'
-import log from 'electron-log'
-import { optimize } from '../apis'
 import { TaskStatus, IState } from '../../common/types'
 import actions from './actionCreaters'
+import { imagineAPI } from '../../bridge/web'
 
-const maxRunningNum = Math.max(os.cpus().length - 1, 1)
+const maxRunningNum = Math.max((navigator.hardwareConcurrency || 2) - 1, 1)
 
 export default class JobRunner {
   private runningNum = 0
@@ -35,6 +33,7 @@ export default class JobRunner {
     const { store } = this
     if (!store) return
 
+    // eslint-disable-next-line no-constant-condition
     while (true) {
       const task = this.pickPendingTask()
 
@@ -42,10 +41,10 @@ export default class JobRunner {
 
       try {
         store.dispatch(actions.taskOptimizeStart(task.id))
-        const optimized = await optimize(task)
+        const optimized = await imagineAPI.optimize(task)
         store.dispatch(actions.taskOptimizeSuccess(task.id, optimized))
       } catch (err) {
-        log.error(err)
+        imagineAPI.logger.error(err)
         store.dispatch(actions.taskOptimizeFail(task.id))
       }
     }

@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react'
-import { shallowCompare } from '../../common/utils'
-import { SupportedExt, IOptimizeOptions } from '../../common/types'
+import { SupportedExt, IOptimizeOptions, Empty } from '../../common/types'
 import ColorNumber from './ColorNumber'
 import Quality from './Quality'
 import __ from '../../locales'
@@ -14,7 +13,7 @@ interface ImageOptionsProps {
   onChange(options: IOptimizeOptions): void
 }
 
-export default class ImageOptions extends PureComponent<ImageOptionsProps, {}> {
+export default class ImageOptions extends PureComponent<ImageOptionsProps, Empty> {
   handleColorChange = (color: number) => {
     this.props.onChange({
       ...this.props.options,
@@ -32,9 +31,9 @@ export default class ImageOptions extends PureComponent<ImageOptionsProps, {}> {
   renderPNG() {
     return (
       <div className="image-options">
-        <label>{__('colors')}</label>
+        <div>{__('colors')}</div>
         <ColorNumber
-          value={this.props.options.color!}
+          value={this.props.options.color || 0}
           onChange={this.handleColorChange}
           nativeStep={this.props.precision ? 0.1 : 1}
         />
@@ -45,9 +44,9 @@ export default class ImageOptions extends PureComponent<ImageOptionsProps, {}> {
   renderJPGWebp() {
     return (
       <div className="image-options">
-        <label>{__('quality')}</label>
+        <div>{__('quality')}</div>
         <Quality
-          value={this.props.options.quality!}
+          value={this.props.options.quality || 0}
           onChange={this.handleQualityChange}
           nativeStep={this.props.precision ? 0.1 : 1}
         />
@@ -66,6 +65,7 @@ export default class ImageOptions extends PureComponent<ImageOptionsProps, {}> {
 
       case SupportedExt.png:
         return this.renderPNG()
+      default:
     }
 
     return null

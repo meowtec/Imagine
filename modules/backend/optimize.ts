@@ -50,7 +50,7 @@ const optimize = async (
 
       try {
         await fs.access(intermediate)
-      } catch (err) {
+      } catch (error) {
         log.info('optimize', 'miss cache (JIMP)')
         await convert(sourcePath, intermediate)
       }

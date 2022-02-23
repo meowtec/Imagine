@@ -1,6 +1,6 @@
 import { ipcMain } from 'electron'
 import log from 'electron-log'
-import { IElectronResponse, IpcChannel } from '../common/types'
+import { IElectronResponse, IpcChannel } from '../../common/types'
 
 /**
  * make cross process method call easier.
@@ -24,7 +24,7 @@ import { IElectronResponse, IpcChannel } from '../common/types'
  * @param channel channel name
  */
 
-export const listenIpc = <I, O>(channel: IpcChannel, responser: (input: I) => Promise<O> | O) => {
+export const listenAsyncCall = <I, O>(channel: IpcChannel, responser: (input: I) => Promise<O> | O) => {
   ipcMain.on(channel, async (event, sessionId: string, data: I) => {
     let result: O | null = null
     let error: Error | null = null
@@ -36,7 +36,7 @@ export const listenIpc = <I, O>(channel: IpcChannel, responser: (input: I) => Pr
       error = err as Error
     }
 
-    event.sender.send(channel, {
+    event.sender.send(IpcChannel.RESPONSE, {
       session: sessionId,
       error: error && error.message,
       result,

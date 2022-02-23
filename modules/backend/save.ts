@@ -1,3 +1,4 @@
+import assert from 'assert'
 import * as path from 'path'
 import * as fs from 'fs-extra'
 import { noop } from '../common/utils'
@@ -21,8 +22,10 @@ export async function saveFiles(images: IImageFile[], type: SaveType, dirname?: 
         break
 
       case SaveType.NEW_DIR:
-        savePath = await fu.unoccupiedFile(path.resolve(dirname!, path.basename(savePath)))
+        assert(dirname)
+        savePath = await fu.unoccupiedFile(path.resolve(dirname, path.basename(savePath)))
         break
+      default:
     }
 
     await fs.copyFile(fu.getFilePath(image), savePath).catch(noop)

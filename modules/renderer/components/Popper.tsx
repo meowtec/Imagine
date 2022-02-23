@@ -40,11 +40,12 @@ export default class Popper extends PureComponent<IPopperProps, IPopperState> {
   }
 
   componentDidMount() {
+    // eslint-disable-next-line react/no-find-dom-node
     const referenceElement = ReactDOM.findDOMNode(this.refReference.current)
 
-    if (!(referenceElement instanceof HTMLElement)) return
+    if (!(referenceElement instanceof HTMLElement) || !this.refPopper.current) return
 
-    this.popper = new Popperjs(referenceElement, this.refPopper.current!, {
+    this.popper = new Popperjs(referenceElement, this.refPopper.current, {
       placement: this.props.placement as any,
       modifiers: {
         arrow: {
@@ -60,7 +61,7 @@ export default class Popper extends PureComponent<IPopperProps, IPopperState> {
   }
 
   componentDidUpdate() {
-    this.popper!.update()
+    this.popper?.update()
   }
 
   onmouseover = () => {

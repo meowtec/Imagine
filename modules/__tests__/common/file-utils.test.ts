@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import '../_tools/before-test'
 
 import * as path from 'path'

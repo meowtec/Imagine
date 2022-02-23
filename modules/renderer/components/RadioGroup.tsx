@@ -2,17 +2,18 @@ import React, { PureComponent, ReactNode } from 'react'
 import classnames from 'classnames'
 
 import './RadioGroup.less'
+import { Empty } from '../../common/types'
 
 interface IRadioGroupProps {
   value: any
   data: any[]
   onChange(value: any): void
-  renderItem?(value: any): ReactNode
-  itemValue?(value: any): any
-  className?: string
+  renderItem(value: any): ReactNode
+  itemValue(value: any): any
+  className: string
 }
 
-export default class RadioGroup extends PureComponent<IRadioGroupProps, {}> {
+export default class RadioGroup extends PureComponent<IRadioGroupProps, Empty> {
   handleClick = (value: any) => {
     this.props.onChange(value)
   }
@@ -24,7 +25,7 @@ export default class RadioGroup extends PureComponent<IRadioGroupProps, {}> {
       <div className={classnames('radio-group', className)}>
         {
           this.props.data.map((item) => {
-            const value = itemValue!(item)
+            const value = itemValue(item)
 
             return (
               <div
@@ -34,7 +35,7 @@ export default class RadioGroup extends PureComponent<IRadioGroupProps, {}> {
                 })}
                 onClick={() => this.handleClick(value)}
               >
-                {renderItem!(item)}
+                {renderItem(item)}
               </div>
             )
           })

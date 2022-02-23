@@ -12,7 +12,7 @@ export type IOptimizeMethod = (
   input: string,
   output: string,
   options: IOptimizeOptions,
-) => Promise<any>
+) => Promise<{ stdout: string; stderr: string }>
 
 export const mozjpeg: IOptimizeMethod = (
   input,

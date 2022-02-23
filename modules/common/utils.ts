@@ -6,7 +6,9 @@ export const coop2 = (min: number, max: number, num: number) => Math.min(max, Ma
 
 export const randomId = () => Math.random().toString(36).slice(2)
 
-export const shallowCompare = <T>(a: T, b: T, keys?: (keyof T)[]) => {
+export const shallowCompare = <T>(a: T, b: T, ks?: (keyof T)[]) => {
+  let keys = ks
+
   if (a === b || (a == null && b == null)) {
     return true
   }
@@ -39,9 +41,9 @@ export const sleep = (ms: number) => new Promise((resolve) => {
   setTimeout(resolve, ms)
 })
 
-export const percent = (rate: number) => fixed((rate * 100), 1)
-
 export const fixed = (number: number, digits: number) => Number(number.toFixed(digits))
+
+export const percent = (rate: number) => fixed((rate * 100), 1)
 
 type Unit = 'B' | 'KB' | 'MB'
 
@@ -65,11 +67,12 @@ export const size = (bytes: number): [number, Unit] => {
   return [number, unit]
 }
 
-export const unpick = <T extends {}, K extends keyof T>(obj: T, keys: K[]) => {
+const { hasOwnProperty } = Object.prototype
+export const unpick = <T, K extends keyof T>(obj: T, keys: K[]) => {
   const newObj: Partial<T> = {}
 
   for (const key in obj) {
-    if (obj.hasOwnProperty(key) && keys.indexOf(key as any) === -1) {
+    if (hasOwnProperty.call(obj, key) && keys.indexOf(key as unknown as K) === -1) {
       newObj[key] = obj[key]
     }
   }

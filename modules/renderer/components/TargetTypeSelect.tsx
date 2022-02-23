@@ -1,6 +1,6 @@
 import React, { PureComponent, ChangeEvent } from 'react'
 import classnames from 'classnames'
-import { SupportedExt } from '../../common/types'
+import { Empty, SupportedExt } from '../../common/types'
 import Select from './Select'
 
 import './TargetTypeSelect.less'
@@ -12,7 +12,7 @@ interface ITargetTypeSelectProps {
   onChange: (ext: SupportedExt) => void
 }
 
-class TargetTypeSelect extends PureComponent<ITargetTypeSelectProps, {}> {
+class TargetTypeSelect extends PureComponent<ITargetTypeSelectProps, Empty> {
   handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
     this.props.onChange(e.target.value as SupportedExt)
   }

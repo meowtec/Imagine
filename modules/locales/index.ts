@@ -1,4 +1,3 @@
-import { app } from 'electron'
 import createLocale, { GetText } from '../common/i18n'
 import en from './en'
 import zh from './zh-CN'
@@ -29,15 +28,8 @@ const texts = {
 let gettext: GetText
 
 // get os language in main or renderer
-export const setup = () => {
-  const locale = app?.getLocale() || navigator.language
+export const setup = (locale: string) => {
   gettext = createLocale(texts, 'en', locale)
 }
 
-// renderer process: auto setup
-// main process: should call setup on app ready
-if (!app) {
-  setup()
-}
-
-export default (key: string, ...args: any[]) => gettext(key, ...args)
+export default (key: string, ...args: unknown[]) => gettext(key, ...args)

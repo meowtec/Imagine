@@ -1,6 +1,6 @@
 import { ipcRenderer } from 'electron'
-import { randomId } from '../common/utils'
-import { IElectronResponse, IpcChannel } from '../common/types'
+import { randomId } from '../../common/utils'
+import { IElectronResponse, IpcChannel } from '../../common/types'
 
 /**
  * make cross process method call easier.
@@ -18,12 +18,12 @@ import { IElectronResponse, IpcChannel } from '../common/types'
  * @param channel channel name
  */
 
-export const requestCreater = <I, O>(channel: IpcChannel) => (data?: I) => new Promise<O>((resolve, reject) => {
+export const createAsyncCall = <I, O>(channel: IpcChannel) => (data?: I) => new Promise<O>((resolve, reject) => {
   const sessionId = randomId()
 
   ipcRenderer.send(channel, sessionId, data)
 
-  const handler = (event: any, { error, result, session }: IElectronResponse<O>) => {
+  const handler = (event: unknown, { error, result, session }: IElectronResponse<O>) => {
     if (session !== sessionId) return
 
     if (error) {
@@ -32,8 +32,8 @@ export const requestCreater = <I, O>(channel: IpcChannel) => (data?: I) => new P
       resolve(result)
     }
 
-    ipcRenderer.removeListener(channel, handler)
+    ipcRenderer.removeListener(IpcChannel.RESPONSE, handler)
   }
 
-  ipcRenderer.on(channel, handler)
+  ipcRenderer.on(IpcChannel.RESPONSE, handler)
 })

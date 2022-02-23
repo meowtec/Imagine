@@ -1,4 +1,3 @@
-import { shell } from 'electron'
 import React, { useCallback } from 'react'
 import { connect } from 'react-redux'
 import classnames from 'classnames'
@@ -13,6 +12,7 @@ import pkg from '../../../package.json'
 import { isTaskSizeIncreased } from '../../common/task'
 
 import './ActionBar.less'
+import { imagineAPI } from '../../bridge/web'
 
 interface IActionBarStateProps {
   count: number
@@ -139,38 +139,36 @@ function ActionBar({
   )
 }
 
-export default connect<IActionBarStateProps, IActionBarDispatchProps, Record<string, never>, IState>(
-  (state) => ({
-    count: state.tasks.length,
-    updateInfo: state.globals.updateInfo,
-    optionsVisible: state.globals.optionsVisible,
-    sizeIncreaseCount: state.tasks.reduce(
-      (count, item) => (count + (isTaskSizeIncreased(item) ? 1 : 0)),
-      0,
-    ),
-  }), (dispatch) => ({
-    onRemoveAll() {
-      dispatch(actions.taskClear())
-    },
+export default connect<IActionBarStateProps, IActionBarDispatchProps, Record<string, never>, IState>((state) => ({
+  count: state.tasks.length,
+  updateInfo: state.globals.updateInfo,
+  optionsVisible: state.globals.optionsVisible,
+  sizeIncreaseCount: state.tasks.reduce(
+    (count, item) => (count + (isTaskSizeIncreased(item) ? 1 : 0)),
+    0,
+  ),
+}), (dispatch) => ({
+  onRemoveAll() {
+    dispatch(actions.taskClear())
+  },
 
-    onRemoveIncreased() {
-      dispatch(actions.taskClearIncreased())
-    },
+  onRemoveIncreased() {
+    dispatch(actions.taskClearIncreased())
+  },
 
-    onOptionsVisibleToggle(visible: boolean) {
-      dispatch(actions.optionsVisible(visible))
-    },
+  onOptionsVisibleToggle(visible: boolean) {
+    dispatch(actions.optionsVisible(visible))
+  },
 
-    onAdd() {
-      apis.fileSelect()
-    },
+  onAdd() {
+    apis.fileSelect()
+  },
 
-    onSave(type: SaveType) {
-      apis.fileSaveAll(type)
-    },
+  onSave(type: SaveType) {
+    apis.fileSaveAll(type)
+  },
 
-    onUpdateClick() {
-      shell.openExternal(`${pkg.homepage}/releases`)
-    },
-  }),
-)(ActionBar)
+  onUpdateClick() {
+    imagineAPI.openExternal(`${pkg.homepage}/releases`)
+  },
+}))(ActionBar)

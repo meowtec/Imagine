@@ -2,7 +2,7 @@ import * as os from 'os'
 import * as fs from 'fs-extra'
 import * as path from 'path'
 import * as crypto from 'crypto'
-import FileType from 'file-type'
+import fileType from 'file-type'
 import rawBody from 'raw-body'
 import log from 'electron-log'
 import { IImageFile, SupportedExt, SupportedExtAlias } from './types'
@@ -31,9 +31,9 @@ export async function fileMD5(filePath: string) {
 
 export async function imageType(file: string | Buffer) {
   if (typeof file === 'string') {
-    return FileType.fromStream(fs.createReadStream(file))
+    return fileType.fromStream(fs.createReadStream(file))
   }
-  return FileType.fromBuffer(file)
+  return fileType.fromBuffer(file)
 }
 
 export const getFilePath = (image: Partial<IImageFile>) => path.resolve(tmpdir, `${image.id}.${image.ext}`)
@@ -44,16 +44,17 @@ export const saveFilesTmp = (files: string[]) => Promise.all(files.map(async (fi
   const type = await imageType(file)
   const ext = type && type.ext
 
-  if (!ext || !isSupportedExt(ext)) return
+  if (!ext || !isSupportedExt(ext)) return null
 
   const id = md5(file) + await fileMD5(file)
   const size = await getSize(file)
 
-  const descriptor: Partial<IImageFile> = {
+  const descriptor: IImageFile = {
     size,
     id,
     ext,
     originalName: file,
+    url: '',
   }
 
   const dest = getFilePath(descriptor)
@@ -61,7 +62,7 @@ export const saveFilesTmp = (files: string[]) => Promise.all(files.map(async (fi
 
   await fs.copyFile(file, dest)
 
-  return descriptor as IImageFile
+  return descriptor
 }))
 
 /**
@@ -110,14 +111,14 @@ export const flattenFiles = async (filePaths: string[]) => {
  * @param ext - jpg
  */
 export const reext = (filename: string, ext: SupportedExt) => filename.replace(/(?:\.(\w+))?$/i, ($0, $1: string) => {
-  $1 = $1.toLowerCase()
+  const matchedExt = $1.toLowerCase()
 
   // make sure `x.PNG` not be transformed to `x.png`
-  if ($1 === ext || SupportedExtAlias[$1] === ext) {
+  if (matchedExt === ext || SupportedExtAlias[matchedExt] === ext) {
     return $0
   }
 
-  if ($1 in SupportedExt) {
+  if (matchedExt in SupportedExt) {
     return `.${ext}`
   }
   return `${$0}.${ext}`

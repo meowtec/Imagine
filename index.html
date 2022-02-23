@@ -6,14 +6,6 @@
 </head>
 <body>
 <div id="app"></div>
-<script>
-(() => {
-  const url = process.env.IMAGINE_ENV === 'development'
-    ? 'http://localhost:9999/dist/app.js'
-    : 'dist/web/app.js'
-  const script = `<script src="${url}"><\/script>`
-  document.write(script)
-})()
-</script>
+<script type="module" src="./modules/renderer/index.ts"></script>
 </body>
 </html>

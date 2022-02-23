@@ -1,7 +1,7 @@
-import { ipcRenderer } from 'electron'
 import { Store } from 'redux'
 import { shallowCompare } from '../../common/utils'
 import { IpcChannel, IBackendState, IState } from '../../common/types'
+import { imagineAPI } from '../../bridge/web'
 
 export default function subscribe(store: Store<IState>) {
   let backendState: IBackendState
@@ -17,7 +17,7 @@ export default function subscribe(store: Store<IState>) {
     }
 
     if (!shallowCompare(backendState, nextBackendState)) {
-      ipcRenderer.send(IpcChannel.SYNC, nextBackendState)
+      imagineAPI.ipcSend(IpcChannel.SYNC, nextBackendState)
     }
 
     backendState = nextBackendState

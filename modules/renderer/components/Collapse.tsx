@@ -21,9 +21,9 @@ export default class Collapse extends PureComponent<ICollapseProps, ICollapseSta
   }
 
   handleClick = () => {
-    this.setState({
-      visible: !this.state.visible,
-    })
+    this.setState((state) => ({
+      visible: !state.visible,
+    }))
   }
 
   render() {
@@ -32,7 +32,10 @@ export default class Collapse extends PureComponent<ICollapseProps, ICollapseSta
         '-hide': !this.state.visible,
       })}
       >
-        <h3 className="collapse-title" onClick={this.handleClick}>
+        <h3
+          className="collapse-title"
+          onClick={this.handleClick}
+        >
           {this.props.title}
         </h3>
         <div className="collapse-content">

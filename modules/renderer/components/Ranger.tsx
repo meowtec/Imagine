@@ -1,5 +1,4 @@
 import React, { PureComponent, ChangeEvent } from 'react'
-import { range } from 'lodash'
 import * as _ from '../../common/utils'
 
 import './Ranger.less'
@@ -10,8 +9,8 @@ interface IRangerProps {
   min: number
   nativeStep: number
   inputReadOnly?: boolean
-  transformInput?(value: number): number
-  transformOutput?(value: number): number
+  transformInput(value: number): number
+  transformOutput(value: number): number
   onChange(value: number): void
 }
 
@@ -21,7 +20,7 @@ export default class Ranger extends PureComponent<IRangerProps, any> {
   fixValue(value: number) {
     const { max, min } = this.props
 
-    return ~~_.coop2(min, max, value)
+    return Math.round(_.coop2(min, max, value))
   }
 
   handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -29,26 +28,26 @@ export default class Ranger extends PureComponent<IRangerProps, any> {
     const { value } = input
     const { transformOutput } = this.props
 
-    this.props.onChange(this.fixValue(transformOutput!(Number(value))))
+    this.props.onChange(this.fixValue(transformOutput(Number(value))))
   }
 
   handleNumberInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    this.props.onChange(this.fixValue(~~e.target.value))
+    this.props.onChange(this.fixValue(Number(e.target.value)))
   }
 
   render() {
     const {
-      min, max, value, transformInput, transformOutput, nativeStep,
+      min, max, value, transformInput, nativeStep,
     } = this.props
-    const nativeValue = transformInput!(value)
+    const nativeValue = transformInput(value)
 
     return (
       <div className="ranger">
         <input
           type="range"
           value={nativeValue}
-          min={transformInput!(min)}
-          max={transformInput!(max)}
+          min={transformInput(min)}
+          max={transformInput(max)}
           step={nativeStep}
           onChange={this.handleInputChange}
         />

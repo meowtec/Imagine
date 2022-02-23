@@ -1,13 +1,9 @@
 import '../_tools/before-test'
 
-import * as path from 'path'
 import { createStore } from '../../renderer/store/store'
 import actions from '../../renderer/store/actionCreaters'
-import app from '../../backend/app'
 import {
   IImageFile,
-  IOptimizeOptions,
-  ITaskItem,
   TaskStatus,
   SupportedExt,
 } from '../../common/types'

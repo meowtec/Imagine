@@ -12,18 +12,10 @@ import {
   IBackendState,
 } from '../common/types'
 import * as fu from '../common/file-utils'
-import { listenIpc } from '../ipc-bridge/backend'
+import { listenAsyncCall } from '../bridge/async-call/main'
 import optimize from './optimize'
 import { saveFiles, saveFile } from './save'
 import Menu from './menu'
-import { IS_DEV } from '../common/env'
-
-if (IS_DEV) {
-  // eslint-disable-next-line global-require
-  require('./dev')
-}
-
-const url = `file://${path.resolve(app.getAppPath(), 'index.html')}`
 
 class App {
   private windows: number[] = []
@@ -34,7 +26,7 @@ class App {
     ipcMain.once(IpcChannel.READY, resolve)
   })
 
-  start() {
+  start(url: string) {
     const gotTheLock = app.requestSingleInstanceLock()
 
     if (!gotTheLock) {
@@ -46,7 +38,7 @@ class App {
 
       app.on('second-instance', this.onOtherInstance)
 
-      this.createWindow()
+      this.createWindow(url)
       this.menu.render()
       this.listenIpc()
       this.listenMenu()
@@ -69,7 +61,7 @@ class App {
     return null
   }
 
-  createWindow() {
+  createWindow(url: string) {
     const baseWidth = 800
 
     const win = new BrowserWindow({
@@ -80,6 +72,8 @@ class App {
       webPreferences: {
         nodeIntegration: true,
         webSecurity: false,
+        preload: path.resolve(__dirname, '../bridge/preload'),
+        // contextIsolation: false,
       },
     })
 
@@ -129,13 +123,14 @@ class App {
     this.menu.on('open-files', (files: string[]) => this.receiveFiles(files))
   }
 
-  handleIpcFileSave = async (event: Electron.IpcMainEvent, images: IImageFile[], type: SaveType) => {
+  handleIpcFileSave = async (event: Electron.IpcMainEvent, { images, type }: { images: IImageFile[], type: SaveType }) => {
     const saveToDir = async (dirname?: string) => {
       await saveFiles(images, type, dirname)
       event.sender.send(IpcChannel.SAVED)
     }
 
-    const mainWindow = this.getMainWindow()!
+    const mainWindow = this.getMainWindow()
+    if (!mainWindow) return
 
     if (type === SaveType.NEW_DIR) {
       const { filePaths } = await dialog.showOpenDialog(mainWindow, {
@@ -169,19 +164,19 @@ class App {
   }
 
   listenIpc() {
-    listenIpc<IOptimizeRequest, IImageFile>(IpcChannel.OPTIMIZE, ({ image, exportExt, options }) => optimize(image, options))
+    listenAsyncCall<IOptimizeRequest, IImageFile>(IpcChannel.OPTIMIZE, ({ image, options }) => optimize(image, options))
 
     ipcMain.on(IpcChannel.FILE_SELECT, () => {
       this.menu.open()
     })
 
-    ipcMain.on(IpcChannel.FILE_ADD, (event: any, files: string[]) => {
+    ipcMain.on(IpcChannel.FILE_ADD, (event, files: string[]) => {
       this.receiveFiles(files)
     })
 
     ipcMain.on(IpcChannel.SAVE, this.handleIpcFileSave)
 
-    ipcMain.on(IpcChannel.SYNC, (event: any, state: IBackendState) => {
+    ipcMain.on(IpcChannel.SYNC, (event, state: IBackendState) => {
       const { menu } = this
       menu.taskCount = state.taskCount
       menu.aloneMode = state.aloneMode

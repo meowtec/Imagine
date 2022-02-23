@@ -1,4 +1,3 @@
-import { ipcRenderer } from 'electron'
 import actions from '../store/actionCreaters'
 import { getActiveTask } from '../store/selectors'
 import store from '../store/store'
@@ -8,16 +7,23 @@ import {
 import { showMessage } from '../components/Messager'
 import * as apis from '../apis'
 import __ from '../../locales'
+import { imagineAPI } from '../../bridge/web'
 
 export default function listenIpc() {
-  ipcRenderer.on(IpcChannel.SAVED, () => {
+  if (!imagineAPI) {
+    // eslint-disable-next-line no-console
+    console.warn('window.imagineAPI is missing')
+    return
+  }
+
+  imagineAPI.ipcListen(IpcChannel.SAVED, () => {
     showMessage({
       message: __('save_success'),
       type: 'success',
     })
   })
 
-  ipcRenderer.on(IpcChannel.SAVE, (e: any, type: SaveType) => {
+  imagineAPI.ipcListen(IpcChannel.SAVE, (type: SaveType) => {
     const state = store.getState()
     const { activeId } = state.globals
     let task: ITaskItem | undefined
@@ -31,11 +37,11 @@ export default function listenIpc() {
     apis.fileSaveAll(type)
   })
 
-  ipcRenderer.on(IpcChannel.FILE_SELECTED, (event: any, data: IImageFile[]) => {
+  imagineAPI.ipcListen(IpcChannel.FILE_SELECTED, (data: IImageFile[]) => {
     store.dispatch(actions.taskAdd(data))
   })
 
-  ipcRenderer.on(IpcChannel.APP_UPDATE, (event: any, data: IUpdateInfo) => {
+  imagineAPI.ipcListen(IpcChannel.APP_UPDATE, (data: IUpdateInfo) => {
     store.dispatch(actions.appUpdateInfo(data))
   })
 }
