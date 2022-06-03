@@ -1,0 +1,31 @@
+name: Build-Pack-mozjpeg-v4
+on:
+  push:
+    branches:
+      - mozjpeg-v4 # mozjpeg-v4 分支 push 时触发工作流
+jobs:
+  pack: # 打包任务
+    runs-on: ${{ matrix.os }} # 操作系统矩阵变量运行复数工作流
+    strategy:
+      matrix:
+        os: [windows-latest, macOS-latest]
+    
+    steps:
+    # step1
+    - name: Checkout a Git repository
+      uses: actions/checkout@v2.4.2 # 下载仓库到工作流机器
+      
+    # step2
+    - name: Build Electron app # 安装依赖并进行构建
+      uses: samuelmeuli/action-electron-builder@v1.6.0
+      with:
+        github_token: ${{ secrets.github_token }}
+        
+    # step3
+    - name: Upload a Build Artifact # 将构建产物进行上传
+      uses: actions/upload-artifact@v3.1.0
+      with:
+        name: Imagine-${{ runner.os }} # 上传后的名字
+        path: |
+          dist/*zip # 将 dist目录下zip进行上传
+          dist/*dmg # 将 dist目录下dmg进行上传
