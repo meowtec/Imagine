@@ -22,10 +22,10 @@ jobs:
         github_token: ${{ secrets.github_token }}
         
     # step3
-    - name: Upload a Build Artifact # 将构建产物进行上传
+    - name: Upload Artifact # 将构建产物进行上传
       uses: actions/upload-artifact@v3.1.0
       with:
         name: Imagine-${{ runner.os }} # 上传后的名字
         path: |
-          dist/*zip # 将 dist目录下zip进行上传
-          dist/*dmg # 将 dist目录下dmg进行上传
+          dist/*dmg # mac 安装包
+          dist/*exe # window 安装包
