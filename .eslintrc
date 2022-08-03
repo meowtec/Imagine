@@ -65,6 +65,7 @@
     "react/require-default-props": "off",
     "react/prefer-stateless-function": "warn",
     "react/jsx-props-no-spreading": "off",
+    "react/default-props-match-prop-types": "off",
     "jsx-a11y/anchor-is-valid": "warn",
     "jsx-a11y/click-events-have-key-events": "off",
     "jsx-a11y/mouse-events-have-key-events": "off",
