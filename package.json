@@ -43,8 +43,9 @@
     "cross-env": "^7.0.3",
     "css-loader": "^6.6.0",
     "electron": "^12.2.3",
-    "electron-builder": "^22.9.1",
+    "electron-builder": "^23.3.3",
     "electron-devtools-installer": "^3.1.1",
+    "electron-updater": "^5.2.1",
     "eslint": "^8.9.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-typescript": "^16.1.0",
@@ -76,12 +77,11 @@
     "ts-node": "^10.5.0",
     "typescript": "^4.2.2",
     "vite": "^2.9.14",
-    "vite-plugin-svg-sprite": "^0.2.4"
+    "vite-plugin-svg-sprite": "^0.2.6"
   },
   "dependencies": {
     "child-process-promise": "^2.2.1",
     "electron-log": "^4.3.2",
-    "electron-updater": "^4.3.5",
     "file-type": "^16.5.3",
     "fs-extra": "^10.0.0",
     "jimp": "^0.16.1",
