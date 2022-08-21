@@ -13,7 +13,7 @@ jobs:
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v1
         with:
-          node-version: 10
+          node-version: 16
 
       - run: npm ci
       - run: npm run lint
