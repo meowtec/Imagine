@@ -24,7 +24,7 @@ app.on('ready', () => {
       imagine.start('http://localhost:9999/')
     })
   } else {
-    imagine.start(`file://${path.resolve(app.getAppPath(), 'index.html')}`)
+    imagine.start(`file://${path.resolve(app.getAppPath(), 'dist/web/index.html')}`)
     updater.checkForUpdates()
   }
 })
