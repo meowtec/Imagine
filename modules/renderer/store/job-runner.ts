@@ -44,7 +44,7 @@ export default class JobRunner {
         const optimized = await imagineAPI.optimize(task)
         store.dispatch(actions.taskOptimizeSuccess(task.id, optimized))
       } catch (err) {
-        imagineAPI.logger.error(err)
+        imagineAPI?.logger.error(err)
         store.dispatch(actions.taskOptimizeFail(task.id))
       }
     }

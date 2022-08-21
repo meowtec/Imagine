@@ -1,3 +1,6 @@
+/**
+ * @jest-environment jsdom
+ */
 import '../_tools/before-test'
 
 import { createStore } from '../../renderer/store/store'

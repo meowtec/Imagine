@@ -30,6 +30,6 @@ export const saveOptions = (options: IStorageContent) => {
   try {
     localStorage.setItem(key, JSON.stringify(options))
   } catch (e) {
-    imagineAPI.logger.error(`Failed to set options to localStorage, ${e}`)
+    imagineAPI?.logger.error(`Failed to set options to localStorage, ${e}`)
   }
 }

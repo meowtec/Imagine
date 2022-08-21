@@ -1,3 +1,6 @@
+/**
+ * @jest-environment jsdom
+ */
 import '../_tools/before-test'
 
 import * as path from 'path'
