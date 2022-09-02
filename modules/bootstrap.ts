@@ -14,7 +14,7 @@ log.transports.file.level = 'info'
 app.on('ready', () => {
   log.info('app launch', process.argv)
 
-  imagine.receiveFiles(process.argv.slice(2))
+  imagine.receiveFiles(process.argv.slice(1))
 
   setupLocales(app.getLocale())
 
