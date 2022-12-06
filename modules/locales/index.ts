@@ -10,6 +10,7 @@ import de from './de'
 import sv from './sv'
 import hr from './hr'
 import sr from './sr'
+import fa from './fa'
 
 const texts = {
   zh,
@@ -23,6 +24,7 @@ const texts = {
   sv,
   hr,
   sr,
+  fa,
 }
 
 let gettext: GetText
