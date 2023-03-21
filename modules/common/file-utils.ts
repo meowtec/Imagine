@@ -31,7 +31,10 @@ export async function fileMD5(filePath: string) {
 
 export async function imageType(file: string | Buffer) {
   if (typeof file === 'string') {
-    return fileType.fromStream(fs.createReadStream(file))
+    const stream = fs.createReadStream(file)
+    const type = await fileType.fromStream(stream)
+    stream.close()
+    return type
   }
   return fileType.fromBuffer(file)
 }
