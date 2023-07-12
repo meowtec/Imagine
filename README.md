@@ -28,11 +28,9 @@ chmod a+x Imagine-x.y.z-x86_64.AppImage # make executable
 ./Imagine-x.y.z-x86_64.AppImage # install and run
 ```
 
-## Screenshot (from legacy version)
+## Screenshot
 
-[GIF(7.4M)](http://7qn7vf.com1.z0.glb.clouddn.com/IMAGINE2.gif)
-
-![](http://meowtec.qiniudn.com/Imagine.jpg)
+![Screenshot](./screenshots/shot.jpg)
 
 ## Features
 
