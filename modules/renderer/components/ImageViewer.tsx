@@ -94,6 +94,7 @@ export default class ImageViewer extends PureComponent<ImageViewerProps, ImageVi
 
     this.setState({
       imageError: false,
+      imageNaturalWidth: this.image.naturalWidth,
     })
 
     if (!this.state.imageNaturalWidth) {
