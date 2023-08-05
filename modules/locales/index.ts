@@ -12,6 +12,7 @@ import hr from './hr'
 import sr from './sr'
 import fa from './fa'
 import ru from './ru'
+import pl from './pl'
 
 const texts = {
   zh,
@@ -27,6 +28,7 @@ const texts = {
   sr,
   fa,
   ru,
+  pl,
 }
 
 let gettext: GetText
