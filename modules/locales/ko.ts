@@ -1,4 +1,4 @@
-﻿export default {
+export default {
   about: '{0} 정보',
   file: '파일',
   open: '열기...',
@@ -7,7 +7,7 @@
   save_cover: '저장 및 덮어쓰기',
   save_new: '새 이름으로 자동 저장',
   save_dir: '내보내기 위치',
-  save_as: '다음으로 저장',
+  save_as: '다른 이름으로 저장',
   save_success: '저장 성공',
   clear: '모두 지우기',
   clear_increased: '증가된 파일 지우기',
@@ -17,8 +17,8 @@
   quality: '품질',
   visit: '홈페이지 방문',
   ok: '확인',
-  before_optimized: '이전',
-  after_optimized: '이후',
+  before_optimized: '변경 전',
+  after_optimized: '변경 후',
   new_version: '업그레이드',
   apply_now: '지금 적용',
 }
